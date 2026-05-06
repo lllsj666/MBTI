@@ -13,22 +13,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TypeMind - MBTI 性格与人生能量测试",
+  title: "TypeMind - MBTI 性格测试 | 更了解你自己",
   description:
-    "通过 20 道题测试你的 MBTI 性格类型，探索你的性格优势、财运倾向、姻缘关系、事业方向与近期好运建议。",
+    "通过 20 道轻量问题，了解你的 MBTI 性格倾向、关系模式和适合的相处方式。免费测试，无需注册。",
   keywords: [
     "MBTI测试",
     "性格测试",
-    "财运测试",
-    "姻缘测试",
-    "运势测试",
     "人格测试",
     "TypeMind",
+    "自我探索",
   ],
   openGraph: {
-    title: "TypeMind - 测出你的性格类型与人生能量",
+    title: "TypeMind - 用 3 分钟，更了解你自己",
     description:
-      "完成 20 道题，获取你的 MBTI 类型、性格优势、财运倾向、姻缘关系与好运建议。",
+      "完成 20 道题，获取你的 MBTI 性格类型、关系模式、适合方向和相处建议。",
     type: "website",
   },
 };
