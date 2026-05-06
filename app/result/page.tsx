@@ -209,7 +209,7 @@ function ResultContent() {
       {/* ===== 4. Deep Reading — Swipeable Deck ===== */}
       <section className="relative z-10 px-5 py-8">
         <div className="mx-auto max-w-2xl">
-          <SectionHeader eyebrow="Deep Reading" title="更具体地理解你的生活模式" description="关于你在关系、金钱、方向和当下的样子。" />
+          <SectionHeader eyebrow="Deep Reading" title="更具体地理解你的生活模式" description="不被任何定义，这只是参考" />
           <div className={`mt-5 rounded-3xl border ${t.cardBorder} bg-white/80 p-6 shadow-sm backdrop-blur-sm`}>
             <SwipeableDeck
               accentClass={t.accentDot}
