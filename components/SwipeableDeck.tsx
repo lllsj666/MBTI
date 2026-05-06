@@ -44,9 +44,9 @@ export function SwipeableDeck({ cards, accentClass = "bg-violet-500", className 
         >
           {cards.map((c) => (
             <div key={c.key} className="h-full w-full flex-shrink-0 overflow-y-auto px-2">
-              <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm md:p-8">
-                <h4 className="mb-4 text-base font-semibold text-slate-800 md:text-lg">{c.title}</h4>
-                <p className="whitespace-pre-wrap text-base leading-relaxed text-slate-600 md:text-[17px]">{c.content}</p>
+              <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+                <h4 className="mb-3 text-sm font-semibold text-slate-800">{c.title}</h4>
+                <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-600">{c.content}</p>
               </div>
             </div>
           ))}
@@ -54,7 +54,7 @@ export function SwipeableDeck({ cards, accentClass = "bg-violet-500", className 
       </div>
 
       {/* Footer: dots + arrows */}
-      <div className="flex items-center justify-between pt-4">
+      <div className="flex items-center justify-between pt-3">
         <button
           onClick={prev}
           disabled={page === 0}
