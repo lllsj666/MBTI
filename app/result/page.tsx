@@ -208,7 +208,7 @@ function ResultContent() {
       {/* ===== 4. Deep Reading — Collapsible Easter Egg ===== */}
       <section className="relative z-10 px-5 py-8 pb-4">
         <div className="mx-auto max-w-2xl">
-          <SectionHeader eyebrow="Deep Reading" title="更具体地理解你的生活模式" description="关于你在关系、金钱、方向和当下的几个生活切面。" />
+          <SectionHeader eyebrow="Deep Reading" title="更具体地理解你的生活模式" />
 
           <div className="mt-5">
             {/* Entry card */}
@@ -247,7 +247,7 @@ function ResultContent() {
               >
                 <div className="max-h-[420px] overflow-y-auto px-5 py-5 md:max-h-[520px] md:px-7 md:py-6">
                   <p className="mb-5 text-[12px] leading-6 text-slate-400 md:text-[13px]">
-                    以下内容不用于定义你，只是提供一些可参考的生活切面。
+                    你就是你，不是任何人。
                   </p>
                   <div className="divide-y divide-slate-100">
                     {insights.map(({ label, content }, i) => (
