@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { mbtiResults, type MBTIResult } from "@/app/data/mbti-results";
 import { STORAGE_KEYS } from "@/app/data/questions";
+import { getMbtiTheme } from "@/app/data/mbti-themes";
 
 function ResultContent() {
   const searchParams = useSearchParams();
@@ -71,7 +72,10 @@ function ResultContent() {
     );
   }
 
-  const sections = [
+  const camp = getMbtiTheme(result.type);
+  const t = camp.theme;
+
+  const insights = [
     { label: "财富观与消费倾向", icon: "✦", content: result.wealth },
     { label: "亲密关系模式", icon: "♥", content: result.love },
     { label: "适合的发展方向", icon: "◆", content: result.career },
@@ -79,9 +83,9 @@ function ResultContent() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#FAFAFB]">
+    <main className={`min-h-screen ${t.pageBg}`}>
       {/* Top bar */}
-      <div className="flex items-center justify-between border-b border-black/5 bg-white px-6 py-4">
+      <div className="flex items-center justify-between border-b border-black/5 bg-white px-5 py-4">
         <Link
           href="/"
           className="text-sm text-[#6F6877] transition hover:text-[#26222E]"
@@ -91,17 +95,17 @@ function ResultContent() {
         <span className="text-sm font-medium text-[#26222E]">TypeMind</span>
         <button
           onClick={handleRestart}
-          className="text-sm text-[#6F6877] transition hover:text-[#7C5CFF]"
+          className={`text-sm text-[#6F6877] transition hover:${t.primaryText}`}
         >
           重新测试
         </button>
       </div>
 
-      {/* Result header */}
-      <section className="px-6 pb-6 pt-10 sm:pt-14">
-        <div className="mx-auto max-w-lg">
+      {/* Hero card */}
+      <section className="px-5 pb-5 pt-8 sm:pt-12">
+        <div className="mx-auto max-w-2xl">
           {isExample && (
-            <div className="mb-6 rounded-xl border border-[#F0A55A]/30 bg-[#FEF7F0] px-4 py-3 text-center text-sm text-[#C88A3A]">
+            <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-center text-sm text-amber-700">
               这是示例报告。完成测试后可生成你的专属结果。
             </div>
           )}
@@ -110,20 +114,24 @@ function ResultContent() {
             你的 TypeMind 测试结果
           </p>
 
-          {/* Type card */}
-          <div className="overflow-hidden rounded-3xl border border-black/5 bg-white shadow-sm">
-            <div className="bg-gradient-to-br from-[#F4F0FA] via-white to-[#FDF2F7] px-6 py-8 text-center sm:px-8 sm:py-10">
-              <p className="mb-3 text-5xl font-bold tracking-widest text-[#26222E] sm:text-6xl">
+          <div className={`overflow-hidden rounded-3xl border ${t.cardBorder} bg-white shadow-sm`}>
+            <div className={`bg-gradient-to-br ${t.heroGradient} px-6 py-8 text-center sm:px-10 sm:py-12`}>
+              {/* Camp badge */}
+              <span className={`mb-4 inline-block rounded-full ${t.badge} px-4 py-1 text-xs font-medium`}>
+                {camp.label}
+              </span>
+
+              <p className="mb-2 text-5xl font-bold tracking-widest text-[#26222E] sm:text-7xl">
                 {result.type}
               </p>
-              <p className="mb-4 text-xl font-semibold text-[#26222E] sm:text-2xl">
+              <p className="mb-5 text-xl font-semibold text-[#26222E] sm:text-2xl">
                 {result.name}
               </p>
               <div className="flex flex-wrap justify-center gap-2">
                 {result.keywords.map((kw) => (
                   <span
                     key={kw}
-                    className="rounded-full border border-[#E0DCE8] bg-white px-3 py-1 text-xs text-[#6F6877]"
+                    className={`rounded-full border ${t.cardBorder} bg-white px-3 py-1 text-xs text-[#6F6877]`}
                   >
                     {kw}
                   </span>
@@ -131,8 +139,8 @@ function ResultContent() {
               </div>
             </div>
 
-            <div className="px-6 py-6 sm:px-8 sm:py-8">
-              <h3 className="mb-3 text-sm font-semibold text-[#7C5CFF]">
+            <div className="px-6 py-6 sm:px-10 sm:py-8">
+              <h3 className={`mb-3 text-sm font-semibold ${t.primaryText}`}>
                 性格特点
               </h3>
               <p className="text-sm leading-relaxed text-[#4A4458]">
@@ -143,11 +151,12 @@ function ResultContent() {
         </div>
       </section>
 
-      {/* Strengths & Cautions */}
-      <section className="px-6 py-6">
-        <div className="mx-auto max-w-lg space-y-4">
-          <div className="rounded-2xl border border-[#E0DCE8] bg-white p-6 shadow-sm">
-            <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-[#5B9FED]">
+      {/* Strengths & Cautions — side by side on desktop */}
+      <section className="px-5 py-5">
+        <div className="mx-auto grid max-w-2xl gap-4 sm:grid-cols-2">
+          {/* Strengths */}
+          <div className={`rounded-2xl border ${t.cardBorder} bg-white p-6 shadow-sm`}>
+            <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-emerald-600">
               <svg
                 width="16"
                 height="16"
@@ -162,21 +171,22 @@ function ResultContent() {
               </svg>
               你的优势
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {result.strengths.map((s) => (
                 <li
                   key={s}
-                  className="flex items-start gap-3 text-sm text-[#4A4458]"
+                  className="flex items-start gap-3 text-sm leading-relaxed text-[#4A4458]"
                 >
-                  <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#5B9FED]" />
+                  <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
                   {s}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-[#E0DCE8] bg-white p-6 shadow-sm">
-            <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-[#F0A55A]">
+          {/* Cautions */}
+          <div className={`rounded-2xl border ${t.cardBorder} bg-white p-6 shadow-sm`}>
+            <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold text-amber-600">
               <svg
                 width="16"
                 height="16"
@@ -193,13 +203,13 @@ function ResultContent() {
               </svg>
               你需要注意
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {result.cautions.map((c) => (
                 <li
                   key={c}
-                  className="flex items-start gap-3 text-sm text-[#4A4458]"
+                  className="flex items-start gap-3 text-sm leading-relaxed text-[#4A4458]"
                 >
-                  <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#F0A55A]" />
+                  <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
                   {c}
                 </li>
               ))}
@@ -208,50 +218,46 @@ function ResultContent() {
         </div>
       </section>
 
-      {/* Insight sections */}
-      <section className="px-6 py-6">
-        <div className="mx-auto max-w-lg space-y-4">
-          {sections.map(({ label, icon, content }) => (
+      {/* Life insights — 2 columns on desktop */}
+      <section className="px-5 py-5">
+        <div className="mx-auto grid max-w-2xl gap-4 sm:grid-cols-2">
+          {insights.map(({ label, icon, content }) => (
             <div
               key={label}
-              className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm"
+              className={`rounded-2xl border border-black/5 bg-white p-6 shadow-sm`}
             >
-              <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-[#7C5CFF]">
+              <h3 className={`mb-3 flex items-center gap-2 text-sm font-semibold ${t.primaryText}`}>
                 <span>{icon}</span>
                 {label}
               </h3>
-              <p className="text-sm leading-relaxed text-[#6F6877]">
-                {content}
-              </p>
+              <p className="text-sm leading-relaxed text-[#6F6877]">{content}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Matches */}
+      {/* Matches — good matches */}
       {result.matches && result.matches.length > 0 && (
-        <section className="px-6 py-6">
-          <div className="mx-auto max-w-lg">
+        <section className="px-5 py-5">
+          <div className="mx-auto max-w-2xl">
             <h3 className="mb-1 text-lg font-bold text-[#26222E]">
               你可能更容易产生默契的类型
             </h3>
             <p className="mb-5 text-sm leading-relaxed text-[#B0A8BA]">
               以下推荐仅作为相处参考，真正合适的关系仍然取决于沟通、边界和共同成长。
             </p>
-            <div className="space-y-3">
+            <div className="grid gap-3 sm:grid-cols-3">
               {result.matches.map((m) => (
                 <div
                   key={m.type}
-                  className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm"
+                  className={`rounded-2xl border ${t.cardBorder} bg-white p-5 shadow-sm`}
                 >
-                  <div className="mb-1 flex items-center gap-2">
-                    <span className="text-sm font-bold text-[#7C5CFF]">
-                      {m.type}
-                    </span>
-                    <span className="text-sm font-medium text-[#26222E]">
-                      {m.title}
-                    </span>
-                  </div>
+                  <span className={`mb-1 block text-sm font-bold ${t.primaryText}`}>
+                    {m.type}
+                  </span>
+                  <span className="mb-1.5 block text-sm font-medium text-[#26222E]">
+                    {m.title}
+                  </span>
                   <p className="text-sm leading-relaxed text-[#6F6877]">
                     {m.description}
                   </p>
@@ -262,18 +268,51 @@ function ResultContent() {
         </section>
       )}
 
+      {/* Challenging Matches */}
+      {result.challengingMatches && result.challengingMatches.length > 0 && (
+        <section className="px-5 py-5">
+          <div className="mx-auto max-w-2xl">
+            <h3 className="mb-1 text-lg font-bold text-[#26222E]">
+              你可能需要更多磨合的类型
+            </h3>
+            <p className="mb-5 text-sm leading-relaxed text-[#B0A8BA]">
+              以下类型并不是不适合，而是在相处节奏、表达方式或需求上可能更容易出现误会。
+              真正的关系仍然取决于沟通、边界和共同成长。
+            </p>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {result.challengingMatches.map((m) => (
+                <div
+                  key={m.type}
+                  className="rounded-2xl border border-[#E8E4ED] bg-[#F8F7FA] p-5"
+                >
+                  <span className="mb-1 block text-sm font-bold text-[#6F6877]">
+                    {m.type}
+                  </span>
+                  <span className="mb-1.5 block text-sm font-medium text-[#4A4458]">
+                    {m.title}
+                  </span>
+                  <p className="text-sm leading-relaxed text-[#8A8298]">
+                    {m.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Actions */}
-      <section className="px-6 py-6">
-        <div className="mx-auto flex max-w-lg flex-col gap-3 sm:flex-row">
+      <section className="px-5 py-6">
+        <div className="mx-auto flex max-w-2xl flex-col gap-3 sm:flex-row">
           <button
             onClick={handleRestart}
-            className="flex-1 rounded-xl border border-[#E0DCE8] bg-white px-6 py-3.5 text-sm font-medium text-[#26222E] shadow-sm transition hover:border-[#7C5CFF] hover:text-[#7C5CFF] active:scale-[0.98]"
+            className={`flex-1 rounded-xl border ${t.cardBorder} bg-white px-6 py-3.5 text-sm font-medium text-[#26222E] shadow-sm transition hover:${t.primaryText} active:scale-[0.98]`}
           >
             重新测试
           </button>
           <button
             onClick={handleShare}
-            className="flex-1 rounded-xl bg-[#7C5CFF] px-6 py-3.5 text-sm font-medium text-white shadow-sm transition hover:bg-[#6A4DE6] active:scale-[0.98]"
+            className={`flex-1 rounded-xl ${t.button} px-6 py-3.5 text-sm font-medium text-white shadow-sm transition active:scale-[0.98]`}
           >
             {shareText}
           </button>
@@ -281,8 +320,8 @@ function ResultContent() {
       </section>
 
       {/* Beta notice */}
-      <section className="px-6 pb-8">
-        <div className="mx-auto max-w-lg text-center">
+      <section className="px-5 pb-6">
+        <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs leading-relaxed text-[#B0A8BA]">
             当前为免费测试版，内容会持续优化。你可以截图保存，或复制链接分享给朋友。
           </p>
@@ -290,8 +329,8 @@ function ResultContent() {
       </section>
 
       {/* Disclaimer */}
-      <section className="px-6 pb-16">
-        <div className="mx-auto max-w-lg rounded-2xl border border-black/5 bg-white p-6 text-center">
+      <section className="px-5 pb-12">
+        <div className="mx-auto max-w-2xl rounded-2xl border border-black/5 bg-white p-6 text-center">
           <p className="text-xs leading-relaxed text-[#B0A8BA]">
             本测试仅用于娱乐和自我探索参考，不构成心理诊断、投资建议、婚恋建议或人生决策依据。
             请把结果当作理解自己的一个角度，而不是唯一答案。
@@ -300,7 +339,7 @@ function ResultContent() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-black/5 px-6 py-8">
+      <footer className="border-t border-black/5 px-5 py-8">
         <div className="text-center text-xs text-[#B0A8BA]">
           TypeMind · MBTI 性格测试
         </div>

@@ -16,6 +16,7 @@ export interface MBTIResult {
   career: string;
   luck: string;
   matches: MatchType[];
+  challengingMatches: MatchType[];
 }
 
 export const mbtiResults: Record<string, MBTIResult> = {
@@ -63,6 +64,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
           "INTP 和 INTJ 都重视独立和深度，彼此不需要太多表面社交。你们可以在各自的世界里专注，又在需要时进行有质量的交流。",
       },
     ],
+    challengingMatches: [
+      {
+        type: "ESFP",
+        title: "节奏差异比较明显",
+        description:
+          "ESFP 更重视当下体验和情绪流动，而 INTJ 更习惯提前规划和理性判断。相处时如果缺少沟通，容易一个觉得对方太冷，一个觉得对方太随性。",
+      },
+      {
+        type: "ESFJ",
+        title: "表达需求容易错位",
+        description:
+          "ESFJ 通常更需要明确的回应和情感互动，而 INTJ 可能更习惯用行动解决问题。两个人相处时需要特别注意情绪表达和安全感的建立。",
+      },
+      {
+        type: "ESTP",
+        title: "决策方式可能不同",
+        description:
+          "ESTP 偏向快速行动和现场反应，INTJ 更重视长期规划和逻辑推演。关系中如果没有共同目标，容易在节奏和优先级上产生摩擦。",
+      },
+    ],
   },
   INTP: {
     type: "INTP",
@@ -106,6 +127,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
         title: "给你结构和落地感",
         description:
           "ESTJ 的务实和组织能力，可以帮助 INTP 把想法落地。虽然表达方式不同，但如果能尊重彼此的节奏，会是很互补的组合。",
+      },
+    ],
+    challengingMatches: [
+      {
+        type: "ESFJ",
+        title: "情感需求不太同步",
+        description:
+          "ESFJ 很看重面对面的温暖互动和情感确认，而 INTP 有时会沉浸在自己的思维里忽略了这一点。双方需要主动沟通彼此的期待，才能避免误会。",
+      },
+      {
+        type: "ESTJ",
+        title: "做事节奏可能冲突",
+        description:
+          "ESTJ 喜欢明确的规则和效率，INTP 更享受探索可能性。在一起做事时容易一个觉得对方太死板，一个觉得对方不靠谱，需要相互理解做事风格。",
+      },
+      {
+        type: "ESFP",
+        title: "关注点不太一样",
+        description:
+          "ESFP 活在当下的感官世界，INTP 活在想法的世界里。两人容易聊不到一块去，但如果愿意尝试对方喜欢的事，也能发现新的乐趣。",
       },
     ],
   },
@@ -153,6 +194,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
           "ENFJ 和 ENTJ 都有很强的行动力和感染力，你们可以在一起做出很棒的事情。需要注意的是，两个强者之间要留出彼此喘息的空间。",
       },
     ],
+    challengingMatches: [
+      {
+        type: "ISFP",
+        title: "沟通方式差异较大",
+        description:
+          "ISFP 温和内敛，不习惯直接的表达方式，而 ENTJ 恰好是非常直接的类型。相处时 ENTJ 需要放慢语速和降低音量，让对方有表达的安全感。",
+      },
+      {
+        type: "INFP",
+        title: "价值观可能有分歧",
+        description:
+          "INFP 重视个人价值和情感真实，而 ENTJ 更看重效率和结果。两人在一起时如果只讨论「怎么做」而不聊「为什么做」，可能会渐行渐远。",
+      },
+      {
+        type: "ESFP",
+        title: "生活节奏不太合拍",
+        description:
+          "ESFP 随性自由、享受当下，ENTJ 目标导向、规划长远。日常相处时可能在时间安排和生活方式上需要更多的相互妥协和理解。",
+      },
+    ],
   },
   ENTP: {
     type: "ENTP",
@@ -196,6 +257,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
         title: "和你一起探索世界",
         description:
           "ENFP 和 ENTP 都充满好奇心和热情，在一起会很聊得来。你们可以一起尝试新事物、交换想法，生活不容易变得沉闷。",
+      },
+    ],
+    challengingMatches: [
+      {
+        type: "ISFJ",
+        title: "对安全感的需求不同",
+        description:
+          "ISFJ 重视稳定和可预期，而 ENTP 喜欢即兴和变化。相处时 ENTP 的随性可能让 ISFJ 感到不安，需要更多的沟通和承诺来建立信任。",
+      },
+      {
+        type: "ISTJ",
+        title: "规则和自由的拉锯",
+        description:
+          "ISTJ 喜欢有条不紊、按计划行事，ENTP 则享受打破常规。两人在日常生活中容易在「要不要按规矩来」这件事上产生分歧，需要互相尊重各自的方式。",
+      },
+      {
+        type: "ESFJ",
+        title: "情绪表达容易错频",
+        description:
+          "ESFJ 很需要被关注和回应，而 ENTP 有时沉浸在想法中忽略了对方的情感需求。相处时需要注意多给对方一些明确的关心和陪伴。",
       },
     ],
   },
@@ -243,6 +324,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
           "INFP 和 INFJ 都重视真诚与意义，容易建立深层连接。你们可以安静地陪伴彼此，不需要太多言语就能理解对方。需要注意的是，不要一起陷入过度内耗。",
       },
     ],
+    challengingMatches: [
+      {
+        type: "ESTP",
+        title: "思考深度不太同步",
+        description:
+          "ESTP 注重实际和当下，INFJ 喜欢深入和反思。你们在一起时，INFJ 可能觉得 ESTP 不够走心，而 ESTP 可能觉得 INFJ 想太多。找到共同兴趣会有所帮助。",
+      },
+      {
+        type: "ESTJ",
+        title: "表达和需求不同频",
+        description:
+          "ESTJ 直接务实，INFJ 细腻敏感。相处时 ESTJ 的直白有时会让 INFJ 觉得受伤，而 INFJ 的含蓄又让 ESTJ 摸不着头脑，需要双方多解释各自的意图。",
+      },
+      {
+        type: "ESFP",
+        title: "能量来源不太一样",
+        description:
+          "ESFP 从热闹和社交中获取能量，INFJ 需要安静和独处来恢复。在一起时可能一个觉得对方太安静，一个觉得对方太闹腾，需要尊重彼此的节奏。",
+      },
+    ],
   },
   INFP: {
     type: "INFP",
@@ -286,6 +387,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
         title: "给你的生活带来阳光",
         description:
           "ENFP 的乐观和活力可以带动 INFP 走出内心世界。你们都对人有真诚的兴趣，相处时会觉得轻松自然，又可以聊得很深入。",
+      },
+    ],
+    challengingMatches: [
+      {
+        type: "ESTJ",
+        title: "处理问题的方式截然不同",
+        description:
+          "ESTJ 习惯用规则和效率解决问题，INFP 更看重感受和价值观。相处时 INFP 可能觉得被冒犯，而 ESTJ 可能觉得对方不够务实，需要在差异中找到平衡点。",
+      },
+      {
+        type: "ENTJ",
+        title: "节奏和关注点不同",
+        description:
+          "ENTJ 行动力强、目标明确，INFP 需要时间感受和沉淀。如果 ENTJ 总是催促或否定，INFP 很容易缩回自己的世界。双方都需要学习对方的语言。",
+      },
+      {
+        type: "ESTP",
+        title: "深度需求不太匹配",
+        description:
+          "ESTP 活在当下、享受现实乐趣，INFP 渴望深度和意义。在一起时 INFP 可能觉得对方太表面，ESTP 可能觉得对方太沉重，需要更多的耐心和理解。",
       },
     ],
   },
@@ -333,6 +454,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
           "ENTJ 的行动力和 ENFJ 的感染力放在一起，可以做成很多事。你们都关注大局和目标，相处时需要注意的是各自留出让对方呼吸的空间。",
       },
     ],
+    challengingMatches: [
+      {
+        type: "ISTP",
+        title: "情感表达不在一个频道",
+        description:
+          "ISTP 冷静少言，喜欢用行动代替表达，而 ENFJ 需要明确的情感反馈。相处时 ENFJ 可能觉得对方不够关心，而 ISTP 可能觉得被要求太多，需要多沟通彼此的需求。",
+      },
+      {
+        type: "INTP",
+        title: "思考与感受的碰撞",
+        description:
+          "INTP 的理性分析有时会让 ENFJ 觉得缺乏温度。ENFJ 在意关系中的人情味，而 INTP 更关注逻辑。如果双方能互相学习对方的视角，反而能成为很好的平衡。",
+      },
+      {
+        type: "ESTP",
+        title: "对关系的期待不同",
+        description:
+          "ESTP 享受轻松自由的相处，ENFJ 希望建立深层的关系连接。两人在一起时 ENFJ 可能觉得对方不够投入，需要明确表达自己的期待而不是默默失望。",
+      },
+    ],
   },
   ENFP: {
     type: "ENFP",
@@ -376,6 +517,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
         title: "一起相信美好的可能性",
         description:
           "INFP 和 ENFP 都是理想主义者，对人和世界有着温柔的期待。你们在一起时会觉得被理解和接纳，可以聊梦想聊到深夜。",
+      },
+    ],
+    challengingMatches: [
+      {
+        type: "ISTJ",
+        title: "自由与秩序的拉扯",
+        description:
+          "ISTJ 喜欢规律和秩序，ENFP 需要自由和变化。你们在一起时 ENFP 可能觉得被束缚，ISTJ 可能觉得太混乱。如果愿意互补，反而能给彼此带来平衡。",
+      },
+      {
+        type: "ESTJ",
+        title: "做事风格差异明显",
+        description:
+          "ESTJ 直奔结果、讲究效率，ENFP 享受过程、关注感受。相处时容易因为优先级不同而产生摩擦，需要双方都退一步理解对方的出发点。",
+      },
+      {
+        type: "ISFJ",
+        title: "需要更多的沟通磨合",
+        description:
+          "ISFJ 比较内敛和传统，ENFP 热情和新潮。ISFJ 可能对 ENFP 的多变感到不安，而 ENFP 可能觉得 ISFJ 不够开放，多花时间了解彼此的内心会有帮助。",
       },
     ],
   },
@@ -423,6 +584,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
           "ISFJ 和 ISTJ 都是稳重负责的类型，彼此很容易建立信任。你们在一起没有太多戏剧化的起伏，但有的是日复一日让人安心的陪伴。",
       },
     ],
+    challengingMatches: [
+      {
+        type: "ENFP",
+        title: "规划与随性的冲突",
+        description:
+          "ENFP 喜欢即兴和变化，而 ISTJ 习惯按计划行事。ISTJ 可能会觉得 ENFP 不够靠谱，ENFP 可能觉得 ISTJ 太刻板。如果彼此能欣赏对方的风格，会是很好的互补。",
+      },
+      {
+        type: "ENTP",
+        title: "传统与创新的分歧",
+        description:
+          "ENTP 乐于挑战规则，ISTJ 尊重和遵守规则。你们在一起讨论事情时，ISTJ 可能觉得 ENTP 总是在抬杠，需要区分「建设性讨论」和「不尊重」。",
+      },
+      {
+        type: "ESFP",
+        title: "生活节奏需要协调",
+        description:
+          "ESFP 活在当下、社交活跃，ISTJ 喜欢安静和规律。日常相处中可能在社交安排和消费观念上有不同偏好，需要坦诚沟通各自的底线和期待。",
+      },
+    ],
   },
   ISFJ: {
     type: "ISFJ",
@@ -466,6 +647,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
         title: "理解你的安静和用心",
         description:
           "ISTJ 和 ISFJ 都是内敛务实的人，不需要太多言语就能理解彼此的可靠。你们在一起的日子可能不算惊天动地，但会是细水长流的温暖。",
+      },
+    ],
+    challengingMatches: [
+      {
+        type: "ENTP",
+        title: "日常节奏不太合拍",
+        description:
+          "ENTP 热爱变化和挑战，ISFJ 更喜欢稳定和舒适。ISFJ 可能觉得 ENTP 的计划总在变让人焦虑，而 ENTP 可能觉得 ISFJ 不够灵活。多一些耐心沟通会很有帮助。",
+      },
+      {
+        type: "ENFP",
+        title: "社交需求不太一致",
+        description:
+          "ENFP 喜欢广泛的社交和新奇的体验，ISFJ 更喜欢安静的小圈子。在一起时 ISFJ 可能会觉得社交太累，需要表达自己的界限而不是强撑着迎合对方。",
+      },
+      {
+        type: "ESTP",
+        title: "风险偏好有差异",
+        description:
+          "ESTP 喜欢冒险和即兴行动，ISFJ 倾向于稳妥和安全。两人在做决定时容易产生分歧，建议在一些小事上互相让步，大事上共同商量。",
       },
     ],
   },
@@ -513,6 +714,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
           "ESFJ 和 ESTJ 都是负责任且善于组织的类型。你们在一起时可以共同建立一个有条理、有温度的社交和家庭生活。",
       },
     ],
+    challengingMatches: [
+      {
+        type: "INFP",
+        title: "价值观差异需要调和",
+        description:
+          "INFP 重视内心感受和理想，ESTJ 看重实际效果和规则。ESTJ 的务实有时会让 INFP 觉得不被理解，需要多问对方「你感受如何」而不是只说「你应该怎么做」。",
+      },
+      {
+        type: "INTP",
+        title: "执行节奏不一样",
+        description:
+          "INTP 喜欢反复推敲和探索不同方案，ESTJ 希望快速决定和执行。在一起做事时容易产生不耐烦，建议 ESTJ 给 INTP 多一些思考时间。",
+      },
+      {
+        type: "ENFP",
+        title: "规划和自由的矛盾",
+        description:
+          "ENFP 不喜欢被计划束缚，ESTJ 认为计划是效率的基础。两人在生活中经常在「要不要按计划来」上较劲，需要找到既有序又灵活的中间地带。",
+      },
+    ],
   },
   ESFJ: {
     type: "ESFJ",
@@ -556,6 +777,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
         title: "为你的生活加点自由",
         description:
           "ENFP 的自由和创意可以帮 ESFJ 从日常责任中暂时跳出来。你会被对方的真诚和好奇心吸引，相处时能体验到计划之外的乐趣。",
+      },
+    ],
+    challengingMatches: [
+      {
+        type: "INTP",
+        title: "情感需求不太匹配",
+        description:
+          "INTP 习惯于独处和思考，ESFJ 需要频繁的互动和反馈。ESFJ 可能会觉得对方太冷、不够关心，而 INTP 可能觉得被情感需求压得喘不过气。需要明确表达各自的舒适范围。",
+      },
+      {
+        type: "INTJ",
+        title: "社交与独处的偏好差异",
+        description:
+          "INTJ 重视独立和深度，ESFJ 喜欢热闹和群体。在社交安排上容易产生分歧，INTJ 需要独处时间并不是在拒绝你，而 ESFJ 的热闹也不是在打扰你。",
+      },
+      {
+        type: "ENTP",
+        title: "对规则的态度不同",
+        description:
+          "ENTP 喜欢挑战和重新定义规则，而 ESFJ 看重传统和约定俗成。两人在面对既定做法时可能立场相反，建议就事论事，不要上升到对对方的否定。",
       },
     ],
   },
@@ -603,6 +844,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
           "ISFP 和 ISTP 都喜欢用行动而非言语表达自己，彼此之间不会有太多社交压力。你们可以安静地做各自的事，又在需要时默契地交流。",
       },
     ],
+    challengingMatches: [
+      {
+        type: "ENFJ",
+        title: "情感表达的期待不同",
+        description:
+          "ENFJ 很在意关系中的情感互动和回馈，而 ISTP 更习惯用行动说话。ENFJ 可能觉得 ISTP 太冷淡，而 ISTP 可能觉得被要求太多。偶尔用语言确认对方的感受会很有帮助。",
+      },
+      {
+        type: "ESFJ",
+        title: "社交节奏不太一致",
+        description:
+          "ESFJ 喜欢活跃的社交生活和固定的安排，ISTP 更随性和独立。ESFJ 可能觉得 ISTP 不够投入，而 ISTP 可能觉得社交太消耗。找到双方都舒服的频率很重要。",
+      },
+      {
+        type: "INFJ",
+        title: "深度交流的节奏差异",
+        description:
+          "INFJ 喜欢深入的对话和情感连接，而 ISTP 更关注具体和实际的问题。INFJ 可能觉得 ISTP 不愿意走心，实际上 ISTP 只是表达爱的方式更含蓄。",
+      },
+    ],
   },
   ISFP: {
     type: "ISFP",
@@ -646,6 +907,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
         title: "看见并欣赏你的独特",
         description:
           "ENFJ 的洞察力可以帮 ISFP 发现自己未曾意识到的优点。你们的相处是温柔的互相照亮——你让对方学会慢下来，对方让你更愿意走出来。",
+      },
+    ],
+    challengingMatches: [
+      {
+        type: "ENTJ",
+        title: "节奏和压力感不一致",
+        description:
+          "ENTJ 的高效和强势有时会让 ISFP 感到压力很大。ISFP 需要温和的引导而不是直接的命令，而 ENTJ 需要理解对方不是不配合，只是需要不同的沟通方式。",
+      },
+      {
+        type: "ESTJ",
+        title: "对规则的态度不同",
+        description:
+          "ESTJ 喜欢明确的规则和效率，ISFP 更重视个人自由和感受。相处时 ISFP 可能觉得被条条框框困住，而 ESTJ 可能觉得对方太散漫，需要找到共同的节奏。",
+      },
+      {
+        type: "ENTP",
+        title: "辩论与和谐的偏好差异",
+        description:
+          "ENTP 享受辩论和思维碰撞，而 ISFP 不喜欢冲突和争论。ISFP 可能会把 ENTP 的挑战视为攻击，其实对方只是在交换想法。区分「讨论」和「争吵」会减少很多误会。",
       },
     ],
   },
@@ -693,6 +974,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
           "ESFP 和 ESTP 都是行动派和享乐主义者，在一起时能量满格。你们可以一起冒险、一起玩乐，生活中永远不缺新鲜刺激。",
       },
     ],
+    challengingMatches: [
+      {
+        type: "INFJ",
+        title: "思考深度有差异",
+        description:
+          "INFJ 喜欢深入反思和规划未来，ESTP 更关注眼前和行动。INFJ 可能觉得 ESTP 不够走心，ESTP 可能觉得 INFJ 想太多。如果愿意互相学习对方的视角，反而是很好的互补。",
+      },
+      {
+        type: "INFP",
+        title: "对冲突的态度不同",
+        description:
+          "INFP 非常在意和谐和感受，ESTP 的直接和务实有时会让 INFP 觉得受伤。ESTP 说「我只是在陈述事实」时，INFP 听到的可能是「你在否定我」。注意语气和措辞可以减少很多误会。",
+      },
+      {
+        type: "ISFJ",
+        title: "风险和安全的需求不一样",
+        description:
+          "ISFJ 重视安全和稳定，ESTP 喜欢冒险和刺激。在做决定时 ESTP 的「试了再说」会让 ISFJ 感到不安，提前沟通和适当妥协很重要。",
+      },
+    ],
   },
   ESFP: {
     type: "ESFP",
@@ -736,6 +1037,26 @@ export const mbtiResults: Record<string, MBTIResult> = {
         title: "感受生活中的小确幸",
         description:
           "ISFP 的温柔和审美，和 ESFP 的活力融合在一起，会让日常变得更有质感。你们可以一起去发现美食、美景，互相用对方喜欢的方式表达关心。",
+      },
+    ],
+    challengingMatches: [
+      {
+        type: "INTJ",
+        title: "生活节奏差异较大",
+        description:
+          "INTJ 喜欢安静、规划和深度思考，ESFP 热爱社交、即兴和感官体验。两人在一起时 ESFP 可能觉得 INTJ 太闷，INTJ 可能觉得 ESFP 太闹。找到共同的活动会很有帮助。",
+      },
+      {
+        type: "ISTJ",
+        title: "规划和即兴的分歧",
+        description:
+          "ISTJ 习惯提前规划，ESFP 喜欢随性而为。日常相处中可能频繁在时间安排和做事方式上产生摩擦，需要双方都退一步，建立彼此都能接受的规则。",
+      },
+      {
+        type: "INTP",
+        title: "沟通和关注点不同",
+        description:
+          "INTP 沉浸在理论和概念中，ESFP 关注现实和体验。ESFP 可能觉得 INTP 太抽象、不够接地气，而 INTP 可能觉得 ESFP 不够深刻。尝试进入对方的世界会有惊喜。",
       },
     ],
   },
