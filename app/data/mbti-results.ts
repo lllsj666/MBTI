@@ -2,6 +2,25 @@ export interface MatchType {
   type: string;
   title: string;
   description: string;
+  shortDescription?: string;
+  traits?: string;
+  why?: string;
+  howToGetAlong?: string;
+  possibleFriction?: string;
+}
+
+/** Fill in missing detail fields from the main description */
+export function normalizeMatch(m: MatchType): Required<Omit<MatchType, "shortDescription">> & { shortDescription: string } {
+  return {
+    type: m.type,
+    title: m.title,
+    description: m.description,
+    shortDescription: m.shortDescription ?? m.description.slice(0, 60).replace(/\n/g, "") + (m.description.length > 60 ? "…" : ""),
+    traits: m.traits ?? m.description,
+    why: m.why ?? m.description,
+    howToGetAlong: m.howToGetAlong ?? "相处时多给对方表达的空间，同时也要明确自己的边界和节奏。试着用开放、真诚的讨论代替互相猜测。",
+    possibleFriction: m.possibleFriction ?? "你们可能在节奏、表达方式或需求重点上不完全一致。只要提前沟通清楚，这些不同反而能让彼此成长。",
+  };
 }
 
 export interface MBTIResult {

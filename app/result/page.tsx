@@ -6,8 +6,10 @@ import Link from "next/link";
 import { mbtiResults, type MBTIResult } from "@/app/data/mbti-results";
 import { STORAGE_KEYS, type MBTIResult2, type TendencyDetail } from "@/app/data/questions";
 import { getMbtiTheme } from "@/app/data/mbti-themes";
+import { SectionHeader } from "@/components/SectionHeader";
+import { RelationshipSection } from "@/components/RelationshipSection";
 
-function strengthBar(diff: number): string {
+function strengthBarLabel(diff: number): string {
   if (diff <= 2) return "轻微";
   if (diff <= 7) return "明显";
   return "强烈";
@@ -90,16 +92,14 @@ function ResultContent() {
 
   const camp = getMbtiTheme(result.type);
   const t = camp.theme;
+  const tendencies: TendencyDetail[] | null = tendency?.tendencies ?? null;
 
   const insights = [
     { label: "亲密关系模式", content: result.love },
-    { label: "财富观与消费倾向", content: result.wealth },
+    { label: "金钱观与资源管理", content: result.wealth },
     { label: "适合的发展方向", content: result.career },
     { label: "近期生活建议", content: result.luck },
   ];
-
-  // Tendency details
-  const tendencies: TendencyDetail[] | null = tendency?.tendencies ?? null;
 
   return (
     <main className={`min-h-screen ${t.pageBg}`}>
@@ -120,7 +120,7 @@ function ResultContent() {
         </button>
       </div>
 
-      {/* 1. Hero card */}
+      {/* ===== 1. Hero card ===== */}
       <section className="px-5 pb-4 pt-8 sm:pt-10">
         <div className="mx-auto max-w-2xl">
           {isExample && (
@@ -161,16 +161,14 @@ function ResultContent() {
               <div className="border-t border-black/5 px-6 py-5 sm:px-10">
                 <div className="space-y-2.5">
                   {tendencies.map((td) => {
-                    const [a, b] = [td.leftType, td.rightType];
                     const total = td.leftScore + td.rightScore || 1;
                     const leftPct = Math.round((td.leftScore / total) * 100);
-                    const winner = td.winner;
                     return (
                       <div key={td.dimension} className="flex items-center gap-2 text-[11px]">
                         <span className="w-8 shrink-0 text-[#B0A8BA]">{td.dimension}</span>
                         <div className="flex flex-1 items-center gap-1.5">
-                          <span className={`w-4 text-right ${winner === a ? "font-semibold text-[#26222E]" : "text-[#B0A8BA]"}`}>
-                            {a}
+                          <span className={`w-4 text-right ${td.winner === td.leftType ? "font-semibold text-[#26222E]" : "text-[#B0A8BA]"}`}>
+                            {td.leftType}
                           </span>
                           <div className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-[#E8E4ED]">
                             <div
@@ -178,12 +176,12 @@ function ResultContent() {
                               style={{ width: `${leftPct}%` }}
                             />
                           </div>
-                          <span className={`w-4 ${winner === b ? "font-semibold text-[#26222E]" : "text-[#B0A8BA]"}`}>
-                            {b}
+                          <span className={`w-4 ${td.winner === td.rightType ? "font-semibold text-[#26222E]" : "text-[#B0A8BA]"}`}>
+                            {td.rightType}
                           </span>
                         </div>
                         <span className="w-8 shrink-0 text-right text-[#B0A8BA]">
-                          {strengthBar(td.leftScore + td.rightScore === 0 ? 0 : Math.abs(td.leftScore - td.rightScore))}
+                          {strengthBarLabel(Math.abs(td.leftScore - td.rightScore))}
                         </span>
                       </div>
                     );
@@ -206,120 +204,86 @@ function ResultContent() {
         </div>
       </section>
 
-      {/* 2. Strengths & Cautions side by side */}
-      <section className="px-5 py-4">
-        <div className="mx-auto grid max-w-2xl gap-4 sm:grid-cols-2">
-          <div className={`rounded-2xl border ${t.cardBorder} bg-white p-5 shadow-sm`}>
-            <h3 className="mb-3 flex items-center gap-1.5 text-sm font-semibold text-emerald-600">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              你的优势
-            </h3>
-            <ul className="space-y-2">
-              {result.strengths.map((s) => (
-                <li key={s} className="flex items-start gap-2 text-sm leading-relaxed text-[#4A4458]">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
-                  {s}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className={`rounded-2xl border ${t.cardBorder} bg-white p-5 shadow-sm`}>
-            <h3 className="mb-3 flex items-center gap-1.5 text-sm font-semibold text-amber-600">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                <line x1="12" y1="9" x2="12" y2="13" />
-                <line x1="12" y1="17" x2="12.01" y2="17" />
-              </svg>
-              你需要注意
-            </h3>
-            <ul className="space-y-2">
-              {result.cautions.map((c) => (
-                <li key={c} className="flex items-start gap-2 text-sm leading-relaxed text-[#4A4458]">
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
-                  {c}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+      {/* ===== 2. Core Snapshot ===== */}
+      <section className="px-5 py-6">
+        <div className="mx-auto max-w-2xl">
+          <SectionHeader
+            eyebrow="Core Snapshot"
+            title="先看最像你的地方"
+            description="这里总结的是你更稳定、更容易被别人感受到的性格特征，以及在日常相处中可能需要留意的部分。"
+          />
 
-      {/* 3. Relationship overview — matches + challenging side by side */}
-      <section className="px-5 py-4">
-        <div className="mx-auto grid max-w-2xl gap-4 sm:grid-cols-2">
-          {/* Matches */}
-          {result.matches && result.matches.length > 0 && (
-            <div>
-              <h3 className="mb-1 text-sm font-bold text-[#26222E]">
-                你可能更容易产生默契的类型
-              </h3>
-              <p className="mb-3 text-xs leading-relaxed text-[#B0A8BA]">
-                以下推荐仅作为相处参考，真正合适的关系仍然取决于沟通和边界。
-              </p>
-              <div className="space-y-2">
-                {result.matches.map((m) => (
-                  <div
-                    key={m.type}
-                    className={`rounded-xl border ${t.cardBorder} bg-white p-4 shadow-sm`}
-                  >
-                    <div className="mb-0.5 flex items-center gap-2">
-                      <span className={`text-sm font-bold ${t.primaryText}`}>{m.type}</span>
-                      <span className="text-xs font-medium text-[#4A4458]">{m.title}</span>
-                    </div>
-                    <p className="line-clamp-2 text-xs leading-relaxed text-[#8A8298]">
-                      {m.description}
-                    </p>
-                  </div>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {/* Strengths */}
+            <div className={`rounded-2xl border ${t.cardBorder} bg-white p-5 shadow-sm`}>
+              <h3 className="mb-1 text-sm font-semibold text-emerald-600">你的优势</h3>
+              <p className="mb-3 text-xs text-[#B0A8BA]">这些是你更容易自然发挥出来的能力。</p>
+              <ul className="space-y-2">
+                {result.strengths.map((s) => (
+                  <li key={s} className="flex items-start gap-2 text-sm leading-relaxed text-[#4A4458]">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
+                    {s}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-          )}
 
-          {/* Challenging */}
-          {result.challengingMatches && result.challengingMatches.length > 0 && (
-            <div>
-              <h3 className="mb-1 text-sm font-bold text-[#26222E]">
-                你可能需要更多磨合的类型
-              </h3>
-              <p className="mb-3 text-xs leading-relaxed text-[#B0A8BA]">
-                以下类型并不是不适合，而是在相处节奏、表达方式上可能需要更多沟通。
-              </p>
-              <div className="space-y-2">
-                {result.challengingMatches.map((m) => (
-                  <div
-                    key={m.type}
-                    className="rounded-xl border border-[#E8E4ED] bg-[#F8F7FA] p-4"
-                  >
-                    <div className="mb-0.5 flex items-center gap-2">
-                      <span className="text-sm font-bold text-[#6F6877]">{m.type}</span>
-                      <span className="text-xs font-medium text-[#4A4458]">{m.title}</span>
-                    </div>
-                    <p className="line-clamp-2 text-xs leading-relaxed text-[#8A8298]">
-                      {m.description}
-                    </p>
-                  </div>
+            {/* Cautions */}
+            <div className={`rounded-2xl border ${t.cardBorder} bg-white p-5 shadow-sm`}>
+              <h3 className="mb-1 text-sm font-semibold text-amber-600">你需要注意</h3>
+              <p className="mb-3 text-xs text-[#B0A8BA]">这些不是缺点，而是你在压力或关系中可能更容易忽略的地方。</p>
+              <ul className="space-y-2">
+                {result.cautions.map((c) => (
+                  <li key={c} className="flex items-start gap-2 text-sm leading-relaxed text-[#4A4458]">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
+                    {c}
+                  </li>
                 ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 3. Relationship Snapshot ===== */}
+      <section className="px-5 py-6">
+        <div className="mx-auto max-w-2xl">
+          <SectionHeader
+            eyebrow="Relationship Snapshot"
+            title="你和不同类型的相处节奏"
+            description="这里不是判断谁适不适合你，而是帮助你提前看见可能的默契点和磨合点。"
+          />
+
+          <div className="mt-6">
+            <RelationshipSection
+              matches={result.matches}
+              challengingMatches={result.challengingMatches}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 4. Deep Reading ===== */}
+      <section className="px-5 py-6">
+        <div className="mx-auto max-w-2xl">
+          <SectionHeader
+            eyebrow="Deep Reading"
+            title="更具体地理解你的生活模式"
+            description="下面的内容会从关系、金钱观、发展方向和近期建议四个角度，给你一些更生活化的参考。"
+          />
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {insights.map(({ label, content }) => (
+              <div key={label} className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+                <h3 className={`mb-2 text-sm font-semibold ${t.primaryText}`}>{label}</h3>
+                <p className="line-clamp-4 text-sm leading-relaxed text-[#6F6877]">{content}</p>
               </div>
-            </div>
-          )}
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* 4. Deep analysis — 2x2 grid */}
-      <section className="px-5 py-4">
-        <div className="mx-auto grid max-w-2xl gap-4 sm:grid-cols-2">
-          {insights.map(({ label, content }) => (
-            <div key={label} className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
-              <h3 className={`mb-2 text-sm font-semibold ${t.primaryText}`}>{label}</h3>
-              <p className="line-clamp-4 text-sm leading-relaxed text-[#6F6877]">{content}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 5. Actions */}
+      {/* ===== 5. Actions ===== */}
       <section className="px-5 py-5">
         <div className="mx-auto flex max-w-2xl flex-col gap-3 sm:flex-row">
           <button
@@ -348,12 +312,16 @@ function ResultContent() {
 
       {/* Disclaimer */}
       <section className="px-5 pb-10">
-        <div className="mx-auto max-w-2xl rounded-2xl border border-black/5 bg-white p-5 text-center">
-          <p className="text-xs leading-relaxed text-[#B0A8BA]">
-            本测试基于 MBTI 四个维度的行为偏好进行估算，
-            结果更适合作为自我探索参考，而不是固定标签。
-            测试免费，无需注册，不构成心理诊断或人生决策依据。
-          </p>
+        <div className="mx-auto max-w-2xl">
+          <SectionHeader
+            title="关于这个结果"
+            description="本测试基于 MBTI 四个维度的行为偏好进行估算，更适合作为自我探索参考，而不是固定标签。你可以把它当作理解自己的一个角度，而不是对自己的限制。"
+          />
+          <div className="mt-4 rounded-2xl border border-black/5 bg-white p-5 text-center">
+            <p className="text-xs leading-relaxed text-[#B0A8BA]">
+              测试免费，无需注册，不构成心理诊断或人生决策依据。
+            </p>
+          </div>
         </div>
       </section>
 
