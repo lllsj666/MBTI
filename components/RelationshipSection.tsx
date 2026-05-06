@@ -24,7 +24,7 @@ export function RelationshipSection({ matches, challengingMatches }: Props) {
               const d = normalizeMatch(m);
               return (
                 <RelationshipCard key={m.type} type={d.type} title={d.title} shortDescription={d.shortDescription} variant="match"
-                  onClick={() => { setSelected({ type: d.type, title: d.title, description: d.description, howToGetAlong: d.howToGetAlong, possibleFriction: d.possibleFriction }); setVariant("match"); }} />
+                  onClick={() => { setSelected({ type: d.type, title: d.title, description: d.description, traits: d.traits, chemistry: d.chemistry, frictionPoint: d.frictionPoint, howToGetAlong: d.howToGetAlong, possibleFriction: d.possibleFriction }); setVariant("match"); }} />
               );
             })}
           </div>
@@ -39,7 +39,7 @@ export function RelationshipSection({ matches, challengingMatches }: Props) {
               const d = normalizeMatch(m);
               return (
                 <RelationshipCard key={m.type} type={d.type} title={d.title} shortDescription={d.shortDescription} variant="challenge"
-                  onClick={() => { setSelected({ type: d.type, title: d.title, description: d.description, howToGetAlong: d.howToGetAlong, possibleFriction: d.possibleFriction }); setVariant("challenge"); }} />
+                  onClick={() => { setSelected({ type: d.type, title: d.title, description: d.description, traits: d.traits, chemistry: d.chemistry, frictionPoint: d.frictionPoint, howToGetAlong: d.howToGetAlong, possibleFriction: d.possibleFriction }); setVariant("challenge"); }} />
               );
             })}
           </div>
