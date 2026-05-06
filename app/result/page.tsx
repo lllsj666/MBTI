@@ -102,9 +102,14 @@ function ResultContent() {
   ];
 
   return (
-    <main className={`min-h-screen ${t.pageBg}`}>
+    <main className={`relative min-h-screen ${t.pageBg}`}>
+      {/* Subtle background glow */}
+      <div
+        className={`pointer-events-none fixed -top-32 left-1/2 h-[500px] w-[700px] -translate-x-1/2 rounded-full opacity-[0.06] blur-[120px] ${t.accentDot}`}
+      />
+
       {/* Top bar */}
-      <div className="flex items-center justify-between border-b border-black/5 bg-white px-5 py-3.5">
+      <div className="relative z-10 flex items-center justify-between border-b border-black/5 bg-white/80 backdrop-blur-lg px-5 py-3.5">
         <Link
           href="/"
           className="text-sm text-[#6F6877] transition hover:text-[#26222E]"
@@ -121,7 +126,7 @@ function ResultContent() {
       </div>
 
       {/* ===== 1. Hero card ===== */}
-      <section className="px-5 pb-4 pt-8 sm:pt-10">
+      <section className="relative z-10 px-5 pb-4 pt-8 sm:pt-10">
         <div className="mx-auto max-w-2xl">
           {isExample && (
             <div className="mb-5 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-center text-sm text-amber-700">
@@ -133,22 +138,27 @@ function ResultContent() {
             你的 TypeMind 测试结果
           </p>
 
-          <div className={`overflow-hidden rounded-3xl border ${t.cardBorder} bg-white shadow-sm`}>
-            <div className={`bg-gradient-to-br ${t.heroGradient} px-6 py-7 text-center sm:px-10 sm:py-10`}>
-              <span className={`mb-3 inline-block rounded-full ${t.badge} px-3 py-0.5 text-xs font-medium`}>
+          <div className={`overflow-hidden rounded-3xl border ${t.cardBorder} bg-white/80 backdrop-blur-sm shadow-lg`}>
+            <div className={`relative overflow-hidden bg-gradient-to-br ${t.heroGradient} px-6 py-7 text-center sm:px-10 sm:py-10`}>
+              {/* Subtle inner glow */}
+              <div
+                className={`pointer-events-none absolute -top-16 left-1/2 h-[200px] w-[300px] -translate-x-1/2 rounded-full opacity-10 blur-[80px] ${t.accentDot}`}
+              />
+
+              <span className={`relative mb-3 inline-block rounded-full ${t.badge} px-3 py-0.5 text-xs font-medium`}>
                 {camp.label}
               </span>
-              <p className="mb-1.5 text-5xl font-bold tracking-widest text-[#26222E] sm:text-6xl">
+              <p className="relative mb-1.5 text-5xl font-bold tracking-widest text-[#26222E] sm:text-6xl">
                 {result.type}
               </p>
-              <p className="mb-4 text-lg font-semibold text-[#26222E] sm:text-xl">
+              <p className="relative mb-4 text-lg font-semibold text-[#26222E] sm:text-xl">
                 {result.name}
               </p>
-              <div className="flex flex-wrap justify-center gap-1.5">
+              <div className="relative flex flex-wrap justify-center gap-1.5">
                 {result.keywords.map((kw) => (
                   <span
                     key={kw}
-                    className={`rounded-full border ${t.cardBorder} bg-white px-2.5 py-0.5 text-xs text-[#6F6877]`}
+                    className={`rounded-full border ${t.cardBorder} bg-white/70 px-2.5 py-0.5 text-xs text-[#6F6877] backdrop-blur-sm`}
                   >
                     {kw}
                   </span>
@@ -172,7 +182,7 @@ function ResultContent() {
                           </span>
                           <div className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-[#E8E4ED]">
                             <div
-                              className="absolute left-0 top-0 h-full rounded-full bg-[#7C5CFF]"
+                              className={`absolute left-0 top-0 h-full rounded-full ${t.accentDot}`}
                               style={{ width: `${leftPct}%` }}
                             />
                           </div>
@@ -205,7 +215,7 @@ function ResultContent() {
       </section>
 
       {/* ===== 2. Core Snapshot ===== */}
-      <section className="px-5 py-6">
+      <section className="relative z-10 px-5 py-6">
         <div className="mx-auto max-w-2xl">
           <SectionHeader
             eyebrow="Core Snapshot"
@@ -214,8 +224,7 @@ function ResultContent() {
           />
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            {/* Strengths */}
-            <div className={`rounded-2xl border ${t.cardBorder} bg-white p-5 shadow-sm`}>
+            <div className={`rounded-2xl border ${t.cardBorder} bg-white/80 backdrop-blur-sm p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md`}>
               <h3 className="mb-1 text-sm font-semibold text-emerald-600">你的优势</h3>
               <p className="mb-3 text-xs text-[#B0A8BA]">这些是你更容易自然发挥出来的能力。</p>
               <ul className="space-y-2">
@@ -228,8 +237,7 @@ function ResultContent() {
               </ul>
             </div>
 
-            {/* Cautions */}
-            <div className={`rounded-2xl border ${t.cardBorder} bg-white p-5 shadow-sm`}>
+            <div className={`rounded-2xl border ${t.cardBorder} bg-white/80 backdrop-blur-sm p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md`}>
               <h3 className="mb-1 text-sm font-semibold text-amber-600">你需要注意</h3>
               <p className="mb-3 text-xs text-[#B0A8BA]">这些不是缺点，而是你在压力或关系中可能更容易忽略的地方。</p>
               <ul className="space-y-2">
@@ -246,7 +254,7 @@ function ResultContent() {
       </section>
 
       {/* ===== 3. Relationship Snapshot ===== */}
-      <section className="px-5 py-6">
+      <section className="relative z-10 px-5 py-6">
         <div className="mx-auto max-w-2xl">
           <SectionHeader
             eyebrow="Relationship Snapshot"
@@ -264,7 +272,7 @@ function ResultContent() {
       </section>
 
       {/* ===== 4. Deep Reading ===== */}
-      <section className="px-5 py-6">
+      <section className="relative z-10 px-5 py-6">
         <div className="mx-auto max-w-2xl">
           <SectionHeader
             eyebrow="Deep Reading"
@@ -274,9 +282,12 @@ function ResultContent() {
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {insights.map(({ label, content }) => (
-              <div key={label} className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm">
+              <div
+                key={label}
+                className={`rounded-2xl border ${t.cardBorder} bg-white/80 backdrop-blur-sm p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md`}
+              >
                 <h3 className={`mb-2 text-sm font-semibold ${t.primaryText}`}>{label}</h3>
-                <p className="line-clamp-4 text-sm leading-relaxed text-[#6F6877]">{content}</p>
+                <p className="text-sm leading-relaxed text-[#6F6877]">{content}</p>
               </div>
             ))}
           </div>
@@ -284,17 +295,17 @@ function ResultContent() {
       </section>
 
       {/* ===== 5. Actions ===== */}
-      <section className="px-5 py-5">
+      <section className="relative z-10 px-5 py-5">
         <div className="mx-auto flex max-w-2xl flex-col gap-3 sm:flex-row">
           <button
             onClick={handleRestart}
-            className={`flex-1 rounded-xl border ${t.cardBorder} bg-white px-6 py-3 text-sm font-medium text-[#26222E] shadow-sm transition hover:text-[#7C5CFF] active:scale-[0.98]`}
+            className={`flex-1 rounded-xl border ${t.cardBorder} bg-white/80 backdrop-blur-sm px-6 py-3 text-sm font-medium text-[#26222E] shadow-sm transition hover:-translate-y-0.5 hover:text-[#7C5CFF] hover:shadow-md active:scale-[0.98]`}
           >
             重新测试
           </button>
           <button
             onClick={handleShare}
-            className={`flex-1 rounded-xl ${t.button} px-6 py-3 text-sm font-medium text-white shadow-sm transition active:scale-[0.98]`}
+            className={`flex-1 rounded-xl ${t.button} px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]`}
           >
             {shareText}
           </button>
@@ -302,7 +313,7 @@ function ResultContent() {
       </section>
 
       {/* Beta notice */}
-      <section className="px-5 pb-4">
+      <section className="relative z-10 px-5 pb-4">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs leading-relaxed text-[#B0A8BA]">
             当前为免费测试版，内容会持续优化。你可以截图保存，或复制链接分享给朋友。
@@ -311,13 +322,13 @@ function ResultContent() {
       </section>
 
       {/* Disclaimer */}
-      <section className="px-5 pb-10">
+      <section className="relative z-10 px-5 pb-10">
         <div className="mx-auto max-w-2xl">
           <SectionHeader
             title="关于这个结果"
             description="本测试基于 MBTI 四个维度的行为偏好进行估算，更适合作为自我探索参考，而不是固定标签。你可以把它当作理解自己的一个角度，而不是对自己的限制。"
           />
-          <div className="mt-4 rounded-2xl border border-black/5 bg-white p-5 text-center">
+          <div className={`mt-4 rounded-2xl border ${t.cardBorder} bg-white/80 backdrop-blur-sm p-5 text-center`}>
             <p className="text-xs leading-relaxed text-[#B0A8BA]">
               测试免费，无需注册，不构成心理诊断或人生决策依据。
             </p>
@@ -326,7 +337,7 @@ function ResultContent() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-black/5 px-5 py-7">
+      <footer className="relative z-10 border-t border-black/5 px-5 py-7">
         <div className="text-center text-xs text-[#B0A8BA]">TypeMind · MBTI 性格测试</div>
       </footer>
     </main>

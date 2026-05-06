@@ -1,4 +1,7 @@
+"use client";
+
 import { useEffect, useRef } from "react";
+import { getMbtiTheme } from "@/app/data/mbti-themes";
 
 export type RelationshipDetail = {
   type: string;
@@ -20,8 +23,8 @@ type Props = {
 function DetailBlock({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <h4 className="text-sm font-semibold text-slate-800">{label}</h4>
-      <div className="mt-1 text-sm leading-relaxed text-slate-600">{children}</div>
+      <h4 className="mb-1.5 text-sm font-semibold text-slate-800">{label}</h4>
+      <p className="text-sm leading-relaxed text-slate-600">{children}</p>
     </div>
   );
 }
@@ -29,7 +32,6 @@ function DetailBlock({ label, children }: { label: string; children: React.React
 export function RelationshipDetailModal({ open, onClose, item, variant }: Props) {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Prevent body scroll when open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -43,16 +45,18 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
 
   if (!open || !item) return null;
 
+  const camp = getMbtiTheme(item.type);
+  const t = camp.theme;
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4"
+      className="fixed inset-0 z-50 flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4"
       onClick={onClose}
     >
-      {/* Card */}
       <div
         ref={contentRef}
         onClick={(e) => e.stopPropagation()}
-        className="relative flex max-h-[85vh] w-full flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl md:max-w-2xl md:rounded-3xl"
+        className="relative flex max-h-[85vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl md:max-w-xl md:rounded-3xl"
       >
         {/* Close button */}
         <button
@@ -66,23 +70,24 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
           </svg>
         </button>
 
-        {/* Header */}
-        <div className={`shrink-0 px-6 pb-4 pt-8 md:px-8 md:pt-10 ${
-          variant === "match" ? "bg-violet-50" : "bg-amber-50"
-        }`}>
-          <span className={`text-xs font-semibold ${
-            variant === "match" ? "text-violet-500" : "text-amber-600"
-          }`}>
-            {variant === "match" ? "更容易产生默契的类型" : "更需要磨合的理解"}
-          </span>
-          <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">
+        {/* Header — themed */}
+        <div className={`shrink-0 bg-gradient-to-br ${t.heroGradient} px-6 pb-4 pt-8 md:px-8 md:pt-10`}>
+          <div className="mb-2 flex items-center gap-2">
+            <span className={`inline-block rounded-full ${t.badge} px-2.5 py-0.5 text-[11px] font-medium`}>
+              {camp.label}
+            </span>
+            <span className={`text-[11px] font-medium ${t.primaryText}`}>
+              {variant === "match" ? "更容易产生默契" : "更需要磨合理解"}
+            </span>
+          </div>
+          <h2 className={`text-3xl font-bold tracking-tight ${t.primaryText}`}>
             {item.type}
           </h2>
-          <p className="mt-1 text-lg font-semibold text-slate-700">{item.title}</p>
+          <p className="mt-1 text-lg font-semibold text-slate-800">{item.title}</p>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.shortDescription}</p>
         </div>
 
-        {/* Scrollable body */}
+        {/* Scrollable body — NO truncation */}
         <div className="flex-1 overflow-y-auto px-6 py-5 md:px-8 md:py-6">
           <div className="space-y-5">
             <DetailBlock label="性格特点">{item.traits}</DetailBlock>
@@ -98,7 +103,7 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
         <div className="shrink-0 border-t border-slate-100 px-6 py-4 md:px-8">
           <button
             onClick={onClose}
-            className="w-full rounded-xl bg-slate-900 py-3 text-sm font-medium text-white transition hover:bg-slate-800 active:scale-[0.98]"
+            className={`w-full rounded-xl ${t.button} py-3 text-sm font-medium text-white shadow-sm transition active:scale-[0.98]`}
           >
             关闭
           </button>
