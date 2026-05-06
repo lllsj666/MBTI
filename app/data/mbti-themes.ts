@@ -80,6 +80,56 @@ export function getMbtiTheme(type: string): CampTheme {
       return camp;
     }
   }
-  // fallback to analyst
   return mbtiThemes.analyst;
+}
+
+export interface DimensionScore {
+  dimension: string;
+  label: string;
+  left: { letter: string; label: string; pct: number };
+  right: { letter: string; label: string; pct: number };
+}
+
+/** Generate example dimension scores for result pages without real test data */
+export function getDefaultDimensionScores(type: string): DimensionScore[] {
+  const letters = type.split("");
+  const dims = [
+    {
+      dimension: "EI",
+      label: "社交能量",
+      left: { letter: "E", label: "外向" },
+      right: { letter: "I", label: "内向" },
+    },
+    {
+      dimension: "SN",
+      label: "信息偏好",
+      left: { letter: "S", label: "实感" },
+      right: { letter: "N", label: "直觉" },
+    },
+    {
+      dimension: "TF",
+      label: "决策方式",
+      left: { letter: "T", label: "思考" },
+      right: { letter: "F", label: "情感" },
+    },
+    {
+      dimension: "JP",
+      label: "生活节奏",
+      left: { letter: "J", label: "判断" },
+      right: { letter: "P", label: "知觉" },
+    },
+  ];
+
+  // Deterministic pct from type string char codes
+  return dims.map((d, i) => {
+    const winner = letters[i];
+    const isLeft = winner === d.left.letter;
+    const seed = (type.charCodeAt(i % 4) * 7 + i * 13) % 16;
+    const winnerPct = 56 + seed;
+    return {
+      ...d,
+      left: { ...d.left, pct: isLeft ? winnerPct : 100 - winnerPct },
+      right: { ...d.right, pct: isLeft ? 100 - winnerPct : winnerPct },
+    };
+  });
 }

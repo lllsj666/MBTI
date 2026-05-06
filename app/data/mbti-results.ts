@@ -5,21 +5,37 @@ export interface MatchType {
   shortDescription?: string;
   traits?: string;
   why?: string;
+  chemistry?: string;
+  frictionPoint?: string;
   howToGetAlong?: string;
   possibleFriction?: string;
 }
 
+export interface NormalizedMatch {
+  type: string;
+  title: string;
+  description: string;
+  shortDescription: string;
+  traits: string;
+  chemistry: string;
+  frictionPoint: string;
+  howToGetAlong: string;
+  possibleFriction: string;
+}
+
 /** Fill in missing detail fields from the main description */
-export function normalizeMatch(m: MatchType): Required<Omit<MatchType, "shortDescription">> & { shortDescription: string } {
+export function normalizeMatch(m: MatchType): NormalizedMatch {
+  const desc = m.description ?? "";
   return {
     type: m.type,
     title: m.title,
-    description: m.description,
-    shortDescription: m.shortDescription ?? m.description.slice(0, 60).replace(/\n/g, "") + (m.description.length > 60 ? "…" : ""),
-    traits: m.traits ?? m.description,
-    why: m.why ?? m.description,
-    howToGetAlong: m.howToGetAlong ?? "相处时多给对方表达的空间，同时也要明确自己的边界和节奏。试着用开放、真诚的讨论代替互相猜测。",
-    possibleFriction: m.possibleFriction ?? "你们可能在节奏、表达方式或需求重点上不完全一致。只要提前沟通清楚，这些不同反而能让彼此成长。",
+    description: desc,
+    shortDescription: m.shortDescription ?? desc.slice(0, 60).replace(/\n/g, "") + (desc.length > 60 ? "…" : ""),
+    traits: m.traits ?? `${m.type} 通常有自己稳定的表达方式和关系节奏，需要在具体相处中慢慢理解。`,
+    chemistry: m.chemistry ?? m.why ?? desc,
+    frictionPoint: m.frictionPoint ?? m.why ?? desc,
+    howToGetAlong: m.howToGetAlong ?? "相处时建议保持清晰表达，也给彼此留出理解和调整的空间。真正稳定的关系来自持续沟通，而不是完全相同。",
+    possibleFriction: m.possibleFriction ?? "你们可能在表达方式、节奏或关注重点上存在差异。提前说明需求，会比互相猜测更有效。",
   };
 }
 

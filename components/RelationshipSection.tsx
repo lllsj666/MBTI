@@ -21,7 +21,7 @@ export function RelationshipSection({ matches, challengingMatches }: Props) {
   return (
     <>
       <div className="grid gap-4 sm:grid-cols-2 sm:items-stretch">
-        {/* Matches column */}
+        {/* Matches */}
         <div className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white/70 p-5 shadow-sm backdrop-blur-sm">
           <h4 className="mb-1 text-sm font-semibold text-slate-800">
             更容易产生默契的类型
@@ -49,13 +49,14 @@ export function RelationshipSection({ matches, challengingMatches }: Props) {
           </div>
         </div>
 
-        {/* Challenging column */}
+        {/* Challenging */}
         <div className="flex h-full flex-col rounded-3xl border border-[#E8E4ED] bg-[#F8F7FA]/70 p-5 shadow-sm backdrop-blur-sm">
           <h4 className="mb-1 text-sm font-semibold text-slate-800">
             更需要磨合的类型
           </h4>
           <p className="mb-4 text-xs leading-relaxed text-slate-400">
             这些类型并不是不适合，而是相处节奏、表达方式或需求重点可能更不同。
+            这并不代表不适合，而是你们可能需要更多沟通来理解彼此的节奏。
           </p>
           <div className="grid flex-1 gap-3">
             {challengingMatches.map((m) => {
