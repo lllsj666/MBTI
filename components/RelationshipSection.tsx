@@ -27,7 +27,7 @@ export function RelationshipSection({ matches, challengingMatches }: Props) {
             更容易产生默契的类型
           </h4>
           <p className="mb-4 text-xs leading-relaxed text-slate-400">
-            这些类型通常更容易与你形成互补、理解或有质量的交流。
+            更容易和你聊到一起的类型。
           </p>
           <div className="grid flex-1 gap-3">
             {matches.map((m) => {
@@ -55,8 +55,7 @@ export function RelationshipSection({ matches, challengingMatches }: Props) {
             更需要磨合的类型
           </h4>
           <p className="mb-4 text-xs leading-relaxed text-slate-400">
-            这些类型并不是不适合，而是相处节奏、表达方式或需求重点可能更不同。
-            这并不代表不适合，而是你们可能需要更多沟通来理解彼此的节奏。
+            你们的节奏不同，需要更多沟通来彼此理解。
           </p>
           <div className="grid flex-1 gap-3">
             {challengingMatches.map((m) => {
