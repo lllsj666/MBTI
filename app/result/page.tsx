@@ -172,11 +172,11 @@ function ResultContent() {
       {/* ===== 2. Core Snapshot ===== */}
       <section className="relative z-10 px-5 pt-8">
         <div className="mx-auto max-w-2xl">
-          <SectionHeader eyebrow="Core Snapshot" title="先看最像你的地方" description="你最常被感受到的样子。" />
+          <SectionHeader eyebrow="Core Snapshot" title="先看最像你的地方tion="最常被感受到的样子。" />
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
             <div className={`rounded-2xl border ${t.cardBorder} bg-white/80 backdrop-blur-sm p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md`}>
               <h3 className="mb-1 text-sm font-semibold text-emerald-600">你的优势</h3>
-              <p className="mb-3 text-xs text-slate-400">你身上自然会发光的部分。</p>
+              <p className="mb-3 text-xs text-slate-400">你身上自然发光的部分。</p>
               <ul className="space-y-2">
                 {result.strengths.map((s) => (
                   <li key={s} className="flex items-start gap-2 text-sm leading-relaxed text-slate-600"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />{s}</li>
@@ -185,7 +185,7 @@ function ResultContent() {
             </div>
             <div className={`rounded-2xl border ${t.cardBorder} bg-white/80 backdrop-blur-sm p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md`}>
               <h3 className="mb-1 text-sm font-semibold text-amber-600">你需要注意</h3>
-              <p className="mb-3 text-xs text-slate-400">压力下容易被你自己忽略的地方。</p>
+              <p className="mb-3 text-xs text-slate-400">压力下容易被忽略的地方。</p>
               <ul className="space-y-2">
                 {result.cautions.map((c) => (
                   <li key={c} className="flex items-start gap-2 text-sm leading-relaxed text-slate-600"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />{c}</li>
@@ -199,7 +199,7 @@ function ResultContent() {
       {/* ===== 3. Relationship Snapshot ===== */}
       <section className="relative z-10 px-5 py-8">
         <div className="mx-auto max-w-2xl">
-          <SectionHeader eyebrow="Relationship Snapshot" title="你和不同类型的相处节奏" description="提前看见你们的默契与磨合。" />
+          <SectionHeader eyebrow="Relationship Snapshot" title="和不同人格的相处节奏" description="默契与磨合。" />
           <div className="mt-5">
             <RelationshipSection matches={result.matches} challengingMatches={result.challengingMatches} />
           </div>
@@ -209,7 +209,7 @@ function ResultContent() {
       {/* ===== 4. Deep Reading — Swipeable Deck ===== */}
       <section className="relative z-10 px-5 py-8">
         <div className="mx-auto max-w-2xl">
-          <SectionHeader eyebrow="Deep Reading" title="更具体地理解你的生活模式" description="关于你在关系、金钱、方向和当下的样子。" />
+          <SectionHeader eyebrow="Deep Reading" title="理解自己需要生活方式/>
           <div className={`mt-5 rounded-3xl border ${t.cardBorder} bg-white/80 p-6 shadow-sm backdrop-blur-sm`}>
             <SwipeableDeck
               accentClass={t.accentDot}
