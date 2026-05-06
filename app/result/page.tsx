@@ -23,6 +23,7 @@ function ResultContent() {
   const [loaded, setLoaded] = useState(false);
   const [dimModal, setDimModal] = useState<DimensionScore | null>(null);
   const [descModal, setDescModal] = useState(false);
+  const [isDeepReadingOpen, setIsDeepReadingOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -204,19 +205,57 @@ function ResultContent() {
         </div>
       </section>
 
-      {/* ===== 4. Deep Reading ===== */}
+      {/* ===== 4. Deep Reading — Collapsible Easter Egg ===== */}
       <section className="relative z-10 px-5 py-8 pb-4">
         <div className="mx-auto max-w-2xl">
           <SectionHeader eyebrow="Deep Reading" title="更具体地理解你的生活模式" description="不被任何定义，这只是参考" />
-          <div className="mt-5 space-y-4">
-            {insights.map(({ label, content }) => (
-              <div key={label} className={`rounded-3xl border ${t.cardBorder} bg-white/80 p-5 shadow-sm backdrop-blur-sm md:p-6`}>
-                <h4 className={`mb-3 text-base font-semibold ${t.primaryText}`}>{label}</h4>
-                <div className="space-y-3 text-[15px] leading-7 text-slate-600 md:text-base">
-                  {splitChineseParagraph(content).map((p, i) => <p key={i}>{p}</p>)}
+
+          <div className="mt-5">
+            <button
+              type="button"
+              onClick={() => setIsDeepReadingOpen(!isDeepReadingOpen)}
+              aria-expanded={isDeepReadingOpen}
+              aria-controls="deep-reading-hidden-content"
+              className={`w-full rounded-3xl border border-emerald-200/70 bg-white/60 px-5 py-5 text-left shadow-sm backdrop-blur-md transition-all hover:shadow-md md:px-7 md:py-6 ${isDeepReadingOpen ? "" : ""}`}
+            >
+              {/* Always-visible header */}
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-sm font-medium tracking-wide text-slate-700">
+                    不被任何定义，这只是参考。
+                  </p>
+                  {!isDeepReadingOpen && (
+                    <p className="mt-2 text-xs leading-6 text-slate-500">
+                      如果你愿意，可以翻开一些更细的观察。
+                    </p>
+                  )}
                 </div>
+                <span className={`shrink-0 text-xs text-emerald-600 transition-transform duration-300 ${isDeepReadingOpen ? "rotate-180" : ""}`}>
+                  {isDeepReadingOpen ? "收起 ↑" : "展开看看 ↓"}
+                </span>
               </div>
-            ))}
+
+              {/* Hidden content */}
+              {isDeepReadingOpen && (
+                <div id="deep-reading-hidden-content" className="mt-5 border-t border-emerald-100/80 pt-5">
+                  <p className="mb-5 text-[11px] leading-relaxed text-slate-400">
+                    以下内容不用于定义你，只是提供一些可参考的生活切面。
+                  </p>
+                  <div className="space-y-5">
+                    {insights.map(({ label, content }) => (
+                      <div key={label}>
+                        <h4 className="mb-2 text-[13px] font-semibold tracking-[0.02em] text-emerald-700 md:text-sm">
+                          {label}
+                        </h4>
+                        <div className="space-y-2 text-[13px] leading-6 text-slate-500 md:text-[14px] md:leading-7">
+                          {splitChineseParagraph(content).map((p, i) => <p key={i}>{p}</p>)}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </button>
           </div>
         </div>
       </section>
