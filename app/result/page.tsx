@@ -4,13 +4,14 @@ import { useState, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { mbtiResults, type MBTIResult } from "@/app/data/mbti-results";
-import { STORAGE_KEYS } from "@/app/data/questions";
+import { STORAGE_KEYS, type MBTIResult2 } from "@/app/data/questions";
 import { getMbtiTheme } from "@/app/data/mbti-themes";
 
 function ResultContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [result, setResult] = useState<MBTIResult | null>(null);
+  const [tendency, setTendency] = useState<MBTIResult2 | null>(null);
   const [isExample, setIsExample] = useState(false);
   const [shareText, setShareText] = useState("复制结果链接");
   const [loaded, setLoaded] = useState(false);
@@ -37,6 +38,17 @@ function ResultContent() {
       setResult(mbtiResults["INFJ"]);
       setIsExample(true);
     }
+
+    // Load tendency
+    try {
+      const savedTendency = localStorage.getItem(STORAGE_KEYS.tendency);
+      if (savedTendency) {
+        setTendency(JSON.parse(savedTendency));
+      }
+    } catch {
+      // ignore
+    }
+
     setLoaded(true);
   }, [searchParams]);
 
@@ -140,6 +152,80 @@ function ResultContent() {
             </div>
 
             <div className="px-6 py-6 sm:px-10 sm:py-8">
+              {/* Tendency bars */}
+              {tendency && !isExample && (
+                <div className="mb-6 rounded-2xl border border-black/5 bg-[#FAFAFB] p-5">
+                  <p className="mb-3 text-xs font-medium text-[#B0A8BA]">
+                    维度倾向
+                  </p>
+                  <div className="space-y-2.5">
+                    {(["E/I", "S/N", "T/F", "J/P"] as const).map((dim) => {
+                      const td = tendency.tendencies[dim];
+                      const [a, b] = dim.split("/");
+                      const pct =
+                        td.diff >= 14
+                          ? 90
+                          : td.diff >= 10
+                            ? 75
+                            : td.diff >= 6
+                              ? 62
+                              : 53;
+                      return (
+                        <div key={dim} className="flex items-center gap-3">
+                          <span className="w-8 text-xs font-medium text-[#6F6877]">
+                            {dim}
+                          </span>
+                          <div className="flex flex-1 items-center gap-2">
+                            <span className="w-5 text-right text-xs text-[#B0A8BA]">
+                              {td.letter === a ? b : a}
+                            </span>
+                            <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-[#E8E4ED]">
+                              <div
+                                className={`absolute top-0 h-full rounded-full transition-all ${
+                                  td.letter === a
+                                    ? "right-0 bg-[#7C5CFF]"
+                                    : "left-0 bg-[#B0A8BA]"
+                                }`}
+                                style={{
+                                  width: `${td.letter === a ? pct : 100 - pct}%`,
+                                }}
+                              />
+                            </div>
+                            <span className="w-5 text-xs font-medium text-[#7C5CFF]">
+                              {td.letter === a ? a : b}
+                            </span>
+                          </div>
+                          <span className="w-10 text-right text-[11px] text-[#B0A8BA]">
+                            {td.strength === "strong"
+                              ? "明确"
+                              : td.strength === "moderate"
+                                ? "较明确"
+                                : "轻微"}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {tendency.secondaryType !== tendency.type && (
+                    <div className="mt-3 border-t border-black/5 pt-3">
+                      <p className="text-xs text-[#B0A8BA]">
+                        你的结果比较接近两种类型：
+                        <span className="font-bold text-[#26222E]">
+                          {" "}
+                          {tendency.type}
+                        </span>{" "}
+                        或
+                        <span className="font-medium text-[#6F6877]">
+                          {" "}
+                          {tendency.secondaryType}
+                        </span>
+                        。以下以 {tendency.type} 为主展示。
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+
               <h3 className={`mb-3 text-sm font-semibold ${t.primaryText}`}>
                 性格特点
               </h3>

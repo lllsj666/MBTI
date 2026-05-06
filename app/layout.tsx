@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "TypeMind - MBTI 性格测试 | 更了解你自己",
   description:
-    "通过 20 道轻量问题，了解你的 MBTI 性格倾向、关系模式和适合的相处方式。免费测试，无需注册。",
+    "通过 36 道轻量问题，了解你的 MBTI 性格倾向、关系模式和适合的相处方式。免费测试，无需注册。",
   keywords: [
     "MBTI测试",
     "性格测试",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "TypeMind - 用 3 分钟，更了解你自己",
     description:
-      "完成 20 道题，获取你的 MBTI 性格类型、关系模式、适合方向和相处建议。",
+      "完成 36 道题，获取你的 MBTI 性格类型、关系模式、适合方向和相处建议。",
     type: "website",
   },
 };

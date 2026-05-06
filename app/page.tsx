@@ -33,7 +33,7 @@ export default function Home() {
             <span className="text-[#7C5CFF]">更了解你自己</span>
           </h1>
           <p className="mx-auto mb-10 max-w-lg text-base leading-relaxed text-[#6F6877] sm:text-lg">
-            通过 20 道轻量问题，了解你的 MBTI 性格倾向、关系模式、
+            通过 36 道轻量问题，了解你的 MBTI 性格倾向、关系模式、
             适合的相处方式与生活建议。
           </p>
 
@@ -192,7 +192,7 @@ export default function Home() {
               {
                 step: "01",
                 title: "完成测试",
-                desc: "回答 20 道日常偏好问题，大约需要 3 分钟。",
+                desc: "回答 36 道日常偏好问题，大约需要 3 分钟。",
               },
               {
                 step: "02",
@@ -227,7 +227,7 @@ export default function Home() {
             准备好更了解自己了吗？
           </h2>
           <p className="mb-8 leading-relaxed text-[#6F6877]">
-            只需 3 分钟，完成 20 道题，获取你的专属性格分析。完全免费，无需注册。
+            只需 3 分钟，完成 36 道题，获取你的专属性格分析。完全免费，无需注册。
           </p>
           <Link
             href="/test"

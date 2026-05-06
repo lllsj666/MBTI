@@ -1,179 +1,305 @@
+export type Dimension = "E/I" | "S/N" | "T/F" | "J/P";
+
 export interface Question {
   id: number;
   question: string;
-  options: { text: string; value: string }[];
+  dimension: Dimension;
+  /** Which letter this statement leans toward when you agree */
+  direction: string;
 }
 
 export const questions: Question[] = [
+  // ===== E/I (9 题) =====
   {
     id: 1,
-    question: "参加一场热闹聚会后，你通常会？",
-    options: [
-      { text: "感觉被点燃，还想继续聊天认识新人", value: "E" },
-      { text: "觉得需要独处一会儿恢复能量", value: "I" },
-    ],
+    question: "比起一个人待着，我更享受和朋友一起聊天、吃饭或出去玩。",
+    dimension: "E/I",
+    direction: "E",
   },
   {
     id: 2,
-    question: "面对一个新机会时，你更容易？",
-    options: [
-      { text: "先和别人聊聊，在交流中找到方向", value: "E" },
-      { text: "先自己想清楚，再决定要不要行动", value: "I" },
-    ],
+    question: "在聚会或活动里，我通常会主动和不认识的人搭话。",
+    dimension: "E/I",
+    direction: "E",
   },
   {
     id: 3,
-    question: "你更喜欢哪种工作方式？",
-    options: [
-      { text: "与团队协作、边讨论边推进", value: "E" },
-      { text: "独立完成，有安静的思考空间", value: "I" },
-    ],
+    question: "周末如果有两天假期，我会希望至少有一天安排了社交活动。",
+    dimension: "E/I",
+    direction: "E",
   },
   {
     id: 4,
-    question: "当你遇到压力时，你更倾向于？",
-    options: [
-      { text: "找朋友倾诉，说出来就轻松很多", value: "E" },
-      { text: "自己消化，等想清楚后再表达", value: "I" },
-    ],
+    question: "在群聊里，我通常是发言比较多的那个人。",
+    dimension: "E/I",
+    direction: "E",
   },
   {
     id: 5,
-    question: "在社交关系中，你通常是？",
-    options: [
-      { text: "主动开启话题，让气氛活跃起来", value: "E" },
-      { text: "慢热观察，熟悉后才真正打开", value: "I" },
-    ],
+    question: "到了一个新环境，我会比较快地和人熟络起来。",
+    dimension: "E/I",
+    direction: "E",
   },
   {
     id: 6,
-    question: "你更相信哪类信息？",
-    options: [
-      { text: "具体事实、经验和已经验证过的方法", value: "S" },
-      { text: "直觉判断、趋势和未来可能性", value: "N" },
-    ],
+    question: "长时间社交之后，我一定要留时间给自己独处，否则会感觉很累。",
+    dimension: "E/I",
+    direction: "I",
   },
   {
     id: 7,
-    question: "学习新东西时，你更喜欢？",
-    options: [
-      { text: "一步一步学，有清楚的案例和操作方法", value: "S" },
-      { text: "先理解整体框架，再自由探索", value: "N" },
-    ],
+    question: "比起约朋友出门，一个人看书、看剧或散步的周末更让我舒服。",
+    dimension: "E/I",
+    direction: "I",
   },
   {
     id: 8,
-    question: "做计划时，你更关注？",
-    options: [
-      { text: "现实条件、资源和当下能执行的步骤", value: "S" },
-      { text: "未来空间、潜在机会和长期可能性", value: "N" },
-    ],
+    question: "别人觉得我话不多，在不太熟的人面前尤其安静。",
+    dimension: "E/I",
+    direction: "I",
   },
   {
     id: 9,
-    question: "你看待一个人时，更容易注意到？",
-    options: [
-      { text: "他的行为、细节和实际表现", value: "S" },
-      { text: "他的潜力、动机和隐藏特质", value: "N" },
-    ],
+    question: "遇到烦心事时，我更倾向于自己消化而不是找人倾诉。",
+    dimension: "E/I",
+    direction: "I",
   },
+
+  // ===== S/N (9 题) =====
   {
     id: 10,
-    question: "面对未知的事情，你通常会？",
-    options: [
-      { text: "先收集资料，确认可行性再行动", value: "S" },
-      { text: "被可能性吸引，愿意边做边探索", value: "N" },
-    ],
+    question: "比起抽象的概念和理论，我更相信看得见的事实和具体的经验。",
+    dimension: "S/N",
+    direction: "S",
   },
   {
     id: 11,
-    question: "做重要决定时，你更看重？",
-    options: [
-      { text: "逻辑是否成立，结果是否高效", value: "T" },
-      { text: "感受是否舒服，关系是否被照顾", value: "F" },
-    ],
+    question: "做一件事时，我喜欢有清晰的步骤和可参考的案例。",
+    dimension: "S/N",
+    direction: "S",
   },
   {
     id: 12,
-    question: "当朋友向你倾诉问题时，你通常会？",
-    options: [
-      { text: "帮他分析原因，提出解决方案", value: "T" },
-      { text: "先理解他的情绪，陪他把感受说完", value: "F" },
-    ],
+    question: "我在意细节——比如房间的布置、文件格式是否统一、对方语气里的微小变化。",
+    dimension: "S/N",
+    direction: "S",
   },
   {
     id: 13,
-    question: "在冲突中，你更希望？",
-    options: [
-      { text: "把问题讲清楚，找到最合理的处理方式", value: "T" },
-      { text: "先缓和情绪，避免关系受到伤害", value: "F" },
-    ],
+    question: "我更关注当下能做什么，多于去设想太远的未来。",
+    dimension: "S/N",
+    direction: "S",
   },
   {
     id: 14,
-    question: "评价一件事时，你更倾向于？",
-    options: [
-      { text: "看标准、原则和客观结果", value: "T" },
-      { text: "看处境、情感和人的感受", value: "F" },
-    ],
+    question: "听别人讲一件事时，我更想知道具体发生了什么，而不是故事背后的寓意。",
+    dimension: "S/N",
+    direction: "S",
   },
   {
     id: 15,
-    question: "如果必须拒绝别人，你会？",
-    options: [
-      { text: "直接说明理由，尽量清楚明确", value: "T" },
-      { text: "尽量委婉表达，避免让对方难受", value: "F" },
-    ],
+    question: "我经常沉浸在对未来的想象里，有时候会忽略眼前的琐事。",
+    dimension: "S/N",
+    direction: "N",
   },
   {
     id: 16,
-    question: "你更喜欢怎样安排生活？",
-    options: [
-      { text: "提前规划，知道接下来要做什么", value: "J" },
-      { text: "保持弹性，随时根据状态调整", value: "P" },
-    ],
+    question: "比起一步一步跟着做，我更想先了解整件事的逻辑和可能性。",
+    dimension: "S/N",
+    direction: "N",
   },
   {
     id: 17,
-    question: "面对截止日期，你通常会？",
-    options: [
-      { text: "提前完成，避免最后一刻赶工", value: "J" },
-      { text: "临近截止时效率最高", value: "P" },
-    ],
+    question: "朋友说我有时天马行空，想法跳来跳去。",
+    dimension: "S/N",
+    direction: "N",
   },
   {
     id: 18,
-    question: "旅行时，你更喜欢？",
-    options: [
-      { text: "提前订好行程、住宿和路线", value: "J" },
-      { text: "大概确定方向，其他随心安排", value: "P" },
-    ],
+    question: "看书或看电影时，我更在意整体的氛围和隐喻，而不是具体的情节推进。",
+    dimension: "S/N",
+    direction: "N",
   },
+
+  // ===== T/F (9 题) =====
   {
     id: 19,
-    question: "你的桌面或生活空间通常？",
-    options: [
-      { text: "比较有秩序，东西最好放在固定位置", value: "J" },
-      { text: "不一定整齐，但自己知道东西在哪里", value: "P" },
-    ],
+    question: "做重要决定时，我会优先考虑逻辑和效率，人情可以往后放一放。",
+    dimension: "T/F",
+    direction: "T",
   },
   {
     id: 20,
-    question: "当计划被打乱时，你通常会？",
-    options: [
-      { text: "有点不舒服，希望尽快重新确定安排", value: "J" },
-      { text: "觉得没关系，也许会出现新的可能", value: "P" },
-    ],
+    question: "朋友来找我倾诉，我的第一反应通常是帮 ta 分析问题，而不是先表达安慰。",
+    dimension: "T/F",
+    direction: "T",
+  },
+  {
+    id: 21,
+    question: "我觉得「对事不对人」是合理的沟通方式，算不上冷漠。",
+    dimension: "T/F",
+    direction: "T",
+  },
+  {
+    id: 22,
+    question: "讨论问题时如果对方的逻辑有漏洞，我会直接指出来。",
+    dimension: "T/F",
+    direction: "T",
+  },
+  {
+    id: 23,
+    question: "比起维护一团和气，我更希望问题能被清楚彻底地解决。",
+    dimension: "T/F",
+    direction: "T",
+  },
+  {
+    id: 24,
+    question: "朋友难过时，就算什么也不说只是陪着，我也觉得这很重要。",
+    dimension: "T/F",
+    direction: "F",
+  },
+  {
+    id: 25,
+    question: "有些决定明知道不太理智，但如果能让重要的人开心，我可能还是会做。",
+    dimension: "T/F",
+    direction: "F",
+  },
+  {
+    id: 26,
+    question: "我很容易被真诚的关心和温柔的善意打动，甚至会记很久。",
+    dimension: "T/F",
+    direction: "F",
+  },
+  {
+    id: 27,
+    question: "指出别人的问题时，我会反复斟酌措辞，担心不小心伤到对方。",
+    dimension: "T/F",
+    direction: "F",
+  },
+
+  // ===== J/P (9 题) =====
+  {
+    id: 28,
+    question: "出门旅行前，我通常会提前查好路线、订好住宿、大致安排每天的行程。",
+    dimension: "J/P",
+    direction: "J",
+  },
+  {
+    id: 29,
+    question: "我喜欢把要做的事列成清单，做完一项划掉一项。",
+    dimension: "J/P",
+    direction: "J",
+  },
+  {
+    id: 30,
+    question: "一件事做完后，我喜欢整理收尾、让一切归位，才算真正结束。",
+    dimension: "J/P",
+    direction: "J",
+  },
+  {
+    id: 31,
+    question: "面对截止日期，我通常会提前完成，不太喜欢拖到最后。",
+    dimension: "J/P",
+    direction: "J",
+  },
+  {
+    id: 32,
+    question: "我对生活有一个大概的规划，大概知道自己接下来几个月要做什么。",
+    dimension: "J/P",
+    direction: "J",
+  },
+  {
+    id: 33,
+    question: "计划临时被打乱时，我很容易适应，甚至觉得可能会出现意外的惊喜。",
+    dimension: "J/P",
+    direction: "P",
+  },
+  {
+    id: 34,
+    question: "比起严格按照计划来，我更享受随性和看心情的安排。",
+    dimension: "J/P",
+    direction: "P",
+  },
+  {
+    id: 35,
+    question: "我的桌面或房间可能看起来有点乱，但我自己清楚东西在哪儿。",
+    dimension: "J/P",
+    direction: "P",
+  },
+  {
+    id: 36,
+    question: "临近截止日期时我的效率最高，那种紧迫感反而让我进入状态。",
+    dimension: "J/P",
+    direction: "P",
   },
 ];
+
+export const OPTIONS = [
+  { text: "很符合我", score: 2 },
+  { text: "比较符合我", score: 1 },
+  { text: "不太符合我", score: -1 },
+  { text: "完全不符合我", score: -2 },
+] as const;
 
 export const STORAGE_KEYS = {
   answers: "typemind_answers",
   scores: "typemind_scores",
   result: "typemind_result",
+  tendency: "typemind_tendency",
 } as const;
 
-export function calculateMBTI(scores: Record<string, number>): string {
+export interface Tendency {
+  letter: string;
+  diff: number;
+  strength: "slight" | "moderate" | "strong";
+}
+
+export interface MBTIResult2 {
+  type: string;
+  secondaryType: string;
+  tendencies: Record<string, Tendency>;
+}
+
+/** Apply a question answer to the score map */
+export function applyScore(
+  scores: Record<string, number>,
+  direction: string,
+  optionScore: number
+): Record<string, number> {
+  const next = { ...scores };
+  const opposite =
+    direction === "E"
+      ? "I"
+      : direction === "I"
+        ? "E"
+        : direction === "S"
+          ? "N"
+          : direction === "N"
+            ? "S"
+            : direction === "T"
+              ? "F"
+              : direction === "F"
+                ? "T"
+                : direction === "J"
+                  ? "P"
+                  : "J";
+
+  if (optionScore > 0) {
+    next[direction] = (next[direction] ?? 0) + optionScore;
+  } else {
+    next[opposite] = (next[opposite] ?? 0) + Math.abs(optionScore);
+  }
+  return next;
+}
+
+function strengthLabel(diff: number): "slight" | "moderate" | "strong" {
+  if (diff <= 3) return "slight";
+  if (diff <= 7) return "moderate";
+  return "strong";
+}
+
+/** Calculate final MBTI type + tendency details */
+export function calculateMBTI(scores: Record<string, number>): MBTIResult2 {
   const e = scores["E"] ?? 0;
   const i = scores["I"] ?? 0;
   const s = scores["S"] ?? 0;
@@ -183,11 +309,39 @@ export function calculateMBTI(scores: Record<string, number>): string {
   const j = scores["J"] ?? 0;
   const p = scores["P"] ?? 0;
 
-  const type =
-    (e >= i ? "E" : "I") +
-    (s >= n ? "S" : "N") +
-    (t >= f ? "T" : "F") +
-    (j >= p ? "J" : "P");
+  const eiLetter = e >= i ? "E" : "I";
+  const snLetter = s >= n ? "S" : "N";
+  const tfLetter = t >= f ? "T" : "F";
+  const jpLetter = j >= p ? "J" : "P";
 
-  return type;
+  const eiDiff = Math.abs(e - i);
+  const snDiff = Math.abs(s - n);
+  const tfDiff = Math.abs(t - f);
+  const jpDiff = Math.abs(j - p);
+
+  const type = eiLetter + snLetter + tfLetter + jpLetter;
+
+  // Secondary type: flip the weakest dimension
+  const diffs = [
+    { letter: eiLetter, diff: eiDiff, opposite: eiLetter === "E" ? "I" : "E" },
+    { letter: snLetter, diff: snDiff, opposite: snLetter === "S" ? "N" : "S" },
+    { letter: tfLetter, diff: tfDiff, opposite: tfLetter === "T" ? "F" : "T" },
+    { letter: jpLetter, diff: jpDiff, opposite: jpLetter === "J" ? "P" : "J" },
+  ];
+  diffs.sort((a, b) => a.diff - b.diff);
+  const weakest = diffs[0];
+  const secondaryType = type
+    .replace(weakest.letter, weakest.opposite);
+
+  return {
+    type,
+    secondaryType:
+      secondaryType !== type ? secondaryType : type,
+    tendencies: {
+      "E/I": { letter: eiLetter, diff: eiDiff, strength: strengthLabel(eiDiff) },
+      "S/N": { letter: snLetter, diff: snDiff, strength: strengthLabel(snDiff) },
+      "T/F": { letter: tfLetter, diff: tfDiff, strength: strengthLabel(tfDiff) },
+      "J/P": { letter: jpLetter, diff: jpDiff, strength: strengthLabel(jpDiff) },
+    },
+  };
 }
