@@ -205,65 +205,34 @@ function ResultContent() {
         </div>
       </section>
 
-      {/* ===== 4. Deep Reading — Collapsible Easter Egg ===== */}
+      {/* ===== 4. Deep Reading — Entry Card ===== */}
       <section className="relative z-10 px-5 py-8 pb-4">
         <div className="mx-auto max-w-2xl">
           <SectionHeader eyebrow="Deep Reading" title="更具体地理解你的生活模式" />
 
           <div className="mt-5">
-            {/* Entry card */}
             <button
               type="button"
-              onClick={() => setIsDeepReadingOpen((prev) => !prev)}
-              aria-expanded={isDeepReadingOpen}
-              aria-controls="deep-reading-hidden-content"
-              className="w-full rounded-[28px] border border-emerald-200/70 bg-white/60 px-5 py-5 text-left shadow-sm backdrop-blur-md transition hover:shadow-md md:px-7 md:py-6"
+              onClick={() => setIsDeepReadingOpen(true)}
+              className="w-full rounded-[28px] border border-amber-200/60 bg-white/60 px-5 py-5 text-left shadow-sm backdrop-blur-md transition hover:shadow-md md:px-7 md:py-6"
             >
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="text-sm font-medium tracking-wide text-slate-700 md:text-[15px]">
                     不被任何定义，这只是参考。
                   </p>
-                  {!isDeepReadingOpen && (
-                    <p className="mt-2 text-xs leading-6 text-slate-500 md:text-[13px]">
-                      如果你愿意，可以翻开一些更细的观察。
-                    </p>
-                  )}
+                  <p className="mt-2 text-xs leading-6 text-slate-500 md:text-[13px]">
+                    如果你愿意，可以翻开一些更细的观察。
+                  </p>
                 </div>
                 <svg
-                  className={`shrink-0 text-emerald-500/50 transition-transform duration-300 ${isDeepReadingOpen ? "rotate-180" : ""}`}
+                  className="shrink-0 text-amber-500/40"
                   width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
                 >
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
               </div>
             </button>
-
-            {/* Content card — separate, appears below */}
-            {isDeepReadingOpen && (
-              <div
-                id="deep-reading-hidden-content"
-                className="mt-4 animate-[fadeIn_0.2s_ease-out] overflow-hidden rounded-[26px] border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur-md"
-              >
-                <div className="max-h-[420px] overflow-y-auto px-5 py-5 md:max-h-[520px] md:px-7 md:py-6">
-                  <p className="mb-5 text-[12px] leading-6 text-slate-400 md:text-[13px]">
-                    你就是你，不是任何人。
-                  </p>
-                  <div className="divide-y divide-slate-100">
-                    {insights.map(({ label, content }, i) => (
-                      <div key={label} className={i === 0 ? "pb-4" : "py-4"}>
-                        <h4 className="text-[13px] font-semibold tracking-[0.02em] text-emerald-700 md:text-sm">
-                          {label}
-                        </h4>
-                        <div className="mt-2 space-y-2 text-[13px] leading-6 text-slate-500 md:text-[14px] md:leading-7">
-                          {splitChineseParagraph(content).map((p, j) => <p key={j}>{p}</p>)}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </section>
@@ -273,16 +242,6 @@ function ResultContent() {
         <div className="mx-auto flex max-w-2xl flex-col gap-3 sm:flex-row">
           <button onClick={handleRestart} className={`flex-1 rounded-xl border ${t.cardBorder} bg-white/80 backdrop-blur-sm px-6 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]`}>重新测试</button>
           <button onClick={handleShare} className={`flex-1 rounded-xl ${t.button} px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]`}>{shareText}</button>
-        </div>
-      </section>
-
-      {/* About */}
-      <section className="relative z-10 px-5 pb-10">
-        <div className="mx-auto max-w-2xl">
-          <SectionHeader title="关于这个结果" description="一种理解自己的角度，而不是定义。测试免费，不构成诊断。" />
-          <div className="mt-4 flex flex-col items-center gap-3">
-            <p className="text-xs text-slate-400">当前为免费测试版，内容会持续优化。你可以截图保存，或复制链接分享给朋友。</p>
-          </div>
         </div>
       </section>
 
@@ -336,6 +295,36 @@ function ResultContent() {
             <div className="flex-1 overflow-y-auto px-6 py-5 md:px-8 md:py-6">
               <div className="space-y-3 text-[15px] leading-7 text-slate-700 md:text-base">
                 {splitChineseParagraph(result.summary).map((p, i) => <p key={i}>{p}</p>)}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===== Deep Reading modal ===== */}
+      {isDeepReadingOpen && (
+        <div className="fixed inset-0 z-[9999] flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4" onClick={() => setIsDeepReadingOpen(false)}>
+          <div onClick={(e) => e.stopPropagation()} className="relative flex max-h-[88vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-white/95 shadow-2xl backdrop-blur-xl md:max-h-[82vh] md:w-[min(92vw,680px)] md:rounded-3xl">
+            <button onClick={() => setIsDeepReadingOpen(false)} className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100/80 text-slate-500 transition hover:bg-slate-200" aria-label="关闭">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+            </button>
+            <div className="shrink-0 bg-gradient-to-br from-amber-50 via-white to-stone-50 px-6 pt-6 pb-4 md:px-8 md:pt-7">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="rounded-full bg-amber-100/80 px-2.5 py-0.5 text-[11px] font-medium text-amber-700">隐藏观察</span>
+              </div>
+              <h2 className="text-xl font-bold text-slate-900 md:text-2xl">不被任何定义，这只是参考。</h2>
+              <p className="mt-1 text-[13px] leading-6 text-slate-400">你就是你，不是任何人。</p>
+            </div>
+            <div className="flex-1 overflow-y-auto px-6 py-5 md:px-8 md:py-6">
+              <div className="divide-y divide-slate-100/80">
+                {insights.map(({ label, content }, i) => (
+                  <div key={label} className={i === 0 ? "pb-4" : "py-4"}>
+                    <h4 className="text-[13px] font-semibold tracking-[0.02em] text-slate-800 md:text-sm">{label}</h4>
+                    <div className="mt-2 space-y-2 text-[13px] leading-6 text-slate-500 md:text-[14px] md:leading-7">
+                      {splitChineseParagraph(content).map((p, j) => <p key={j}>{p}</p>)}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
