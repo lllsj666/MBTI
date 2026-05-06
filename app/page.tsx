@@ -1,43 +1,61 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
-    <main className="flex-1">
+    <main className="flex-1 bg-[#0b0711] text-white">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 border-b border-zinc-100 bg-white/80 backdrop-blur-md">
+      <nav className="sticky top-0 z-50 border-b border-white/5 bg-[#0b0711]/80 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
-          <span className="text-lg font-semibold tracking-tight text-zinc-900">
+          <Link
+            href="/"
+            className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-xl font-bold text-transparent"
+          >
             TypeMind
-          </span>
-          <a
-            href="#start"
-            className="rounded-full bg-zinc-900 px-5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-zinc-800 hover:shadow-md"
+          </Link>
+          <Link
+            href="/test"
+            className="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-5 py-2 text-sm font-medium text-white shadow-lg shadow-violet-500/20 transition hover:shadow-xl hover:shadow-violet-500/30 active:scale-95"
           >
             开始测试
-          </a>
+          </Link>
         </div>
       </nav>
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-zinc-50 to-white px-6 pb-24 pt-20 sm:pb-32 sm:pt-28">
-        {/* Subtle decoration */}
-        <div className="pointer-events-none absolute -top-24 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-indigo-50/60 blur-3xl" />
+      <section className="relative overflow-hidden px-6 pb-20 pt-16 sm:pb-28 sm:pt-24">
+        {/* Background glows */}
+        <div className="pointer-events-none absolute -top-32 left-1/2 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-violet-500/20 blur-[120px]" />
+        <div className="pointer-events-none absolute top-20 right-0 h-[300px] w-[400px] rounded-full bg-fuchsia-500/10 blur-[100px]" />
+        <div className="pointer-events-none absolute bottom-0 left-0 h-[300px] w-[400px] rounded-full bg-indigo-500/10 blur-[100px]" />
 
         <div className="relative mx-auto max-w-3xl text-center">
-          <p className="mb-4 text-sm font-medium tracking-widest text-indigo-600 uppercase">
-            MBTI Personality Assessment
-          </p>
-          <h1 className="mb-6 text-4xl font-bold tracking-tight text-zinc-900 leading-tight sm:text-5xl lg:text-6xl">
-            发现你的
+          {/* Badge */}
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-400">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+            MBTI 性格与人生能量探索
+          </div>
+
+          <h1 className="mb-6 text-3xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+            测出你的
+            <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400 bg-clip-text text-transparent">
+              性格类型
+            </span>
+            ，解锁你的
             <br />
-            <span className="text-indigo-600">性格类型</span>
+            <span className="bg-gradient-to-r from-amber-400 via-fuchsia-400 to-violet-400 bg-clip-text text-transparent">
+              财富、姻缘与运势密码
+            </span>
           </h1>
-          <p className="mx-auto mb-10 max-w-xl text-base text-zinc-500 leading-relaxed sm:text-lg">
-            基于荣格心理学理论，通过专业的 MBTI 性格测试，
-            帮助你深入了解自己的思维方式、行为模式与内在潜能。
+
+          <p className="mx-auto mb-10 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg">
+            基于 MBTI
+            性格维度，结合情感、财富、事业与运势模型，生成你的专属人生探索报告。
           </p>
+
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <a
-              href="#start"
-              className="inline-flex items-center gap-2 rounded-xl bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white shadow-sm transition hover:bg-zinc-800 hover:shadow-md"
+            <Link
+              href="/test"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-8 py-3.5 text-sm font-medium text-white shadow-lg shadow-violet-500/25 transition hover:shadow-xl hover:shadow-violet-500/40 active:scale-95"
             >
               开始免费测试
               <svg
@@ -52,103 +70,125 @@ export default function Home() {
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-            </a>
-            <a
-              href="#features"
-              className="inline-flex items-center rounded-xl px-8 py-3.5 text-sm font-medium text-zinc-600 transition hover:text-zinc-900"
+            </Link>
+            <Link
+              href="/result?type=INFJ"
+              className="inline-flex items-center rounded-xl border border-zinc-600 px-8 py-3.5 text-sm font-medium text-zinc-300 transition hover:border-zinc-400 hover:text-white active:scale-95"
             >
-              了解更多
-            </a>
+              查看报告示例
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="bg-white px-6 py-20 sm:py-28">
+      {/* Feature Cards */}
+      <section className="px-6 py-16 sm:py-24">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-14 text-center">
-            <p className="mb-3 text-sm font-medium tracking-widest text-indigo-600 uppercase">
-              Why MBTI
+          <div className="mb-12 text-center">
+            <p className="mb-3 text-sm font-medium tracking-widest text-amber-400 uppercase">
+              不只是 MBTI
             </p>
-            <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
-              为什么了解性格类型很重要？
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
+              而是你的
+              <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+                个人能量地图
+              </span>
             </h2>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 icon: (
                   <svg
-                    width="24"
-                    height="24"
+                    width="22"
+                    height="22"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="text-indigo-600"
                   >
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
                   </svg>
                 ),
-                title: "科学测评",
-                desc: "基于荣格心理学经典理论，结合现代统计学方法，提供可靠的性格分析结果。",
+                color: "violet",
+                title: "性格核心",
+                desc: "了解你的思维方式、情绪模式、人际风格与隐藏优势。",
               },
               {
                 icon: (
                   <svg
-                    width="24"
-                    height="24"
+                    width="22"
+                    height="22"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="text-indigo-600"
                   >
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="6" x2="12" y2="18" />
+                    <line x1="6" y1="12" x2="18" y2="12" />
                   </svg>
                 ),
-                title: "深度报告",
-                desc: "获取详细的性格分析报告，涵盖你的优势、盲点、沟通风格与职业倾向。",
+                color: "amber",
+                title: "财运倾向",
+                desc: "探索你更适合的财富路径、赚钱方式与需要避开的消费盲点。",
               },
               {
                 icon: (
                   <svg
-                    width="24"
-                    height="24"
+                    width="22"
+                    height="22"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="text-indigo-600"
                   >
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                   </svg>
                 ),
-                title: "自我成长",
-                desc: "通过认识自我，找到适合的发展方向，改善人际关系，实现个人突破。",
+                color: "fuchsia",
+                title: "姻缘关系",
+                desc: "分析你的恋爱模式、适配伴侣类型与关系中的关键课题。",
               },
-            ].map(({ icon, title, desc }) => (
+              {
+                icon: (
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
+                ),
+                color: "indigo",
+                title: "近期运势",
+                desc: "从性格能量角度，给出适合你的行动建议与好运方向。",
+              },
+            ].map(({ icon, color, title, desc }) => (
               <div
                 key={title}
-                className="group rounded-2xl border border-zinc-100 bg-white p-8 shadow-sm transition hover:border-zinc-200 hover:shadow-md"
+                className="group rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:border-white/20 hover:bg-white/[0.07]"
               >
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50">
+                <div
+                  className={`mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-${color}-500/10 text-${color}-400`}
+                >
                   {icon}
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-zinc-900">
-                  {title}
-                </h3>
-                <p className="text-sm text-zinc-500 leading-relaxed">{desc}</p>
+                <h3 className="mb-2 text-lg font-semibold">{title}</h3>
+                <p className="text-sm leading-relaxed text-zinc-400">{desc}</p>
               </div>
             ))}
           </div>
@@ -156,13 +196,15 @@ export default function Home() {
       </section>
 
       {/* Steps */}
-      <section className="bg-zinc-50 px-6 py-20 sm:py-28">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="mb-3 text-sm font-medium tracking-widest text-indigo-600 uppercase">
-            How It Works
+      <section className="relative overflow-hidden px-6 py-16 sm:py-24">
+        <div className="pointer-events-none absolute top-0 right-1/2 h-[300px] w-[500px] translate-x-1/2 rounded-full bg-violet-500/10 blur-[100px]" />
+
+        <div className="relative mx-auto max-w-4xl text-center">
+          <p className="mb-3 text-sm font-medium tracking-widest text-amber-400 uppercase">
+            三步开始
           </p>
-          <h2 className="mb-14 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
-            三步开始你的自我探索
+          <h2 className="mb-14 text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
+            开启你的自我探索之旅
           </h2>
 
           <div className="grid gap-8 sm:grid-cols-3">
@@ -170,27 +212,28 @@ export default function Home() {
               {
                 step: "01",
                 title: "完成测试",
-                desc: "回答一系列关于日常偏好的问题，大约需要 12 分钟。",
+                desc: "回答 20 道关于日常偏好的问题，大约需要 3 分钟。",
               },
               {
                 step: "02",
-                title: "获取结果",
-                desc: "即时生成你的四字母性格类型与详细分析报告。",
+                title: "获得类型",
+                desc: "系统会根据四个性格维度计算你的 MBTI 类型。",
               },
               {
                 step: "03",
-                title: "认识自己",
-                desc: "深入了解你的性格特质，开启有意识的自我成长。",
+                title: "查看报告",
+                desc: "获取基础性格分析，并预览财运、姻缘、事业与运势内容。",
               },
             ].map(({ step, title, desc }) => (
-              <div key={step} className="relative">
-                <span className="mb-4 block text-4xl font-bold tracking-tight text-zinc-200">
+              <div
+                key={step}
+                className="relative rounded-2xl border border-white/5 bg-white/[0.03] p-8 backdrop-blur-sm"
+              >
+                <span className="mb-4 block text-4xl font-bold tracking-tight text-white/10">
                   {step}
                 </span>
-                <h3 className="mb-2 text-lg font-semibold text-zinc-900">
-                  {title}
-                </h3>
-                <p className="text-sm text-zinc-500 leading-relaxed">{desc}</p>
+                <h3 className="mb-2 text-lg font-semibold">{title}</h3>
+                <p className="text-sm leading-relaxed text-zinc-400">{desc}</p>
               </div>
             ))}
           </div>
@@ -198,17 +241,22 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="bg-white px-6 py-20 sm:py-28">
+      <section className="px-6 py-16 sm:py-24">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl">
-            准备好了吗？
+          <h2 className="mb-4 text-2xl font-bold tracking-tight sm:text-3xl">
+            准备好发现你的
+            <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+              性格密码
+            </span>
+            了吗？
           </h2>
-          <p className="mb-8 text-zinc-500 leading-relaxed">
-            只需12分钟，发现属于你的性格密码。完全免费，无需注册。
+          <p className="mb-8 leading-relaxed text-zinc-400">
+            只需 3 分钟，完成 20
+            道题，即可获得你的专属性格分析报告。完全免费，无需注册。
           </p>
-          <a
-            href="#start"
-            className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-8 py-3.5 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700 hover:shadow-md"
+          <Link
+            href="/test"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-8 py-3.5 text-sm font-medium text-white shadow-lg shadow-violet-500/25 transition hover:shadow-xl hover:shadow-violet-500/40 active:scale-95"
           >
             开始免费测试
             <svg
@@ -223,22 +271,35 @@ export default function Home() {
             >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </a>
+          </Link>
+        </div>
+      </section>
+
+      {/* Disclaimer */}
+      <section className="px-6 pb-16 sm:pb-24">
+        <div className="mx-auto max-w-2xl rounded-2xl border border-white/5 bg-white/[0.02] p-6 text-center backdrop-blur-sm">
+          <p className="text-xs leading-relaxed text-zinc-500">
+            本测试仅用于娱乐和自我探索参考，不构成心理诊断、投资建议、婚恋建议或人生决策依据。
+            测试结果基于 MBTI 理论模型，每个人的性格都是独特且复杂的，
+            请理性看待测试结果。
+          </p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-100 bg-white px-6 py-10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-zinc-400 sm:flex-row">
-          <span>TypeMind &copy; {new Date().getFullYear()}</span>
+      <footer className="border-t border-white/5 px-6 py-10">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-zinc-500 sm:flex-row">
+          <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text font-semibold text-transparent">
+            TypeMind
+          </span>
           <div className="flex gap-6">
-            <a href="#" className="transition hover:text-zinc-600">
+            <a href="#" className="transition hover:text-zinc-300">
               关于
             </a>
-            <a href="#" className="transition hover:text-zinc-600">
+            <a href="#" className="transition hover:text-zinc-300">
               隐私政策
             </a>
-            <a href="#" className="transition hover:text-zinc-600">
+            <a href="#" className="transition hover:text-zinc-300">
               联系我们
             </a>
           </div>
