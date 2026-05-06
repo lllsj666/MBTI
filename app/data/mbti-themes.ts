@@ -12,6 +12,7 @@ export interface CampTheme {
     softBg: string;
     heroGradient: string;
     accentDot: string;
+    typeGradient: string;
   };
 }
 
@@ -28,6 +29,7 @@ export const mbtiThemes: Record<string, CampTheme> = {
       softBg: "bg-violet-50",
       heroGradient: "from-violet-50 via-white to-purple-50",
       accentDot: "bg-violet-500",
+      typeGradient: "from-violet-600 to-purple-700",
     },
   },
   diplomat: {
@@ -42,6 +44,7 @@ export const mbtiThemes: Record<string, CampTheme> = {
       softBg: "bg-emerald-50",
       heroGradient: "from-emerald-50 via-white to-teal-50",
       accentDot: "bg-emerald-500",
+      typeGradient: "from-emerald-600 to-teal-700",
     },
   },
   sentinel: {
@@ -56,6 +59,7 @@ export const mbtiThemes: Record<string, CampTheme> = {
       softBg: "bg-blue-50",
       heroGradient: "from-blue-50 via-white to-sky-50",
       accentDot: "bg-blue-500",
+      typeGradient: "from-blue-600 to-sky-700",
     },
   },
   explorer: {
@@ -70,6 +74,7 @@ export const mbtiThemes: Record<string, CampTheme> = {
       softBg: "bg-amber-50",
       heroGradient: "from-amber-50 via-white to-yellow-50",
       accentDot: "bg-amber-500",
+      typeGradient: "from-amber-500 to-orange-600",
     },
   },
 };

@@ -10,6 +10,11 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { RelationshipSection } from "@/components/RelationshipSection";
 import { SwipeableDeck, type DeckCard } from "@/components/SwipeableDeck";
 
+function splitChineseParagraph(text: string): string[] {
+  if (!text) return [];
+  return text.split(/(?<=。|！|？)/).map((s) => s.trim()).filter(Boolean);
+}
+
 function ResultContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -19,6 +24,7 @@ function ResultContent() {
   const [shareText, setShareText] = useState("复制结果链接");
   const [loaded, setLoaded] = useState(false);
   const [dimModal, setDimModal] = useState<DimensionScore | null>(null);
+  const [descModal, setDescModal] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,10 +39,7 @@ function ResultContent() {
         else { setResult(mbtiResults["INFJ"]); setIsExample(true); }
       } catch { setResult(mbtiResults["INFJ"]); setIsExample(true); }
     }
-    try {
-      const s = localStorage.getItem(STORAGE_KEYS.tendency);
-      if (s) setTendency(JSON.parse(s));
-    } catch { /* ignore */ }
+    try { const s = localStorage.getItem(STORAGE_KEYS.tendency); if (s) setTendency(JSON.parse(s)); } catch { /* ignore */ }
     setLoaded(true);
   }, [searchParams]);
 
@@ -124,7 +127,8 @@ function ResultContent() {
               <div className={`pointer-events-none absolute -top-12 left-1/2 h-[180px] w-[280px] -translate-x-1/2 rounded-full opacity-10 blur-[60px] ${t.accentDot}`} />
               <p className="relative mb-1 text-[11px] text-slate-400">你的 TypeMind 结果卡</p>
               <span className={`relative mb-3 inline-block rounded-full ${t.badge} px-3 py-0.5 text-xs font-medium`}>{camp.label}</span>
-              <p className={`relative mb-0.5 text-5xl font-bold tracking-widest sm:text-6xl bg-gradient-to-br ${t.primaryText} bg-clip-text text-transparent`}>{result.type}</p>
+              {/* FIXED: proper gradient background so text is visible */}
+              <p className={`relative mb-0.5 text-5xl font-black tracking-widest sm:text-7xl bg-gradient-to-r ${t.typeGradient} bg-clip-text text-transparent`}>{result.type}</p>
               <p className="relative mb-3 text-lg font-semibold text-slate-800 sm:text-xl">{result.name}</p>
               <div className="relative flex flex-wrap justify-center gap-1.5">
                 {result.keywords.map((kw) => (
@@ -148,8 +152,15 @@ function ResultContent() {
 
               <p className="relative mt-4 text-[11px] text-slate-400 group-hover:text-slate-500 transition">点击查看完整解读 ↓</p>
             </div>
-            <div className="border-t border-black/5 px-6 py-4 sm:px-10">
+
+            {/* Description preview — click to open full modal */}
+            <div
+              className="border-t border-black/5 px-6 py-4 sm:px-10 cursor-pointer transition hover:bg-slate-50/50"
+              onClick={(e) => { e.stopPropagation(); setDescModal(true); }}
+            >
+              <h4 className="mb-1 text-xs font-semibold text-slate-500">完整描述</h4>
               <p className="line-clamp-2 text-sm leading-relaxed text-slate-500">{result.summary}</p>
+              <p className="mt-2 text-[11px] text-slate-400 transition group-hover:text-slate-500">点击查看完整描述 →</p>
             </div>
           </button>
         </div>
@@ -230,18 +241,16 @@ function ResultContent() {
         <div className="text-center text-xs text-slate-400">TypeMind · MBTI 性格测试</div>
       </footer>
 
-      {/* Dimension detail modal */}
+      {/* ===== Dimension detail modal ===== */}
       {dimModal && (
-        <div className="fixed inset-0 z-50 flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4" onClick={() => setDimModal(null)}>
+        <div className="fixed inset-0 z-[9999] flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4" onClick={() => setDimModal(null)}>
           <div onClick={(e) => e.stopPropagation()} className="relative flex max-h-[85vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-white/95 shadow-2xl backdrop-blur-xl md:max-w-md md:rounded-3xl">
             <button onClick={() => setDimModal(null)} className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-600">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
             </button>
             <div className={`shrink-0 bg-gradient-to-br ${t.heroGradient} px-6 pb-5 pt-8 text-center`}>
               <span className={`mb-3 inline-block rounded-full ${t.badge} px-3 py-0.5 text-xs font-medium`}>{dimModal.label}</span>
-              <h2 className="text-2xl font-bold text-slate-800">
-                {dimModal.left.label}({dimModal.left.letter}) / {dimModal.right.label}({dimModal.right.letter})
-              </h2>
+              <h2 className="text-2xl font-bold text-slate-800">{dimModal.left.label}({dimModal.left.letter}) / {dimModal.right.label}({dimModal.right.letter})</h2>
             </div>
             <div className="flex-1 overflow-y-auto px-6 py-5">
               <div className="space-y-4">
@@ -253,10 +262,31 @@ function ResultContent() {
                   <span className="w-8 font-medium text-slate-600">{dimModal.right.letter}</span>
                 </div>
                 <p className="text-center text-sm text-slate-500">{dimModal.left.pct}% / {dimModal.right.pct}%</p>
-                <p className="text-sm leading-relaxed text-slate-600">
-                  这个维度反映你 {dimModal.label} 的自然倾向。如果分差较小，说明你在不同场景中可能会灵活切换。
-                </p>
+                <p className="text-sm leading-relaxed text-slate-600">这个维度反映你 {dimModal.label} 的自然倾向。如果分差较小，说明你在不同场景中可能会灵活切换。</p>
                 {isExampleScores && <p className="text-center text-xs text-amber-600">示例倾向 · 完成测试后显示真实分数</p>}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===== Description modal ===== */}
+      {descModal && (
+        <div className="fixed inset-0 z-[9999] flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4" onClick={() => setDescModal(false)}>
+          <div onClick={(e) => e.stopPropagation()} className="relative flex max-h-[88vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-white/95 shadow-2xl backdrop-blur-xl md:max-h-[82vh] md:w-[min(92vw,680px)] md:rounded-3xl">
+            <button onClick={() => setDescModal(false)} className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100/80 text-slate-500 transition hover:bg-slate-200" aria-label="关闭">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+            </button>
+            <div className={`shrink-0 bg-gradient-to-br ${t.heroGradient} px-6 pt-6 pb-4 md:px-8 md:pt-7`}>
+              <div className="mb-2 flex items-center gap-2">
+                <span className={`rounded-full ${t.badge} px-2.5 py-0.5 text-[11px] font-medium`}>{camp.label}</span>
+                <span className="text-[11px] font-medium text-slate-500">{result.type}</span>
+              </div>
+              <h2 className="text-xl font-bold text-slate-900 md:text-2xl">完整描述</h2>
+            </div>
+            <div className="flex-1 overflow-y-auto px-6 py-5 md:px-8 md:py-6">
+              <div className="space-y-3 text-[15px] leading-7 text-slate-700 md:text-base">
+                {splitChineseParagraph(result.summary).map((p, i) => <p key={i}>{p}</p>)}
               </div>
             </div>
           </div>

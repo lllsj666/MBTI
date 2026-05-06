@@ -52,7 +52,7 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
 
   return (
     <div
-      className="fixed inset-0 z-50 flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4"
+      className="fixed inset-0 z-[9999] flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4"
       onClick={onClose}
     >
       <div
