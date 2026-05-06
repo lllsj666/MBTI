@@ -43,10 +43,10 @@ export function SwipeableDeck({ cards, accentClass = "bg-violet-500", className 
           style={{ transform: `translateX(-${page * 100}%)`, width: `${total * 100}%` }}
         >
           {cards.map((c) => (
-            <div key={c.key} className="h-full w-full flex-shrink-0 overflow-y-auto px-1">
-              <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
-                <h4 className="mb-3 text-sm font-semibold text-slate-800">{c.title}</h4>
-                <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-600">{c.content}</p>
+            <div key={c.key} className="h-full w-full flex-shrink-0 overflow-y-auto px-2">
+              <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm md:p-8">
+                <h4 className="mb-4 text-base font-semibold text-slate-800 md:text-lg">{c.title}</h4>
+                <p className="whitespace-pre-wrap text-base leading-relaxed text-slate-600 md:text-[17px]">{c.content}</p>
               </div>
             </div>
           ))}

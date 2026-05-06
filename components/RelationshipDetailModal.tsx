@@ -31,7 +31,7 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
 
   return (
     <div className="fixed inset-0 z-50 flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4" onClick={onClose}>
-      <div onClick={(e) => e.stopPropagation()} className="relative flex max-h-[90vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-white/95 shadow-2xl backdrop-blur-xl md:max-w-2xl md:rounded-3xl">
+      <div onClick={(e) => e.stopPropagation()} className="relative flex max-h-[90vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-white/95 shadow-2xl backdrop-blur-xl md:max-h-[92vh] md:max-w-4xl md:rounded-3xl">
         {/* Close */}
         <button onClick={onClose} className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-600" aria-label="关闭">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
@@ -48,7 +48,7 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
         </div>
 
         {/* 2-page SwipeableDeck */}
-        <div className="flex-1 overflow-hidden px-6 py-4 md:px-8 md:py-5">
+        <div className="flex-1 overflow-hidden px-4 py-4 md:px-10 md:py-6">
           <SwipeableDeck cards={cards} accentClass={t.accentDot} />
         </div>
       </div>
