@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
+import { createPortal } from "react-dom";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { mbtiResults, type MBTIResult } from "@/app/data/mbti-results";
@@ -301,35 +302,37 @@ function ResultContent() {
         </div>
       )}
 
-      {/* ===== Deep Reading modal ===== */}
-      {isDeepReadingOpen && (
-        <div className="fixed inset-0 z-[9999] flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4" onClick={() => setIsDeepReadingOpen(false)}>
-          <div onClick={(e) => e.stopPropagation()} className="relative flex max-h-[88vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-white/95 shadow-2xl backdrop-blur-xl md:max-h-[82vh] md:w-[min(92vw,680px)] md:rounded-3xl">
-            <button onClick={() => setIsDeepReadingOpen(false)} className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100/80 text-slate-500 transition hover:bg-slate-200" aria-label="关闭">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-            </button>
-            <div className="shrink-0 bg-gradient-to-br from-amber-50 via-white to-stone-50 px-6 pt-6 pb-4 md:px-8 md:pt-7">
-              <div className="mb-2 flex items-center gap-2">
-                <span className="rounded-full bg-amber-100/80 px-2.5 py-0.5 text-[11px] font-medium text-amber-700">隐藏观察</span>
+      {/* ===== Deep Reading modal (portal to body) ===== */}
+      {isDeepReadingOpen &&
+        createPortal(
+          <div className="fixed inset-0 z-[9999] flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4" onClick={() => setIsDeepReadingOpen(false)}>
+            <div onClick={(e) => e.stopPropagation()} className="relative flex max-h-[88vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-white/95 shadow-2xl backdrop-blur-xl md:max-h-[82vh] md:w-[min(92vw,680px)] md:rounded-3xl">
+              <button onClick={() => setIsDeepReadingOpen(false)} className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100/80 text-slate-500 transition hover:bg-slate-200" aria-label="关闭">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+              </button>
+              <div className="shrink-0 bg-gradient-to-br from-amber-50 via-white to-stone-50 px-6 pt-6 pb-4 md:px-8 md:pt-7">
+                <div className="mb-2 flex items-center gap-2">
+                  <span className="rounded-full bg-amber-100/80 px-2.5 py-0.5 text-[11px] font-medium text-amber-700">隐藏观察</span>
+                </div>
+                <h2 className="text-xl font-bold text-slate-900 md:text-2xl">不被任何定义，这只是参考。</h2>
+                <p className="mt-1 text-[13px] leading-6 text-slate-400">你就是你，不是任何人。</p>
               </div>
-              <h2 className="text-xl font-bold text-slate-900 md:text-2xl">不被任何定义，这只是参考。</h2>
-              <p className="mt-1 text-[13px] leading-6 text-slate-400">你就是你，不是任何人。</p>
-            </div>
-            <div className="flex-1 overflow-y-auto px-6 py-5 md:px-8 md:py-6">
-              <div className="divide-y divide-slate-100/80">
-                {insights.map(({ label, content }, i) => (
-                  <div key={label} className={i === 0 ? "pb-4" : "py-4"}>
-                    <h4 className="text-[13px] font-semibold tracking-[0.02em] text-slate-800 md:text-sm">{label}</h4>
-                    <div className="mt-2 space-y-2 text-[13px] leading-6 text-slate-500 md:text-[14px] md:leading-7">
-                      {splitChineseParagraph(content).map((p, j) => <p key={j}>{p}</p>)}
+              <div className="flex-1 overflow-y-auto px-6 py-5 md:px-8 md:py-6">
+                <div className="divide-y divide-slate-100/80">
+                  {insights.map(({ label, content }, i) => (
+                    <div key={label} className={i === 0 ? "pb-4" : "py-4"}>
+                      <h4 className="text-[13px] font-semibold tracking-[0.02em] text-slate-800 md:text-sm">{label}</h4>
+                      <div className="mt-2 space-y-2 text-[13px] leading-6 text-slate-500 md:text-[14px] md:leading-7">
+                        {splitChineseParagraph(content).map((p, j) => <p key={j}>{p}</p>)}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </main>
   );
 }
