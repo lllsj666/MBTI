@@ -8,6 +8,7 @@ import { STORAGE_KEYS, type MBTIResult2 } from "@/app/data/questions";
 import { getMbtiTheme, getDefaultDimensionScores, type DimensionScore } from "@/app/data/mbti-themes";
 import { SectionHeader } from "@/components/SectionHeader";
 import { RelationshipSection } from "@/components/RelationshipSection";
+import { SwipeableDeck, type DeckCard } from "@/components/SwipeableDeck";
 
 function ResultContent() {
   const searchParams = useSearchParams();
@@ -194,17 +195,15 @@ function ResultContent() {
         </div>
       </section>
 
-      {/* ===== 4. Deep Reading ===== */}
+      {/* ===== 4. Deep Reading — Swipeable Deck ===== */}
       <section className="relative z-10 px-5 py-8">
         <div className="mx-auto max-w-2xl">
           <SectionHeader eyebrow="Deep Reading" title="更具体地理解你的生活模式" description="关于你在关系、金钱、方向和当下的样子。" />
-          <div className="mt-5 grid gap-4 sm:grid-cols-2">
-            {insights.map(({ label, content }) => (
-              <div key={label} className={`rounded-2xl border ${t.cardBorder} bg-white/80 backdrop-blur-sm p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md`}>
-                <h3 className={`mb-2 text-sm font-semibold ${t.primaryText}`}>{label}</h3>
-                <p className="text-sm leading-relaxed text-slate-500">{content}</p>
-              </div>
-            ))}
+          <div className={`mt-5 rounded-3xl border ${t.cardBorder} bg-white/80 p-6 shadow-sm backdrop-blur-sm`}>
+            <SwipeableDeck
+              accentClass={t.accentDot}
+              cards={insights.map(({ label, content }): DeckCard => ({ key: label, title: label, content }))}
+            />
           </div>
         </div>
       </section>
