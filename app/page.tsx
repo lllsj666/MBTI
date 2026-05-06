@@ -73,7 +73,7 @@ export default function Home() {
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-5">
           <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight text-slate-900">
             <span className="h-2.5 w-2.5 rounded-full bg-gradient-to-br from-violet-500 to-emerald-500" />
-            TypeMind
+            覆
           </Link>
           <Link href="/test" className="rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800 hover:-translate-y-0.5 hover:shadow-md active:scale-95">
             开始测试
@@ -85,7 +85,7 @@ export default function Home() {
       <motion.section ref={heroRef} className="relative z-10 px-5 pb-14 pt-16 sm:pb-24 sm:pt-24" initial="offscreen" animate="onscreen" variants={stagger}>
         <div className="mx-auto max-w-2xl text-center">
           <motion.p variants={fadeUp} className="mb-4 text-xs font-medium tracking-widest text-slate-400 uppercase">
-            TypeMind · MBTI 性格地图
+            MBTI-覆 · 性格地图
           </motion.p>
           <motion.h1 variants={fadeUp} className="mb-5 text-5xl font-bold leading-tight tracking-tight sm:text-6xl md:text-7xl">
             你是怎样和世界
@@ -93,7 +93,7 @@ export default function Home() {
             的？
           </motion.h1>
           <motion.p variants={fadeUp} className="mx-auto mb-6 max-w-lg text-base leading-relaxed text-slate-500 sm:text-lg">
-            回答 36 个轻松场景题，从社交能量、信息偏好、决策方式和生活节奏里，看见你的 MBTI 性格倾向。
+            回答 36 个轻松场景题，从社交能量、信息偏好、决策方式和生活节奏里，翻开你更真实的性格底色。
           </motion.p>
 
           <motion.div variants={fadeUp} className="mb-8 flex flex-wrap justify-center gap-2">
@@ -174,7 +174,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="relative z-10 border-t border-slate-200/50 bg-white/40 px-5 py-8 backdrop-blur-sm">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-slate-400 sm:flex-row">
-          <span className="flex items-center gap-1.5 font-semibold text-slate-600"><span className="h-2 w-2 rounded-full bg-gradient-to-br from-violet-500 to-emerald-500" />TypeMind</span>
+          <span className="flex items-center gap-1.5 font-semibold text-slate-600"><span className="h-2 w-2 rounded-full bg-gradient-to-br from-violet-500 to-emerald-500" />MBTI 性格测试-覆</span>
           <div className="flex gap-6"><a href="#" className="transition hover:text-slate-600">关于</a><a href="#" className="transition hover:text-slate-600">隐私政策</a><a href="#" className="transition hover:text-slate-600">联系我们</a></div>
         </div>
       </footer>

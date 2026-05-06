@@ -8,8 +8,6 @@ import { STORAGE_KEYS, type MBTIResult2 } from "@/app/data/questions";
 import { getMbtiTheme, getDefaultDimensionScores, type DimensionScore } from "@/app/data/mbti-themes";
 import { SectionHeader } from "@/components/SectionHeader";
 import { RelationshipSection } from "@/components/RelationshipSection";
-import { SwipeableDeck, type DeckCard } from "@/components/SwipeableDeck";
-
 function splitChineseParagraph(text: string): string[] {
   if (!text) return [];
   return text.split(/(?<=。|！|？)/).map((s) => s.trim()).filter(Boolean);
@@ -105,7 +103,7 @@ function ResultContent() {
       {/* Top bar */}
       <div className="relative z-10 flex items-center justify-between border-b border-black/5 bg-white/80 backdrop-blur-xl px-5 py-3.5">
         <Link href="/" className="text-sm text-slate-500 transition hover:text-slate-900">← 返回首页</Link>
-        <span className="text-sm font-medium text-slate-800">TypeMind</span>
+        <span className="text-sm font-medium text-slate-800">MBTI-覆</span>
         <button onClick={handleRestart} className="text-sm text-slate-500 transition hover:text-[#7C5CFF]">重新测试</button>
       </div>
 
@@ -125,7 +123,7 @@ function ResultContent() {
           >
             <div className={`relative overflow-hidden bg-gradient-to-br ${t.heroGradient} px-6 py-7 text-center sm:px-10 sm:py-10`}>
               <div className={`pointer-events-none absolute -top-12 left-1/2 h-[180px] w-[280px] -translate-x-1/2 rounded-full opacity-10 blur-[60px] ${t.accentDot}`} />
-              <p className="relative mb-1 text-[11px] text-slate-400">你的 TypeMind 结果卡</p>
+              <p className="relative mb-1 text-[11px] text-slate-400">你的 MBTI-覆 结果卡</p>
               <span className={`relative mb-3 inline-block rounded-full ${t.badge} px-3 py-0.5 text-xs font-medium`}>{camp.label}</span>
               {/* FIXED: proper gradient background so text is visible */}
               <p className={`relative mb-0.5 text-5xl font-black tracking-widest sm:text-7xl bg-gradient-to-r ${t.typeGradient} bg-clip-text text-transparent`}>{result.type}</p>
@@ -206,15 +204,19 @@ function ResultContent() {
         </div>
       </section>
 
-      {/* ===== 4. Deep Reading — Swipeable Deck ===== */}
-      <section className="relative z-10 px-5 py-8">
+      {/* ===== 4. Deep Reading ===== */}
+      <section className="relative z-10 px-5 py-8 pb-4">
         <div className="mx-auto max-w-2xl">
           <SectionHeader eyebrow="Deep Reading" title="更具体地理解你的生活模式" description="不被任何定义，这只是参考" />
-          <div className={`mt-5 rounded-3xl border ${t.cardBorder} bg-white/80 p-6 shadow-sm backdrop-blur-sm`}>
-            <SwipeableDeck
-              accentClass={t.accentDot}
-              cards={insights.map(({ label, content }): DeckCard => ({ key: label, title: label, content }))}
-            />
+          <div className="mt-5 space-y-4">
+            {insights.map(({ label, content }) => (
+              <div key={label} className={`rounded-3xl border ${t.cardBorder} bg-white/80 p-5 shadow-sm backdrop-blur-sm md:p-6`}>
+                <h4 className={`mb-3 text-base font-semibold ${t.primaryText}`}>{label}</h4>
+                <div className="space-y-3 text-[15px] leading-7 text-slate-600 md:text-base">
+                  {splitChineseParagraph(content).map((p, i) => <p key={i}>{p}</p>)}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -238,7 +240,7 @@ function ResultContent() {
       </section>
 
       <footer className="relative z-10 border-t border-black/5 px-5 py-7">
-        <div className="text-center text-xs text-slate-400">TypeMind · MBTI 性格测试</div>
+        <div className="text-center text-xs text-slate-400">MBTI 性格测试-覆</div>
       </footer>
 
       {/* ===== Dimension detail modal ===== */}
