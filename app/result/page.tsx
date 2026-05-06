@@ -208,54 +208,62 @@ function ResultContent() {
       {/* ===== 4. Deep Reading — Collapsible Easter Egg ===== */}
       <section className="relative z-10 px-5 py-8 pb-4">
         <div className="mx-auto max-w-2xl">
-          <SectionHeader eyebrow="Deep Reading" title="更具体地理解你的生活模式" description="不被任何定义，这只是参考" />
+          <SectionHeader eyebrow="Deep Reading" title="更具体地理解你的生活模式" description="关于你在关系、金钱、方向和当下的几个生活切面。" />
 
           <div className="mt-5">
+            {/* Entry card */}
             <button
               type="button"
-              onClick={() => setIsDeepReadingOpen(!isDeepReadingOpen)}
+              onClick={() => setIsDeepReadingOpen((prev) => !prev)}
               aria-expanded={isDeepReadingOpen}
               aria-controls="deep-reading-hidden-content"
-              className={`w-full rounded-3xl border border-emerald-200/70 bg-white/60 px-5 py-5 text-left shadow-sm backdrop-blur-md transition-all hover:shadow-md md:px-7 md:py-6 ${isDeepReadingOpen ? "" : ""}`}
+              className="w-full rounded-[28px] border border-emerald-200/70 bg-white/60 px-5 py-5 text-left shadow-sm backdrop-blur-md transition hover:shadow-md md:px-7 md:py-6"
             >
-              {/* Always-visible header */}
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-sm font-medium tracking-wide text-slate-700">
+                  <p className="text-sm font-medium tracking-wide text-slate-700 md:text-[15px]">
                     不被任何定义，这只是参考。
                   </p>
                   {!isDeepReadingOpen && (
-                    <p className="mt-2 text-xs leading-6 text-slate-500">
+                    <p className="mt-2 text-xs leading-6 text-slate-500 md:text-[13px]">
                       如果你愿意，可以翻开一些更细的观察。
                     </p>
                   )}
                 </div>
-                <span className={`shrink-0 text-xs text-emerald-600 transition-transform duration-300 ${isDeepReadingOpen ? "rotate-180" : ""}`}>
-                  {isDeepReadingOpen ? "收起 ↑" : "展开看看 ↓"}
-                </span>
+                <svg
+                  className={`shrink-0 text-emerald-500/50 transition-transform duration-300 ${isDeepReadingOpen ? "rotate-180" : ""}`}
+                  width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
               </div>
+            </button>
 
-              {/* Hidden content */}
-              {isDeepReadingOpen && (
-                <div id="deep-reading-hidden-content" className="mt-5 border-t border-emerald-100/80 pt-5">
-                  <p className="mb-5 text-[11px] leading-relaxed text-slate-400">
+            {/* Content card — separate, appears below */}
+            {isDeepReadingOpen && (
+              <div
+                id="deep-reading-hidden-content"
+                className="mt-4 animate-[fadeIn_0.2s_ease-out] overflow-hidden rounded-[26px] border border-slate-200/80 bg-white/80 shadow-sm backdrop-blur-md"
+              >
+                <div className="max-h-[420px] overflow-y-auto px-5 py-5 md:max-h-[520px] md:px-7 md:py-6">
+                  <p className="mb-5 text-[12px] leading-6 text-slate-400 md:text-[13px]">
                     以下内容不用于定义你，只是提供一些可参考的生活切面。
                   </p>
-                  <div className="space-y-5">
-                    {insights.map(({ label, content }) => (
-                      <div key={label}>
-                        <h4 className="mb-2 text-[13px] font-semibold tracking-[0.02em] text-emerald-700 md:text-sm">
+                  <div className="divide-y divide-slate-100">
+                    {insights.map(({ label, content }, i) => (
+                      <div key={label} className={i === 0 ? "pb-4" : "py-4"}>
+                        <h4 className="text-[13px] font-semibold tracking-[0.02em] text-emerald-700 md:text-sm">
                           {label}
                         </h4>
-                        <div className="space-y-2 text-[13px] leading-6 text-slate-500 md:text-[14px] md:leading-7">
-                          {splitChineseParagraph(content).map((p, i) => <p key={i}>{p}</p>)}
+                        <div className="mt-2 space-y-2 text-[13px] leading-6 text-slate-500 md:text-[14px] md:leading-7">
+                          {splitChineseParagraph(content).map((p, j) => <p key={j}>{p}</p>)}
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-              )}
-            </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
