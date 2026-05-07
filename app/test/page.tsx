@@ -77,43 +77,43 @@ export default function TestPage() {
   return (
     <main className="flex min-h-screen flex-col bg-[var(--bg)]">
       {/* Top bar */}
-      <div className="flex items-center justify-between border-b border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-xl px-5 py-3 sm:px-6">
-        <Link href="/" className="text-sm text-[var(--muted)] transition hover:text-[var(--text)]">← 返回</Link>
-        <span className="text-xs text-[var(--muted)]">{dimLabel[q.dimension]} · {String(ci+1).padStart(2,"0")}/{total}</span>
-        <button onClick={handleRestart} className="text-xs text-[var(--muted)] transition hover:text-rose-400">重新开始</button>
+      <div className="flex items-center justify-between border-b border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-xl px-4 py-2 sm:px-6 sm:py-3">
+        <Link href="/" className="text-xs text-[var(--muted)] transition hover:text-[var(--text)] sm:text-sm">← 返回</Link>
+        <span className="text-[11px] text-[var(--muted)] sm:text-xs">{dimLabel[q.dimension]} · {String(ci+1).padStart(2,"0")}/{total}</span>
+        <button onClick={handleRestart} className="text-[11px] text-[var(--muted)] transition hover:text-rose-400 sm:text-xs">重新开始</button>
       </div>
 
       {/* Progress bar */}
-      <div className="relative h-1.5 w-full bg-[var(--border)]">
+      <div className="relative h-1 w-full bg-[var(--border)]">
         <div className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 shadow-sm transition-all duration-500 ease-out" style={{width:`${progress}%`}}/>
       </div>
 
       {/* Main content */}
-      <div className="flex flex-1 flex-col px-4 py-8 sm:px-6 sm:py-12">
+      <div className="flex flex-1 flex-col px-4 py-4 sm:px-6 sm:py-10">
         <div className="mx-auto flex w-full max-w-[840px] flex-1 flex-col">
           {/* Slide wrapper */}
           <div className="flex-1" style={{transform:animating?`translateX(${slideDir*-12}px)`:"none",opacity:animating?0:1,transition:"all 0.2s ease-out"}}>
             {/* Question */}
-            <h2 className="mb-8 text-center text-xl font-semibold leading-relaxed text-[var(--text)] sm:mb-10 sm:text-2xl">{q.question}</h2>
+            <h2 className="mb-4 text-center text-base font-semibold leading-relaxed text-[var(--text)] sm:mb-8 sm:text-2xl">{q.question}</h2>
 
             {/* A/B description cards */}
-            <div className="mb-8 grid gap-3 sm:mb-10 sm:grid-cols-2 sm:gap-4">
-              <div className={`rounded-2xl border p-5 backdrop-blur-sm transition-all sm:p-6 ${
+            <div className="mb-4 grid gap-2 sm:mb-8 sm:grid-cols-2 sm:gap-4">
+              <div className={`rounded-2xl border p-3 backdrop-blur-sm transition-all sm:p-6 ${
                 isSelectedA?"border-violet-300/60 bg-violet-50/40 ring-1 ring-violet-200/50":"border-[var(--border)] bg-[var(--surface)] hover:border-violet-200/60"
               }`}>
-                <span className="mb-2 block text-[11px] font-semibold tracking-wider text-violet-500 sm:text-xs">A</span>
-                <p className="text-sm leading-relaxed text-[var(--text)] sm:text-base">{q.optionA}</p>
+                <span className="mb-1 block text-[10px] font-semibold tracking-wider text-violet-500 sm:mb-2 sm:text-xs">A</span>
+                <p className="text-[13px] leading-relaxed text-[var(--text)] sm:text-base">{q.optionA}</p>
               </div>
-              <div className={`rounded-2xl border p-5 backdrop-blur-sm transition-all sm:p-6 ${
+              <div className={`rounded-2xl border p-3 backdrop-blur-sm transition-all sm:p-6 ${
                 isSelectedB?"border-amber-300/60 bg-amber-50/40 ring-1 ring-amber-200/50":"border-[var(--border)] bg-[var(--surface)] hover:border-amber-200/60"
               }`}>
-                <span className="mb-2 block text-[11px] font-semibold tracking-wider text-amber-500 sm:text-xs">B</span>
-                <p className="text-sm leading-relaxed text-[var(--text)] sm:text-base">{q.optionB}</p>
+                <span className="mb-1 block text-[10px] font-semibold tracking-wider text-amber-500 sm:mb-2 sm:text-xs">B</span>
+                <p className="text-[13px] leading-relaxed text-[var(--text)] sm:text-base">{q.optionB}</p>
               </div>
             </div>
 
-            {/* Option buttons — light, minimal, 2x2 desktop, vertical mobile */}
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
+            {/* Option buttons */}
+            <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 sm:gap-3">
               {CHOICES.map((ch) => {
                 const isActive = selected === ch.value;
                 const isLeft = ch.value > 0;
@@ -121,14 +121,14 @@ export default function TestPage() {
                 const side = isLeft?"violet":"amber";
                 return (
                   <button key={ch.value} onClick={()=>handleChoose(ch.value,ci===total-1)}
-                    className={`rounded-xl border py-3 text-center transition-all active:scale-[0.98] sm:py-3.5 ${
+                    className={`rounded-xl border py-2.5 text-center transition-all active:scale-[0.98] sm:py-3.5 ${
                       isActive
                         ?`border-${side}-400 bg-${side}-500 text-white shadow-sm`
                         :isStrong
                           ?`border-${side}-200/60 bg-${side}-50/30 text-${side}-700 hover:border-${side}-300`
                           :`border-[var(--border)] bg-[var(--surface)]/60 text-[var(--muted)] hover:border-${side}-200/50 hover:text-${side}-600`
                     }`}>
-                    <span className={`block text-sm font-medium ${isStrong?"sm:text-[15px]":""}`}>{ch.label}</span>
+                    <span className={`block text-[13px] font-medium ${isStrong?"sm:text-[15px]":""}`}>{ch.label}</span>
                     <span className={`mt-0.5 block text-[10px] sm:text-[11px] ${isActive?"opacity-80":isStrong?"opacity-55":"opacity-40"}`}>{ch.sublabel}</span>
                   </button>
                 );
@@ -137,12 +137,12 @@ export default function TestPage() {
           </div>
 
           {/* Bottom nav */}
-          <div className="mt-8 space-y-3">
+          <div className="mt-3 space-y-2 sm:mt-8 sm:space-y-3">
             <button onClick={handlePrev} disabled={ci===0}
-              className={`w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-6 py-3 text-sm font-medium backdrop-blur-sm transition active:scale-[0.98] ${
+              className={`w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-2.5 text-[13px] font-medium backdrop-blur-sm transition active:scale-[0.98] sm:px-6 sm:py-3 sm:text-sm ${
                 ci===0?"cursor-not-allowed text-[var(--muted)]/40":"text-[var(--muted)] hover:border-[var(--accent)]/30 hover:text-[var(--text)]"
               }`}>← 上一题</button>
-            <p className="text-center text-[11px] leading-relaxed text-[var(--muted)]">基于 MBTI 四维行为偏好估算，这只是参考，不是标签。</p>
+            <p className="text-center text-[10px] leading-relaxed text-[var(--muted)] sm:text-[11px] hidden sm:block">基于 MBTI 四维行为偏好估算，这只是参考，不是标签。</p>
           </div>
         </div>
       </div>
