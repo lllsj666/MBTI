@@ -19,76 +19,57 @@ export default function TestPage() {
   const [ceremony, setCeremony] = useState(false);
 
   useEffect(() => {
-    try {
-      const a = localStorage.getItem(STORAGE_KEYS.answers);
-      const s = localStorage.getItem(STORAGE_KEYS.scores);
-      if (a) setAnswers(JSON.parse(a));
-      if (s) setScores(JSON.parse(s));
-    } catch {}
+    try { const a=localStorage.getItem(STORAGE_KEYS.answers);const s=localStorage.getItem(STORAGE_KEYS.scores);if(a)setAnswers(JSON.parse(a));if(s)setScores(JSON.parse(s)); } catch {}
     setLoaded(true);
   }, []);
 
   useEffect(() => {
-    if (!loaded) return;
-    try {
-      localStorage.setItem(STORAGE_KEYS.answers, JSON.stringify(answers));
-      localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(scores));
-    } catch {}
-  }, [answers, scores, loaded]);
+    if(!loaded)return;
+    try { localStorage.setItem(STORAGE_KEYS.answers,JSON.stringify(answers));localStorage.setItem(STORAGE_KEYS.scores,JSON.stringify(scores)); } catch {}
+  }, [answers,scores,loaded]);
 
-  const goToResult = useCallback((s: Record<string, number>) => {
-    const r = calculateMBTI(s);
-    try { localStorage.setItem(STORAGE_KEYS.result, r.type); localStorage.setItem(STORAGE_KEYS.tendency, JSON.stringify(r)); } catch {}
+  const goToResult = useCallback((s: Record<string,number>)=>{
+    const r=calculateMBTI(s);
+    try{localStorage.setItem(STORAGE_KEYS.result,r.type);localStorage.setItem(STORAGE_KEYS.tendency,JSON.stringify(r));}catch{}
     router.push(`/result?type=${r.type}`);
-  }, [router]);
+  },[router]);
 
-  const handleChoose = useCallback((val: number, isLast: boolean) => {
-    if (animating) return;
-    const q = questions[ci];
-    const prev = answers[q.id];
-    let ns = { ...scores };
-    if (prev !== undefined) {
-      const pl = prev > 0 ? q.optionAType : q.optionBType;
-      ns[pl] = Math.max(0, (ns[pl] ?? 0) - Math.abs(prev));
-    }
-    const letter = val > 0 ? q.optionAType : q.optionBType;
-    ns[letter] = (ns[letter] ?? 0) + Math.abs(val);
-    setAnswers((p) => ({ ...p, [q.id]: val }));
-    setScores(ns);
-    if (isLast) { setCeremony(true); setTimeout(() => goToResult(ns), 1300); }
-    else { setSlideDir(1); setAnimating(true); setTimeout(() => { setCi((p) => p + 1); setAnimating(false); }, 200); }
-  }, [ci, answers, scores, animating, goToResult]);
+  const handleChoose = useCallback((val:number,isLast:boolean)=>{
+    if(animating)return;
+    const q=questions[ci];const prev=answers[q.id];let ns={...scores};
+    if(prev!==undefined){const pl=prev>0?q.optionAType:q.optionBType;ns[pl]=Math.max(0,(ns[pl]??0)-Math.abs(prev));}
+    const letter=val>0?q.optionAType:q.optionBType;ns[letter]=(ns[letter]??0)+Math.abs(val);
+    setAnswers(p=>({...p,[q.id]:val}));setScores(ns);
+    if(isLast){setCeremony(true);setTimeout(()=>goToResult(ns),1300);}
+    else{setSlideDir(1);setAnimating(true);setTimeout(()=>{setCi(p=>p+1);setAnimating(false);},200);}
+  },[ci,answers,scores,animating,goToResult]);
 
-  const handlePrev = useCallback(() => {
-    if (ci === 0 || animating) return;
-    setSlideDir(-1); setAnimating(true);
-    setTimeout(() => { setCi((p) => p - 1); setAnimating(false); }, 200);
-  }, [ci, animating]);
+  const handlePrev = useCallback(()=>{
+    if(ci===0||animating)return;
+    setSlideDir(-1);setAnimating(true);setTimeout(()=>{setCi(p=>p-1);setAnimating(false);},200);
+  },[ci,animating]);
 
-  const handleRestart = useCallback(() => {
-    setCi(0); setAnswers({}); setScores({}); setCeremony(false);
-    try { localStorage.removeItem(STORAGE_KEYS.answers); localStorage.removeItem(STORAGE_KEYS.scores); localStorage.removeItem(STORAGE_KEYS.result); localStorage.removeItem(STORAGE_KEYS.tendency); } catch {}
-  }, []);
+  const handleRestart = useCallback(()=>{
+    setCi(0);setAnswers({});setScores({});setCeremony(false);
+    try{localStorage.removeItem(STORAGE_KEYS.answers);localStorage.removeItem(STORAGE_KEYS.scores);localStorage.removeItem(STORAGE_KEYS.result);localStorage.removeItem(STORAGE_KEYS.tendency);}catch{}
+  },[]);
 
-  if (!loaded) return <main className="flex min-h-screen items-center justify-center bg-[var(--bg)]"><div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)] border-t-transparent" /></main>;
+  if(!loaded)return<main className="flex min-h-screen items-center justify-center bg-[var(--bg)]"><div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)] border-t-transparent"/></main>;
 
-  const q = questions[ci];
-  const answered = Object.keys(answers).length;
-  const progress = (answered / total) * 100;
-  const selected = answers[q.id] ?? null;
-  const isSelectedA = selected !== null && selected > 0;
-  const isSelectedB = selected !== null && selected < 0;
+  const q=questions[ci];
+  const answered=Object.keys(answers).length;
+  const progress=(answered/total)*100;
+  const selected=answers[q.id]??null;
+  const isSelectedA=selected!==null&&selected>0;
+  const isSelectedB=selected!==null&&selected<0;
 
-  if (ceremony) return (
+  if(ceremony)return(
     <main className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
       <div className="animate-[fadeIn_0.3s_ease-out] text-center">
-        <div className="mb-6 flex justify-center gap-3">
-          {["bg-violet-400","bg-emerald-400","bg-amber-400","bg-sky-400"].map((c,i)=><div key={i} className={`h-4 w-4 rounded-full ${c} animate-[fadeIn_0.3s_ease-out_both]`} style={{animationDelay:`${0.15*i}s`}}/>)}
-        </div>
+        <div className="mb-6 flex justify-center gap-3">{["violet","emerald","amber","sky"].map((c,i)=><div key={i} className={`h-4 w-4 rounded-full bg-${c}-400 animate-[fadeIn_0.3s_ease-out_both]`} style={{animationDelay:`${0.15*i}s`}}/>)}</div>
         <div className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-xl backdrop-blur-xl animate-[fadeIn_0.5s_ease-out_0.4s_both]">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-violet-100 to-emerald-100"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8f6ed5" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <p className="text-lg font-bold text-[var(--text)]">正在生成你的性格报告</p>
-          <p className="mt-2 text-sm text-[var(--muted)]">稍等...</p>
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-violet-100 to-emerald-100"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <p className="text-lg font-bold text-[var(--text)]">正在生成你的性格报告</p><p className="mt-2 text-sm text-[var(--muted)]">稍等...</p>
         </div>
       </div>
     </main>
@@ -97,71 +78,70 @@ export default function TestPage() {
   return (
     <main className="flex min-h-screen flex-col bg-[var(--bg)]">
       {/* Top bar */}
-      <div className="flex items-center justify-between border-b border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-xl px-4 py-2.5 sm:px-6 sm:py-3">
+      <div className="flex items-center justify-between border-b border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-xl px-5 py-3 sm:px-6">
         <Link href="/" className="text-sm text-[var(--muted)] transition hover:text-[var(--text)]">← 返回</Link>
-        <span className="text-xs text-[var(--muted)]">{dimLabel[q.dimension]} · {ci+1}/{total}</span>
+        <span className="text-xs text-[var(--muted)]">{dimLabel[q.dimension]} · {String(ci+1).padStart(2,"0")}/{total}</span>
         <button onClick={handleRestart} className="text-xs text-[var(--muted)] transition hover:text-rose-400">重新开始</button>
       </div>
 
       {/* Progress bar */}
-      <div className="relative h-2 w-full bg-[var(--border)]">
+      <div className="relative h-1.5 w-full bg-[var(--border)]">
         <div className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 shadow-sm transition-all duration-500 ease-out" style={{width:`${progress}%`}}/>
       </div>
 
-      {/* Question container */}
-      <div className="flex flex-1 flex-col px-4 py-6 sm:px-6 sm:py-10">
-        <div className="mx-auto flex w-full max-w-[780px] flex-1 flex-col">
-          <div className="flex-1 overflow-hidden">
-            <div className="transition-all duration-200 ease-out" style={{transform:animating?`translateX(${slideDir*-16}px)`:"translateX(0)",opacity:animating?0:1}}>
-              {/* Question */}
-              <h2 className="mb-6 text-center text-xl font-semibold leading-relaxed text-[var(--text)] sm:mb-8 sm:text-2xl">{q.question}</h2>
+      {/* Main content */}
+      <div className="flex flex-1 flex-col px-4 py-8 sm:px-6 sm:py-12">
+        <div className="mx-auto flex w-full max-w-[840px] flex-1 flex-col">
+          {/* Slide wrapper */}
+          <div className="flex-1" style={{transform:animating?`translateX(${slideDir*-12}px)`:"none",opacity:animating?0:1,transition:"all 0.2s ease-out"}}>
+            {/* Question */}
+            <h2 className="mb-8 text-center text-xl font-semibold leading-relaxed text-[var(--text)] sm:mb-10 sm:text-2xl">{q.question}</h2>
 
-              {/* A/B cards */}
-              <div className="mb-6 grid gap-4 sm:mb-8 sm:grid-cols-2">
-                <div className={`rounded-2xl border p-5 backdrop-blur-xl transition-all sm:p-6 ${
-                  isSelectedA ? "border-violet-300/60 bg-violet-50/40 ring-1 ring-violet-200/50" : "border-[var(--border)] bg-[var(--surface)] hover:border-violet-200/60"
-                }`}>
-                  <span className="mb-2 block text-xs font-semibold tracking-wider text-violet-500">A</span>
-                  <p className="text-sm leading-relaxed text-[var(--text)] sm:text-base">{q.optionA}</p>
-                </div>
-                <div className={`rounded-2xl border p-5 backdrop-blur-xl transition-all sm:p-6 ${
-                  isSelectedB ? "border-amber-300/60 bg-amber-50/40 ring-1 ring-amber-200/50" : "border-[var(--border)] bg-[var(--surface)] hover:border-amber-200/60"
-                }`}>
-                  <span className="mb-2 block text-xs font-semibold tracking-wider text-amber-500">B</span>
-                  <p className="text-sm leading-relaxed text-[var(--text)] sm:text-base">{q.optionB}</p>
-                </div>
+            {/* A/B description cards */}
+            <div className="mb-8 grid gap-3 sm:mb-10 sm:grid-cols-2 sm:gap-4">
+              <div className={`rounded-2xl border p-5 backdrop-blur-sm transition-all sm:p-6 ${
+                isSelectedA?"border-violet-300/60 bg-violet-50/40 ring-1 ring-violet-200/50":"border-[var(--border)] bg-[var(--surface)] hover:border-violet-200/60"
+              }`}>
+                <span className="mb-2 block text-[11px] font-semibold tracking-wider text-violet-500 sm:text-xs">A</span>
+                <p className="text-sm leading-relaxed text-[var(--text)] sm:text-base">{q.optionA}</p>
               </div>
+              <div className={`rounded-2xl border p-5 backdrop-blur-sm transition-all sm:p-6 ${
+                isSelectedB?"border-amber-300/60 bg-amber-50/40 ring-1 ring-amber-200/50":"border-[var(--border)] bg-[var(--surface)] hover:border-amber-200/60"
+              }`}>
+                <span className="mb-2 block text-[11px] font-semibold tracking-wider text-amber-500 sm:text-xs">B</span>
+                <p className="text-sm leading-relaxed text-[var(--text)] sm:text-base">{q.optionB}</p>
+              </div>
+            </div>
 
-              {/* Choice buttons — vertical on mobile, horizontal on desktop */}
-              <div className="flex flex-col gap-2.5 sm:flex-row sm:gap-3">
-                {CHOICES.map((ch) => {
-                  const isActive = selected === ch.value;
-                  const isLeft = ch.value > 0;
-                  const isStrong = Math.abs(ch.value) === 2;
-                  const side = isLeft ? "violet" : "amber";
-                  return (
-                    <button key={ch.value} onClick={() => handleChoose(ch.value, ci===total-1)}
-                      className={`flex-1 rounded-2xl border py-3 text-center transition-all active:scale-[0.97] sm:min-h-[56px] sm:py-3.5 ${
-                        isActive
-                          ? `border-${side}-400 bg-${side}-500 text-white shadow-md`
-                          : isStrong
-                            ? `border-${side}-200 bg-${side}-50/60 text-${side}-700 hover:border-${side}-300`
-                            : `border-${side}-100/60 bg-[var(--surface)] text-${side}-600 hover:border-${side}-200`
-                      }`}>
-                      <span className={`block font-medium ${isStrong?"text-sm sm:text-base":"text-sm"}`}>{ch.label}</span>
-                      <span className={`mt-0.5 block text-[11px] ${isActive?"opacity-80":isStrong?"opacity-60":"opacity-40"}`}>{ch.sublabel}</span>
-                    </button>
-                  );
-                })}
-              </div>
+            {/* Option buttons — 2x2 grid on desktop, vertical stack on mobile */}
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3">
+              {CHOICES.map((ch) => {
+                const isActive = selected === ch.value;
+                const isLeft = ch.value > 0;
+                const isStrong = Math.abs(ch.value) === 2;
+                const side = isLeft?"violet":"amber";
+                return (
+                  <button key={ch.value} onClick={()=>handleChoose(ch.value,ci===total-1)}
+                    className={`rounded-2xl border py-4 text-center transition-all active:scale-[0.97] sm:py-5 ${
+                      isActive
+                        ?`border-${side}-400 bg-${side}-500 text-white shadow-md`
+                        :isStrong
+                          ?`border-${side}-200 bg-${side}-50/60 text-${side}-700 hover:border-${side}-300 hover:shadow-sm`
+                          :`border-${side}-100/60 bg-[var(--surface)] text-${side}-600 hover:border-${side}-200`
+                    }`}>
+                    <span className={`block font-semibold ${isStrong?"text-base":"text-sm"}`}>{ch.label}</span>
+                    <span className={`mt-1 block text-[11px] ${isActive?"opacity-80":isStrong?"opacity-60":"opacity-40"}`}>{ch.sublabel}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Bottom */}
-          <div className="mt-6 space-y-3 sm:mt-8">
+          {/* Bottom nav */}
+          <div className="mt-8 space-y-3">
             <button onClick={handlePrev} disabled={ci===0}
               className={`w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-6 py-3 text-sm font-medium backdrop-blur-sm transition active:scale-[0.98] ${
-                ci===0?"cursor-not-allowed text-[var(--muted)]/40":"text-[var(--muted)] hover:border-violet-300/40 hover:text-[var(--text)]"
+                ci===0?"cursor-not-allowed text-[var(--muted)]/40":"text-[var(--muted)] hover:border-[var(--accent)]/30 hover:text-[var(--text)]"
               }`}>← 上一题</button>
             <p className="text-center text-[11px] leading-relaxed text-[var(--muted)]">基于 MBTI 四维行为偏好估算，这只是参考，不是标签。</p>
           </div>
