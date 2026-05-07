@@ -3,7 +3,7 @@
 import { useEffect, useMemo } from "react";
 import Link from "next/link";
 import { motion, useAnimation, type Variants } from "framer-motion";
-import { getDefaultDimensionScores } from "@/app/data/mbti-themes";
+import { getMbtiTheme, getDefaultDimensionScores } from "@/app/data/mbti-themes";
 import { mbtiResults } from "@/app/data/mbti-results";
 
 const fadeUp: Variants = {
@@ -38,12 +38,13 @@ export default function Home() {
   const randomExample = useMemo(() => {
     const t = allTypes[Math.floor(Math.random() * allTypes.length)];
     const data = mbtiResults[t];
+    const camp = getMbtiTheme(t);
     const dims = getDefaultDimensionScores(t);
     const chips = dims.map((d) => {
       const isLeft = d.left.pct >= d.right.pct;
       return { letter: isLeft ? d.left.letter : d.right.letter, pct: isLeft ? d.left.pct : d.right.pct };
     });
-    return { type: t, name: data.name, keywords: data.keywords.slice(0,4), chips };
+    return { type: t, name: data.name, keywords: data.keywords.slice(0,4), camp, chips };
   }, []);
 
   useEffect(() => { ctrls.start("onscreen"); }, [ctrls]);
@@ -99,18 +100,18 @@ export default function Home() {
 
         {/* Left: preview card (desktop) / Bottom: card (mobile) */}
         <motion.div className="mb-12 flex-1 lg:mb-0" initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0, transition: { duration: 0.6, delay: 0.2 } }}>
-          <div className={`relative overflow-hidden rounded-3xl border ${accent.border} bg-[var(--surface)] shadow-xl backdrop-blur-xl`}>
-            {/* Accent glow */}
-            <div className={`pointer-events-none absolute -top-16 left-1/2 h-[200px] w-[300px] -translate-x-1/2 rounded-full ${accent.glow} blur-[80px]`} />
+          <div className={`relative overflow-hidden rounded-3xl border ${randomExample.camp.theme.cardBorder} bg-[var(--surface)] shadow-xl backdrop-blur-xl`}>
+            {/* Camp glow */}
+            <div className={`pointer-events-none absolute -top-16 left-1/2 h-[200px] w-[300px] -translate-x-1/2 rounded-full opacity-15 blur-[80px] ${randomExample.camp.theme.accentDot}`} />
             <div className="relative p-6 sm:p-8">
-              <span className={`mb-4 inline-block rounded-full ${accent.badge} px-3 py-0.5 text-xs font-medium`}>
-                {randomExample.name}
+              <span className={`mb-4 inline-block rounded-full ${randomExample.camp.theme.badge} px-3 py-0.5 text-xs font-medium`}>
+                {randomExample.camp.label}
               </span>
               <p className="mb-1 text-6xl font-black tracking-widest text-[var(--text)]">{randomExample.type}</p>
               <p className="mb-4 text-sm text-[var(--muted)]">{randomExample.name}</p>
               <div className="mb-5 flex flex-wrap gap-1.5">
                 {randomExample.keywords.map((k: string) => (
-                  <span key={k} className={`rounded-full border ${accent.border} bg-[var(--surface)] px-2.5 py-0.5 text-xs text-[var(--muted)]`}>{k}</span>
+                  <span key={k} className={`rounded-full border ${randomExample.camp.theme.cardBorder} bg-[var(--surface)] px-2.5 py-0.5 text-xs text-[var(--muted)]`}>{k}</span>
                 ))}
               </div>
               <div className="flex flex-wrap gap-2">
