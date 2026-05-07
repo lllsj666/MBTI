@@ -57,8 +57,7 @@ export default function TestPage() {
   if(!loaded)return<main className="flex min-h-screen items-center justify-center bg-[var(--bg)]"><div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--accent)] border-t-transparent"/></main>;
 
   const q=questions[ci];
-  const answered=Object.keys(answers).length;
-  const progress=(answered/total)*100;
+  const progress=((ci+(answers[q.id]!==undefined?1:0))/total)*100;
   const selected=answers[q.id]??null;
   const isSelectedA=selected!==null&&selected>0;
   const isSelectedB=selected!==null&&selected<0;
