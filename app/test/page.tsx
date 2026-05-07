@@ -7,10 +7,10 @@ import { questions, CHOICES, calculateMBTI, STORAGE_KEYS } from "@/app/data/ques
 
 const total = questions.length;
 const SEGMENTS = [
-  { start: 0, end: 8, color: "bg-violet-500", label: "社交能量", dim: "EI" },
-  { start: 9, end: 17, color: "bg-emerald-500", label: "信息偏好", dim: "SN" },
-  { start: 18, end: 26, color: "bg-amber-500", label: "决策方式", dim: "TF" },
-  { start: 27, end: 35, color: "bg-sky-500", label: "生活节奏", dim: "JP" },
+  { start: 0, end: 8, color: "from-violet-400 to-violet-300", dot: "bg-violet-400", label: "社交能量", dim: "EI" },
+  { start: 9, end: 17, color: "from-emerald-400 to-emerald-300", dot: "bg-emerald-400", label: "信息偏好", dim: "SN" },
+  { start: 18, end: 26, color: "from-amber-400 to-amber-300", dot: "bg-amber-400", label: "决策方式", dim: "TF" },
+  { start: 27, end: 35, color: "from-sky-400 to-sky-300", dot: "bg-sky-400", label: "生活节奏", dim: "JP" },
 ];
 
 const dimLabel: Record<string, string> = { EI: "社交能量", SN: "信息偏好", TF: "决策方式", JP: "生活节奏" };
@@ -68,7 +68,6 @@ export default function TestPage() {
       setScores(nextScores);
 
       if (isLast) {
-        // Ceremony
         setCeremony(true);
         setTimeout(() => goToResult(nextScores), 1300);
       } else {
@@ -101,7 +100,7 @@ export default function TestPage() {
   if (!loaded) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-50">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-violet-400 border-t-transparent" />
       </main>
     );
   }
@@ -114,19 +113,13 @@ export default function TestPage() {
   const isSelectedB = selected !== null && selected < 0;
   const currentSeg = SEGMENTS.find((s) => currentIndex >= s.start && currentIndex <= s.end) || SEGMENTS[0];
 
-  // Ceremony overlay
   if (ceremony) {
     return (
-      <main className="relative flex min-h-screen items-center justify-center bg-slate-50">
-        {/* Dots converging */}
+      <main className="flex min-h-screen items-center justify-center bg-slate-50">
         <div className="animate-[fadeIn_0.3s_ease-out]">
-          <div className="flex gap-3 mb-6">
-            {["bg-violet-500", "bg-emerald-500", "bg-amber-500", "bg-sky-500"].map((color, i) => (
-              <div
-                key={i}
-                className={`h-4 w-4 rounded-full opacity-80 ${color} animate-[fadeIn_0.3s_ease-out_both]`}
-                style={{ animationDelay: `${0.15 * i}s` }}
-              />
+          <div className="mb-6 flex gap-3">
+            {["bg-violet-400", "bg-emerald-400", "bg-amber-400", "bg-sky-400"].map((color, i) => (
+              <div key={i} className={`h-4 w-4 rounded-full opacity-80 ${color} animate-[fadeIn_0.3s_ease-out_both]`} style={{ animationDelay: `${0.15 * i}s` }} />
             ))}
           </div>
           <div className="rounded-3xl border border-slate-200 bg-white/90 p-8 text-center shadow-2xl backdrop-blur-xl animate-[fadeIn_0.5s_ease-out_0.4s_both]">
@@ -144,74 +137,75 @@ export default function TestPage() {
   return (
     <main className="flex min-h-screen flex-col bg-slate-50">
       {/* Top bar */}
-      <div className="flex items-center justify-between border-b border-black/5 bg-white/80 backdrop-blur-xl px-5 py-3">
+      <div className="flex items-center justify-between border-b border-black/5 bg-white/80 backdrop-blur-xl px-4 py-2.5 sm:px-5 sm:py-3">
         <Link href="/" className="text-sm text-slate-500 transition hover:text-slate-900">← 返回</Link>
-        <span className="text-xs text-slate-400">{dimLabel[q.dimension]} · 第 {currentIndex + 1}/{total} 题</span>
+        <span className="text-xs text-slate-400">{dimLabel[q.dimension]} · {currentIndex + 1}/{total}</span>
         <button onClick={handleRestart} className="text-xs text-slate-400 transition hover:text-rose-400">重新开始</button>
       </div>
 
-      {/* Segmented progress bar */}
-      <div className="relative h-1.5 w-full bg-slate-200">
+      {/* Progress bar — elegant gradient segments */}
+      <div className="relative h-1 w-full bg-slate-100">
         {SEGMENTS.map(({ start, end, color }) => (
           <div
             key={start}
-            className={`absolute top-0 h-full ${color}`}
-            style={{
-              left: `${(start / total) * 100}%`,
-              width: `${((end - start + 1) / total) * 100}%`,
-            }}
+            className={`absolute top-0 h-full rounded-full bg-gradient-to-r ${color}`}
+            style={{ left: `${(start / total) * 100}%`, width: `${((end - start + 1) / total) * 100}%` }}
           />
         ))}
-        {/* Current highlight */}
-        <div className={`absolute top-0 h-full ${currentSeg.color} opacity-40 transition-all`} style={{ left: `${(currentIndex / total) * 100}%`, width: `${(1 / total) * 100}%` }} />
-        {/* Filled progress */}
-        <div className="absolute top-0 h-full bg-white/60 transition-all duration-500" style={{ left: `${progress}%`, right: 0 }} />
+        <div className="absolute top-0 h-full bg-white/50 transition-all duration-500" style={{ left: `${progress}%`, right: 0 }} />
+        <div className={`absolute top-0 h-full w-1 rounded-full ${currentSeg.dot} shadow-sm transition-all duration-300`} style={{ left: `calc(${(currentIndex / total) * 100}% - 2px)` }} />
       </div>
 
-      {/* Question */}
-      <div className="flex flex-1 flex-col px-5 py-5 sm:py-8">
-        <div className="mx-auto flex w-full max-w-lg flex-1 flex-col">
-          {/* Slide container */}
+      {/* Question area */}
+      <div className="flex flex-1 flex-col px-4 py-4 sm:px-5 sm:py-6">
+        <div className="mx-auto flex w-full max-w-xl flex-1 flex-col">
           <div className="flex-1 overflow-hidden">
             <div
-              className="transition-transform duration-200 ease-out"
-              style={{ transform: animating ? `translateX(${slideDir * -30}px)` : "translateX(0)", opacity: animating ? 0 : 1 }}
+              className="transition-all duration-200 ease-out"
+              style={{ transform: animating ? `translateX(${slideDir * -20}px)` : "translateX(0)", opacity: animating ? 0 : 1 }}
             >
-              <h2 className="mb-5 text-center text-lg font-semibold leading-relaxed text-slate-800 sm:text-xl">{q.question}</h2>
+              <h2 className="mb-4 text-center text-base font-semibold leading-relaxed text-slate-800 sm:mb-5 sm:text-xl">
+                {q.question}
+              </h2>
 
-              {/* A/B glass cards */}
-              <div className="mb-5 grid gap-3 sm:grid-cols-2">
+              {/* A/B cards */}
+              <div className="mb-4 grid gap-3 sm:mb-5">
                 <button
                   onClick={() => handleChoose(2, currentIndex === total - 1)}
-                  className={`rounded-3xl border p-5 text-left backdrop-blur-xl transition-all active:scale-[0.98] ${
-                    isSelectedA ? "border-violet-400 bg-violet-50/60 ring-2 ring-violet-200 shadow-md" : "border-white/60 bg-white/70 hover:border-violet-300 hover:shadow-lg hover:scale-[1.01] shadow-sm"
+                  className={`rounded-2xl border p-4 text-left backdrop-blur-xl transition-all active:scale-[0.98] sm:rounded-3xl sm:p-5 ${
+                    isSelectedA ? "border-violet-300 bg-violet-50/70 ring-1 ring-violet-200 shadow-md" : "border-white/60 bg-white/70 hover:border-violet-200 hover:shadow-md hover:scale-[1.005] shadow-sm"
                   }`}>
-                  <span className="mb-2 block text-[11px] font-semibold tracking-wider text-violet-500 uppercase">A</span>
-                  <p className="text-sm leading-relaxed text-slate-700">{q.optionA}</p>
+                  <span className="mb-1.5 block text-[10px] font-semibold tracking-wider text-violet-500 uppercase sm:mb-2 sm:text-[11px]">A</span>
+                  <p className="text-sm leading-relaxed text-slate-700 sm:text-[15px]">{q.optionA}</p>
                 </button>
                 <button
                   onClick={() => handleChoose(-2, currentIndex === total - 1)}
-                  className={`rounded-3xl border p-5 text-left backdrop-blur-xl transition-all active:scale-[0.98] ${
-                    isSelectedB ? "border-amber-400 bg-amber-50/60 ring-2 ring-amber-200 shadow-md" : "border-white/60 bg-white/70 hover:border-amber-300 hover:shadow-lg hover:scale-[1.01] shadow-sm"
+                  className={`rounded-2xl border p-4 text-left backdrop-blur-xl transition-all active:scale-[0.98] sm:rounded-3xl sm:p-5 ${
+                    isSelectedB ? "border-amber-300 bg-amber-50/70 ring-1 ring-amber-200 shadow-md" : "border-white/60 bg-white/70 hover:border-amber-200 hover:shadow-md hover:scale-[1.005] shadow-sm"
                   }`}>
-                  <span className="mb-2 block text-[11px] font-semibold tracking-wider text-amber-500 uppercase">B</span>
-                  <p className="text-sm leading-relaxed text-slate-700">{q.optionB}</p>
+                  <span className="mb-1.5 block text-[10px] font-semibold tracking-wider text-amber-500 uppercase sm:mb-2 sm:text-[11px]">B</span>
+                  <p className="text-sm leading-relaxed text-slate-700 sm:text-[15px]">{q.optionB}</p>
                 </button>
               </div>
 
-              {/* Choice buttons */}
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+              {/* Choice buttons — 更像 deeper, 有点像 lighter */}
+              <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
                 {CHOICES.map((ch) => {
                   const isActive = selected === ch.value;
                   const isLeft = ch.value > 0;
+                  const isStrong = Math.abs(ch.value) === 2;
+                  const side = isLeft ? "violet" : "amber";
                   return (
                     <button key={ch.value} onClick={() => handleChoose(ch.value, currentIndex === total - 1)}
-                      className={`rounded-xl border p-2.5 text-center transition-all active:scale-[0.96] ${
-                        isActive ? (isLeft ? "border-violet-400 bg-violet-500 text-white shadow-md" : "border-amber-400 bg-amber-500 text-white shadow-md")
-                        : isLeft ? "border-violet-200 bg-white/70 text-violet-600 hover:border-violet-400 hover:bg-violet-50" : "border-amber-200 bg-white/70 text-amber-600 hover:border-amber-400 hover:bg-amber-50"
+                      className={`rounded-xl border py-2.5 text-center transition-all active:scale-[0.96] sm:py-3 ${
+                        isActive
+                          ? `border-${side}-400 bg-${side}-500 text-white shadow-md`
+                          : isStrong
+                            ? `border-${side}-200 bg-${side}-50/70 text-${side}-700 hover:border-${side}-300 hover:bg-${side}-50 shadow-sm`
+                            : `border-${side}-100 bg-white/80 text-${side}-600 hover:border-${side}-200 hover:bg-${side}-50/40`
                       }`}>
-                      <span className="block text-sm font-medium">{ch.label}</span>
-                      <span className={`mt-0.5 block text-[10px] ${isActive ? "opacity-80" : isLeft ? "text-violet-400" : "text-amber-400"}`}>{ch.sublabel}</span>
+                      <span className={`block text-sm font-medium ${isStrong ? "sm:text-[15px]" : "sm:text-sm"}`}>{ch.label}</span>
+                      <span className={`mt-0.5 block text-[10px] sm:text-[11px] ${isActive ? "opacity-80" : isStrong ? "opacity-70" : "opacity-50"}`}>{ch.sublabel}</span>
                     </button>
                   );
                 })}
@@ -220,9 +214,9 @@ export default function TestPage() {
           </div>
 
           {/* Bottom */}
-          <div className="mt-auto space-y-3 pt-6">
+          <div className="mt-auto space-y-2 pt-4 sm:space-y-3 sm:pt-6">
             {currentIndex > 0 && (
-              <button onClick={handlePrev} className="w-full rounded-xl border border-slate-200 bg-white/70 px-6 py-3 text-sm font-medium text-slate-600 backdrop-blur-sm transition hover:border-slate-300 hover:text-slate-900 active:scale-[0.98]">
+              <button onClick={handlePrev} className="w-full rounded-xl border border-slate-200 bg-white/70 px-5 py-2.5 text-sm font-medium text-slate-600 backdrop-blur-sm transition hover:border-slate-300 hover:text-slate-900 active:scale-[0.98] sm:px-6 sm:py-3">
                 ← 上一题
               </button>
             )}

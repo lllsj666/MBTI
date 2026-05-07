@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import Link from "next/link";
 import { motion, useAnimation, type Variants } from "framer-motion";
+import { getMbtiTheme, getDefaultDimensionScores } from "@/app/data/mbti-themes";
+import { mbtiResults } from "@/app/data/mbti-results";
 
 const fadeUp: Variants = {
   offscreen: { opacity: 0, y: 24 },
@@ -25,11 +27,24 @@ const dimCards = [
   { color: "from-sky-100 to-blue-50", accent: "text-sky-600", title: "生活节奏", desc: "你偏好提前规划还是保留弹性" },
 ];
 
+const allTypes = Object.keys(mbtiResults);
+
 export default function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isDesktop, setIsDesktop] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   const ctrls = useAnimation();
+  const randomExample = useMemo(() => {
+    const t = allTypes[Math.floor(Math.random() * allTypes.length)];
+    const data = mbtiResults[t];
+    const camp = getMbtiTheme(t);
+    const dims = getDefaultDimensionScores(t);
+    const chips = dims.map((d) => {
+      const isLeft = d.left.pct >= d.right.pct;
+      return { letter: isLeft ? d.left.letter : d.right.letter, pct: isLeft ? d.left.pct : d.right.pct };
+    });
+    return { type: t, name: data.name, keywords: data.keywords.slice(0, 4), camp, chips };
+  }, []);
 
   useEffect(() => {
     setIsDesktop(window.innerWidth > 768);
@@ -107,9 +122,6 @@ export default function Home() {
               开始测试
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </Link>
-            <Link href="/result?type=INFJ" className="inline-flex items-center rounded-xl border border-slate-200 bg-white/70 px-8 py-3.5 text-sm font-medium text-slate-600 backdrop-blur-sm transition hover:border-slate-300 hover:-translate-y-0.5 hover:text-slate-900 hover:shadow-sm active:scale-95">
-              查看示例结果
-            </Link>
           </motion.div>
           <motion.p variants={fadeUp} className="mt-5 text-xs text-slate-400">约 5-7 分钟 · 免费 · 无需注册 · 仅供自我探索参考</motion.p>
         </div>
@@ -132,29 +144,33 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* Preview */}
+      {/* Preview — random display card */}
       <motion.section className="relative z-10 px-5 py-16 sm:py-24" initial="offscreen" whileInView="onscreen" viewport={{ once: true, margin: "-80px" }}>
         <motion.h2 variants={fadeUp} className="mb-8 text-center text-2xl font-bold tracking-tight sm:text-3xl">得到的不只是四个字母</motion.h2>
         <motion.div variants={fadeUp} className="mx-auto max-w-lg">
-          <Link href="/result?type=INFJ" className="group relative block overflow-hidden rounded-3xl border border-emerald-200/60 bg-white/80 shadow-xl shadow-emerald-100/30 backdrop-blur-xl transition hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-100/40">
-            <div className="pointer-events-none absolute -top-16 left-1/2 h-[200px] w-[300px] -translate-x-1/2 rounded-full bg-emerald-200/30 blur-[80px] transition group-hover:bg-emerald-200/40" />
+          <div className="relative overflow-hidden rounded-3xl border border-slate-200/60 bg-white/80 shadow-xl shadow-slate-200/30 backdrop-blur-xl">
+            <div className="pointer-events-none absolute -top-16 left-1/2 h-[200px] w-[300px] -translate-x-1/2 rounded-full bg-slate-200/20 blur-[80px]" />
             <div className="relative grid gap-6 p-6 sm:grid-cols-[1fr_auto] sm:p-8">
               <div>
-                <span className="mb-3 inline-block rounded-full bg-emerald-100 px-3 py-0.5 text-xs font-medium text-emerald-700">绿人 · 外交家</span>
-                <p className="mb-2 text-5xl font-bold tracking-widest text-slate-900">INFJ</p>
+                <span className={`mb-3 inline-block rounded-full ${randomExample.camp.theme.badge} px-3 py-0.5 text-xs font-medium`}>
+                  {randomExample.camp.label}
+                </span>
+                <p className="mb-2 text-5xl font-bold tracking-widest text-slate-900">{randomExample.type}</p>
+                <p className="mb-1 text-sm text-slate-500">{randomExample.name}</p>
                 <div className="mb-3 flex flex-wrap gap-1.5">
-                  {["共情", "洞察", "理想感", "深度关系"].map((k) => (<span key={k} className="rounded-full border border-emerald-200 bg-white/70 px-2.5 py-0.5 text-xs text-slate-500">{k}</span>))}
+                  {randomExample.keywords.map((k: string) => (
+                    <span key={k} className="rounded-full border border-slate-200 bg-white/70 px-2.5 py-0.5 text-xs text-slate-500">{k}</span>
+                  ))}
                 </div>
-                <p className="text-sm leading-relaxed text-slate-500">你的优势、需要注意的地方、默契类型、磨合类型、关系模式和生活建议。</p>
-                <p className="mt-3 text-xs font-medium text-emerald-600 transition group-hover:translate-x-1">查看完整示例 →</p>
+                <p className="text-sm leading-relaxed text-slate-400">你的优势、需要注意的地方、默契类型、磨合类型、关系模式和生活建议。完成测试即可查看你的专属结果。</p>
               </div>
               <div className="flex flex-row justify-start gap-2 sm:flex-col sm:justify-center">
-                {[{ dim: "I", pct: 71 }, { dim: "N", pct: 71 }, { dim: "F", pct: 60 }, { dim: "J", pct: 69 }].map(({ dim, pct }) => (
-                  <div key={dim} className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/60 px-3 py-1.5 text-xs backdrop-blur-sm"><span className="font-bold text-slate-700">{dim}</span><span className="text-slate-400">{pct}%</span></div>
+                {randomExample.chips.map(({ letter, pct }: { letter: string; pct: number }) => (
+                  <div key={letter} className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/60 px-3 py-1.5 text-xs backdrop-blur-sm"><span className="font-bold text-slate-700">{letter}</span><span className="text-slate-400">{pct}%</span></div>
                 ))}
               </div>
             </div>
-          </Link>
+          </div>
         </motion.div>
       </motion.section>
 

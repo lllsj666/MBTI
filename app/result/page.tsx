@@ -21,7 +21,6 @@ function ResultContent() {
   const [result, setResult] = useState<MBTIResult | null>(null);
   const [tendency, setTendency] = useState<MBTIResult2 | null>(null);
   const [isExample, setIsExample] = useState(false);
-  const [shareText, setShareText] = useState("复制结果链接");
   const [loaded, setLoaded] = useState(false);
   const [dimModal, setDimModal] = useState<DimensionScore | null>(null);
   const [descModal, setDescModal] = useState(false);
@@ -48,11 +47,6 @@ function ResultContent() {
     try { localStorage.removeItem(STORAGE_KEYS.answers); localStorage.removeItem(STORAGE_KEYS.scores); localStorage.removeItem(STORAGE_KEYS.result); localStorage.removeItem(STORAGE_KEYS.tendency); } catch { /* ignore */ }
     router.push("/test");
   }, [router]);
-
-  const handleShare = useCallback(async () => {
-    if (!result) return;
-    try { await navigator.clipboard.writeText(`${window.location.origin}/result?type=${result.type}`); setShareText("已复制链接"); setTimeout(() => setShareText("复制结果链接"), 2000); } catch { setShareText("复制失败"); setTimeout(() => setShareText("复制结果链接"), 2000); }
-  }, [result]);
 
   const scrollToContent = useCallback(() => {
     contentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -239,16 +233,13 @@ function ResultContent() {
         </div>
       </section>
 
-      {/* ===== 5. Actions ===== */}
-      <section className="relative z-10 px-5 py-5">
-        <div className="mx-auto flex max-w-2xl flex-col gap-3 sm:flex-row">
-          <button onClick={handleRestart} className={`flex-1 rounded-xl border ${t.cardBorder} bg-white/80 backdrop-blur-sm px-6 py-3 text-sm font-medium text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]`}>重新测试</button>
-          <button onClick={handleShare} className={`flex-1 rounded-xl ${t.button} px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]`}>{shareText}</button>
-        </div>
-      </section>
-
-      <footer className="relative z-10 border-t border-black/5 px-5 py-7">
-        <div className="text-center text-xs text-slate-400">MBTI 性格测试-覆</div>
+      <footer className="relative z-10 border-t border-black/5 px-5 py-8">
+        <p className="text-center text-xs leading-relaxed text-slate-400">
+          MBTI 性格测试-覆
+        </p>
+        <p className="mt-3 text-center text-[11px] leading-relaxed text-slate-400">
+          这只是参考，不是定义。
+        </p>
       </footer>
 
       {/* ===== Dimension detail modal ===== */}
