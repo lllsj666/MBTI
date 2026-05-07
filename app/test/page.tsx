@@ -106,8 +106,8 @@ export default function TestPage() {
               </div>
             </div>
 
-            {/* Option buttons — A=violet on top, B=amber at bottom */}
-            <div className="grid grid-cols-1 gap-1.5 sm:gap-3">
+            {/* Option buttons — 2x2 grid */}
+            <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 sm:gap-3">
               {CHOICES.map((ch) => {
                 const isStrong = Math.abs(ch.value) === 2;
                 const isLeft = ch.value > 0;

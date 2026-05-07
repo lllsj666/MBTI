@@ -346,10 +346,10 @@ export const questions: Question[] = [
 
 // choice values: 2 = 更像A, 1 = 有点像A, -1 = 有点像B, -2 = 更像B
 export const CHOICES = [
-  { label: "更像左边", sublabel: "A 描述的就是我", value: 2 },
-  { label: "有点像左边", sublabel: "A 更接近我", value: 1 },
-  { label: "有点像右边", sublabel: "B 更接近我", value: -1 },
-  { label: "更像右边", sublabel: "B 描述的就是我", value: -2 },
+  { label: "更像上面", sublabel: "A 描述的就是我", value: 2 },
+  { label: "有点像上面", sublabel: "A 更接近我", value: 1 },
+  { label: "有点像下面", sublabel: "B 更接近我", value: -1 },
+  { label: "更像下面", sublabel: "B 描述的就是我", value: -2 },
 ] as const;
 
 export const STORAGE_KEYS = {
