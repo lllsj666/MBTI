@@ -95,7 +95,7 @@ export default function TestPage() {
             </div>
 
             {/* A/B description cards — A=violet tone, B=amber tone, no click change */}
-            <div className="mb-4 grid gap-2 sm:mb-6 sm:grid-cols-2 sm:gap-4">
+            <div className="mb-4 grid gap-2 sm:mb-6 sm:gap-3">
               <div className="rounded-2xl border border-violet-200/60 bg-violet-50/20 px-4 py-3 backdrop-blur-xl sm:px-5 sm:py-4">
                 <span className="mb-1 block text-[10px] font-semibold tracking-wider text-violet-500/80 sm:mb-1.5 sm:text-xs">A</span>
                 <p className="text-[13px] leading-relaxed text-[var(--text)] sm:text-[15px]">{q.optionA}</p>
