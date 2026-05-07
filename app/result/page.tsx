@@ -271,7 +271,7 @@ function ResultContent() {
               <div key={label} className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]/80 p-5">
                 <div className="pointer-events-none absolute -top-8 right-0 h-[80px] w-[120px] rounded-full bg-[var(--accent)]/8 blur-[40px]" />
                 <h4 className="relative mb-2 text-[13px] font-semibold tracking-[0.02em] text-[var(--accent)] md:text-sm">{label}</h4>
-                <div className="relative space-y-2 text-[13px] leading-6 text-[var(--text)]/85 md:text-[14px] md:leading-7">
+                <div className="relative space-y-2 text-[13px] leading-6 text-[var(--text)] md:text-[14px] md:leading-7">
                   {splitChineseParagraph(content).map((p, j) => <p key={j}>{p}</p>)}
                 </div>
               </div>
