@@ -75,7 +75,7 @@ export default function TestPage() {
     <main className="flex min-h-screen flex-col bg-[var(--bg)] font-sans">
       {/* Top bar */}
       <div className="flex items-center justify-between border-b border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-xl px-4 py-2 sm:px-6 sm:py-3">
-        <Link href="/" className="text-xs text-[var(--muted)] transition hover:text-[var(--text)] sm:text-sm">← 返回</Link>
+        <Link href="/" className="text-xs text-[var(--text)]/70 transition hover:text-[var(--text)] sm:text-sm">← 返回</Link>
         <span className="text-[11px] text-[var(--muted)] sm:text-xs">{dimLabel[q.dimension]} · {String(ci+1).padStart(2,"0")}/{total}</span>
         <button onClick={handleRestart} className="text-[11px] text-[var(--muted)] transition hover:text-rose-400 sm:text-xs">重新开始</button>
       </div>
