@@ -106,14 +106,16 @@ export default function TestPage() {
               </div>
             </div>
 
-            {/* Option buttons — consistent glass, "更像" deeper, "有点像" lighter */}
-            <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 sm:gap-3">
+            {/* Option buttons — A=violet on top, B=amber at bottom */}
+            <div className="grid grid-cols-1 gap-1.5 sm:gap-3">
               {CHOICES.map((ch) => {
                 const isStrong = Math.abs(ch.value) === 2;
+                const isLeft = ch.value > 0;
+                const sideColor = isLeft ? "text-violet-600" : "text-amber-600";
                 return (
                   <button key={ch.value} onClick={()=>handleChoose(ch.value,ci===total-1)}
                     className="rounded-xl border border-[var(--border)] bg-[var(--surface)]/50 px-4 py-2.5 text-center backdrop-blur-xl transition-all active:scale-[0.98] hover:bg-[var(--surface)]/80 sm:py-3.5">
-                    <span className={`block font-medium tracking-wide text-[var(--text)] ${
+                    <span className={`block font-medium tracking-wide ${sideColor} ${
                       isStrong?"text-[14px] sm:text-base":"text-[13px] sm:text-sm"
                     }`}>{ch.label}</span>
                     <span className="mt-0.5 block text-[10px] text-[var(--muted)] sm:text-[11px]">{ch.sublabel}</span>
