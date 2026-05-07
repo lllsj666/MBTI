@@ -75,7 +75,7 @@ export default function TestPage() {
   );
 
   return (
-    <main className="flex min-h-screen flex-col bg-[var(--bg)]">
+    <main className="flex min-h-screen flex-col bg-[var(--bg)] font-sans">
       {/* Top bar */}
       <div className="flex items-center justify-between border-b border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-xl px-4 py-2 sm:px-6 sm:py-3">
         <Link href="/" className="text-xs text-[var(--muted)] transition hover:text-[var(--text)] sm:text-sm">← 返回</Link>
@@ -85,51 +85,52 @@ export default function TestPage() {
 
       {/* Progress bar */}
       <div className="relative h-1 w-full bg-[var(--border)]">
-        <div className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 shadow-sm transition-all duration-500 ease-out" style={{width:`${progress}%`}}/>
+        <div className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[var(--accent)]/40 via-[var(--accent)] to-[var(--accent)]/40 shadow-sm transition-all duration-500 ease-out" style={{width:`${progress}%`}}/>
       </div>
 
       {/* Main content */}
       <div className="flex flex-1 flex-col px-4 py-4 sm:px-6 sm:py-10">
         <div className="mx-auto flex w-full max-w-[840px] flex-1 flex-col">
-          {/* Slide wrapper */}
           <div className="flex-1" style={{transform:animating?`translateX(${slideDir*-12}px)`:"none",opacity:animating?0:1,transition:"all 0.2s ease-out"}}>
-            {/* Question */}
-            <h2 className="mb-4 text-center text-base font-semibold leading-relaxed text-[var(--text)] sm:mb-8 sm:text-2xl">{q.question}</h2>
+            {/* Question — glass card */}
+            <div className="mb-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)]/70 px-5 py-4 backdrop-blur-xl sm:mb-8 sm:px-8 sm:py-6">
+              <h2 className="text-center text-base font-semibold leading-relaxed text-[var(--text)] sm:text-xl">{q.question}</h2>
+            </div>
 
-            {/* A/B description cards */}
-            <div className="mb-4 grid gap-2 sm:mb-8 sm:grid-cols-2 sm:gap-4">
-              <div className={`rounded-2xl border p-3 backdrop-blur-sm transition-all sm:p-6 ${
-                isSelectedA?"border-violet-300/60 bg-violet-50/40 ring-1 ring-violet-200/50":"border-[var(--border)] bg-[var(--surface)] hover:border-violet-200/60"
+            {/* A/B description cards — glass */}
+            <div className="mb-4 grid gap-2 sm:mb-6 sm:grid-cols-2 sm:gap-4">
+              <div className={`rounded-2xl border px-4 py-3 backdrop-blur-xl transition-all sm:px-5 sm:py-4 ${
+                isSelectedA?"border-[var(--accent)]/40 bg-[var(--accent-soft)]/30 ring-1 ring-[var(--accent)]/20":"border-[var(--border)] bg-[var(--surface)]/60 hover:border-[var(--accent)]/20"
               }`}>
-                <span className="mb-1 block text-[10px] font-semibold tracking-wider text-violet-500 sm:mb-2 sm:text-xs">A</span>
-                <p className="text-[13px] leading-relaxed text-[var(--text)] sm:text-base">{q.optionA}</p>
+                <span className="mb-1 block text-[10px] font-semibold tracking-wider text-[var(--accent)] sm:mb-1.5 sm:text-xs">A</span>
+                <p className="text-[13px] leading-relaxed text-[var(--text)] sm:text-[15px]">{q.optionA}</p>
               </div>
-              <div className={`rounded-2xl border p-3 backdrop-blur-sm transition-all sm:p-6 ${
-                isSelectedB?"border-amber-300/60 bg-amber-50/40 ring-1 ring-amber-200/50":"border-[var(--border)] bg-[var(--surface)] hover:border-amber-200/60"
+              <div className={`rounded-2xl border px-4 py-3 backdrop-blur-xl transition-all sm:px-5 sm:py-4 ${
+                isSelectedB?"border-[var(--accent)]/40 bg-[var(--accent-soft)]/30 ring-1 ring-[var(--accent)]/20":"border-[var(--border)] bg-[var(--surface)]/60 hover:border-[var(--accent)]/20"
               }`}>
-                <span className="mb-1 block text-[10px] font-semibold tracking-wider text-amber-500 sm:mb-2 sm:text-xs">B</span>
-                <p className="text-[13px] leading-relaxed text-[var(--text)] sm:text-base">{q.optionB}</p>
+                <span className="mb-1 block text-[10px] font-semibold tracking-wider text-[var(--accent)] sm:mb-1.5 sm:text-xs">B</span>
+                <p className="text-[13px] leading-relaxed text-[var(--text)] sm:text-[15px]">{q.optionB}</p>
               </div>
             </div>
 
-            {/* Option buttons */}
+            {/* Option buttons — 2x2 grid, glass, subtle selection */}
             <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 sm:gap-3">
               {CHOICES.map((ch) => {
                 const isActive = selected === ch.value;
-                const isLeft = ch.value > 0;
                 const isStrong = Math.abs(ch.value) === 2;
-                const side = isLeft?"violet":"amber";
                 return (
                   <button key={ch.value} onClick={()=>handleChoose(ch.value,ci===total-1)}
-                    className={`rounded-xl border py-2.5 text-center transition-all active:scale-[0.98] sm:py-3.5 ${
+                    className={`rounded-xl border px-4 py-2.5 text-center backdrop-blur-xl transition-all active:scale-[0.98] sm:py-3.5 ${
                       isActive
-                        ?`border-${side}-400 bg-${side}-500 text-white shadow-sm`
-                        :isStrong
-                          ?`border-${side}-200/60 bg-${side}-50/30 text-${side}-700 hover:border-${side}-300`
-                          :`border-[var(--border)] bg-[var(--surface)]/60 text-[var(--muted)] hover:border-${side}-200/50 hover:text-${side}-600`
+                        ?"border-[var(--accent)]/40 bg-[var(--accent-soft)]/20 ring-1 ring-[var(--accent)]/20 shadow-sm"
+                        :"border-[var(--border)] bg-[var(--surface)]/50 hover:border-[var(--accent)]/20 hover:bg-[var(--surface)]/80"
                     }`}>
-                    <span className={`block text-[13px] font-medium ${isStrong?"sm:text-[15px]":""}`}>{ch.label}</span>
-                    <span className={`mt-0.5 block text-[10px] sm:text-[11px] ${isActive?"opacity-80":isStrong?"opacity-55":"opacity-40"}`}>{ch.sublabel}</span>
+                    <span className={`block font-medium tracking-wide ${
+                      isActive?"text-[var(--accent)]":isStrong?"text-[var(--text)]":"text-[var(--muted)]"
+                    } ${isStrong?"text-[14px] sm:text-base":"text-[13px] sm:text-sm"}`}>{ch.label}</span>
+                    <span className={`mt-0.5 block text-[10px] sm:text-[11px] ${
+                      isActive?"text-[var(--accent)]/70":isStrong?"text-[var(--muted)]":"text-[var(--muted)]/60"
+                    }`}>{ch.sublabel}</span>
                   </button>
                 );
               })}
@@ -139,10 +140,10 @@ export default function TestPage() {
           {/* Bottom nav */}
           <div className="mt-3 space-y-2 sm:mt-8 sm:space-y-3">
             <button onClick={handlePrev} disabled={ci===0}
-              className={`w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-2.5 text-[13px] font-medium backdrop-blur-sm transition active:scale-[0.98] sm:px-6 sm:py-3 sm:text-sm ${
-                ci===0?"cursor-not-allowed text-[var(--muted)]/40":"text-[var(--muted)] hover:border-[var(--accent)]/30 hover:text-[var(--text)]"
+              className={`w-full rounded-xl border border-[var(--border)] bg-[var(--surface)]/60 px-5 py-2.5 text-[13px] font-medium backdrop-blur-xl transition active:scale-[0.98] sm:px-6 sm:py-3 sm:text-sm ${
+                ci===0?"cursor-not-allowed text-[var(--muted)]/30":"text-[var(--muted)] hover:border-[var(--accent)]/20 hover:text-[var(--text)]"
               }`}>← 上一题</button>
-            <p className="text-center text-[10px] leading-relaxed text-[var(--muted)] sm:text-[11px] hidden sm:block">基于 MBTI 四维行为偏好估算，这只是参考，不是标签。</p>
+            <p className="text-center text-[10px] leading-relaxed text-[var(--muted)] hidden sm:block">基于 MBTI 四维行为偏好估算，这只是参考，不是标签。</p>
           </div>
         </div>
       </div>
