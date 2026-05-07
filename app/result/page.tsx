@@ -205,7 +205,7 @@ function ResultContent() {
       {dimModal && (
         <div className="fixed inset-0 z-[9999] flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4" onClick={() => setDimModal(null)}>
           <div onClick={(e) => e.stopPropagation()} className="relative flex max-h-[85vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-[var(--surface-strong)] shadow-2xl backdrop-blur-xl md:max-w-md md:rounded-3xl">
-            <button onClick={() => setDimModal(null)} className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--border)]">
+            <button onClick={() => setDimModal(null)} className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--bg)] text-[var(--muted)] transition hover:bg-[var(--border)]">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
             </button>
             <div className="shrink-0 bg-gradient-to-br from-[var(--accent-soft)]/30 via-[var(--surface)] to-[var(--bg)] px-6 pb-5 pt-8 text-center">
@@ -234,7 +234,7 @@ function ResultContent() {
       {descModal && (
         <div className="fixed inset-0 z-[9999] flex animate-[fadeIn_0.2s_ease-out] items-end justify-center bg-slate-900/40 backdrop-blur-sm md:items-center md:p-4" onClick={() => setDescModal(false)}>
           <div onClick={(e) => e.stopPropagation()} className="relative flex max-h-[88vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-[var(--surface-strong)] shadow-2xl backdrop-blur-xl md:max-h-[82vh] md:w-[min(92vw,680px)] md:rounded-3xl">
-            <button onClick={() => setDescModal(false)} className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--border)]">
+            <button onClick={() => setDescModal(false)} className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--bg)] text-[var(--muted)] transition hover:bg-[var(--border)]">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
             </button>
             <div className="shrink-0 bg-gradient-to-br from-[var(--accent-soft)]/30 via-[var(--surface)] to-[var(--bg)] px-6 pt-6 pb-4 md:px-8 md:pt-7">
@@ -268,7 +268,7 @@ function ResultContent() {
         <div className="flex-1 overflow-y-auto px-6 py-5 md:px-8 md:py-6">
           <div className="space-y-4">
             {insights.map(({ label, content }) => (
-              <div key={label} className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]/80 p-5">
+              <div key={label} className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-5">
                 <div className="pointer-events-none absolute -top-8 right-0 h-[80px] w-[120px] rounded-full bg-[var(--accent)]/8 blur-[40px]" />
                 <h4 className="relative mb-2 text-[13px] font-semibold tracking-[0.02em] text-[var(--accent)] md:text-sm">{label}</h4>
                 <div className="relative space-y-2 text-[13px] leading-6 text-[var(--text)] md:text-[14px] md:leading-7">

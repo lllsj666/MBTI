@@ -34,7 +34,7 @@ export function ResultModalShell({ open, onClose, children }: Props) {
       />
       {/* Content */}
       <div
-        className="relative flex max-h-[90vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-white/95 shadow-2xl backdrop-blur-xl md:max-h-[86dvh] md:w-[min(92vw,680px)] md:rounded-3xl"
+        className="relative flex max-h-[90vh] w-full animate-[slideUp_0.25s_ease-out] flex-col overflow-hidden rounded-t-3xl bg-[var(--surface-strong)] shadow-2xl backdrop-blur-xl md:max-h-[86dvh] md:w-[min(92vw,680px)] md:rounded-3xl"
         onClick={(e) => e.stopPropagation()}
       >
         {children}
