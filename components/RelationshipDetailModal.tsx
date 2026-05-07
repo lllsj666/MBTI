@@ -22,9 +22,9 @@ function splitChineseParagraph(text: string): string[] {
 
 function CardsSection({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm md:rounded-[22px] md:p-6">
-      <h4 className="mb-3 text-base font-bold text-slate-950 md:text-lg">{label}</h4>
-      <div className="text-[15px] leading-7 text-slate-700 md:text-base">{children}</div>
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm md:rounded-[22px] md:p-6">
+      <h4 className="mb-3 text-base font-bold text-[var(--text)] md:text-lg">{label}</h4>
+      <div className="text-[15px] leading-7 text-[var(--text)] md:text-base">{children}</div>
     </div>
   );
 }
@@ -46,7 +46,7 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
       {/* Close */}
       <button
         onClick={onClose}
-        className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100/80 text-slate-500 transition hover:bg-slate-200"
+        className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--border)]"
         aria-label="关闭详情"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
@@ -59,7 +59,7 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
           <span className={`text-[11px] font-medium ${t.primaryText}`}>{variant === "match" ? "更容易产生默契" : "更需要磨合"}</span>
         </div>
         <h2 className={`text-3xl font-bold tracking-tight md:text-4xl ${t.primaryText}`}>{item.type}</h2>
-        <p className="mt-1 text-xl font-bold text-slate-800 md:text-2xl">{item.title}</p>
+        <p className="mt-1 text-xl font-bold text-[var(--text)] md:text-2xl">{item.title}</p>
       </div>
 
       {/* Body */}

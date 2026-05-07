@@ -113,8 +113,8 @@ export default function TestPage() {
               </div>
             </div>
 
-            {/* Option buttons — 2x2 grid on desktop, vertical stack on mobile */}
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3">
+            {/* Option buttons — light, minimal, 2x2 desktop, vertical mobile */}
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
               {CHOICES.map((ch) => {
                 const isActive = selected === ch.value;
                 const isLeft = ch.value > 0;
@@ -122,15 +122,15 @@ export default function TestPage() {
                 const side = isLeft?"violet":"amber";
                 return (
                   <button key={ch.value} onClick={()=>handleChoose(ch.value,ci===total-1)}
-                    className={`rounded-2xl border py-4 text-center transition-all active:scale-[0.97] sm:py-5 ${
+                    className={`rounded-xl border py-3 text-center transition-all active:scale-[0.98] sm:py-3.5 ${
                       isActive
-                        ?`border-${side}-400 bg-${side}-500 text-white shadow-md`
+                        ?`border-${side}-400 bg-${side}-500 text-white shadow-sm`
                         :isStrong
-                          ?`border-${side}-200 bg-${side}-50/60 text-${side}-700 hover:border-${side}-300 hover:shadow-sm`
-                          :`border-${side}-100/60 bg-[var(--surface)] text-${side}-600 hover:border-${side}-200`
+                          ?`border-${side}-200/60 bg-${side}-50/30 text-${side}-700 hover:border-${side}-300`
+                          :`border-[var(--border)] bg-[var(--surface)]/60 text-[var(--muted)] hover:border-${side}-200/50 hover:text-${side}-600`
                     }`}>
-                    <span className={`block font-semibold ${isStrong?"text-base":"text-sm"}`}>{ch.label}</span>
-                    <span className={`mt-1 block text-[11px] ${isActive?"opacity-80":isStrong?"opacity-60":"opacity-40"}`}>{ch.sublabel}</span>
+                    <span className={`block text-sm font-medium ${isStrong?"sm:text-[15px]":""}`}>{ch.label}</span>
+                    <span className={`mt-0.5 block text-[10px] sm:text-[11px] ${isActive?"opacity-80":isStrong?"opacity-55":"opacity-40"}`}>{ch.sublabel}</span>
                   </button>
                 );
               })}

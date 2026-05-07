@@ -16,9 +16,9 @@ export function RelationshipSection({ matches, challengingMatches }: Props) {
     <>
       <div className="grid gap-4 sm:grid-cols-2 sm:items-stretch">
         {/* Matches */}
-        <div className="flex h-full flex-col rounded-3xl border border-slate-200 bg-white/70 p-5 shadow-sm backdrop-blur-sm">
-          <h4 className="text-sm font-semibold text-slate-800">更容易产生默契的类型</h4>
-          <p className="mt-0.5 text-xs text-slate-400">更容易和你聊到一起的类型。</p>
+        <div className="flex h-full flex-col rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm backdrop-blur-sm">
+          <h4 className="text-sm font-semibold text-[var(--text)]">更容易产生默契的类型</h4>
+          <p className="mt-0.5 text-xs text-[var(--muted)]">更容易和你聊到一起的类型。</p>
           <div className="mt-4 grid flex-1 gap-3">
             {matches.map((m) => {
               const d = normalizeMatch(m);
@@ -31,9 +31,9 @@ export function RelationshipSection({ matches, challengingMatches }: Props) {
         </div>
 
         {/* Challenging */}
-        <div className="flex h-full flex-col rounded-3xl border border-[#E8E4ED] bg-[#F8F7FA]/70 p-5 shadow-sm backdrop-blur-sm">
-          <h4 className="text-sm font-semibold text-slate-800">更需要磨合的类型</h4>
-          <p className="mt-0.5 text-xs text-slate-400">你们的节奏不同，需要更多沟通来彼此理解。</p>
+        <div className="flex h-full flex-col rounded-3xl border border-[var(--border)] bg-[var(--surface)]/70 p-5 shadow-sm backdrop-blur-sm">
+          <h4 className="text-sm font-semibold text-[var(--text)]">更需要磨合的类型</h4>
+          <p className="mt-0.5 text-xs text-[var(--muted)]">你们的节奏不同，需要更多沟通来彼此理解。</p>
           <div className="mt-4 grid flex-1 gap-3">
             {challengingMatches.map((m) => {
               const d = normalizeMatch(m);
