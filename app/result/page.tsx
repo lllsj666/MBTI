@@ -107,23 +107,23 @@ function ResultContent() {
           )}
 
           <button type="button" onClick={scrollToContent}
-            className={`group w-full overflow-hidden rounded-3xl border ${t.cardBorder} bg-[var(--surface)] text-left shadow-lg backdrop-blur-xl transition hover:-translate-y-1 hover:shadow-xl`}
+            className="group w-full overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--surface)] text-left shadow-lg backdrop-blur-xl transition hover:-translate-y-1 hover:shadow-xl"
           >
-            <div className={`relative overflow-hidden bg-gradient-to-br ${t.heroGradient} px-6 py-7 text-center sm:px-10 sm:py-10`}>
-              <div className={`pointer-events-none absolute -top-12 left-1/2 h-[180px] w-[280px] -translate-x-1/2 rounded-full opacity-10 blur-[60px] ${t.accentDot}`} />
+            <div className="relative overflow-hidden bg-gradient-to-br from-[var(--accent-soft)]/30 via-[var(--surface)] to-[var(--bg)] px-6 py-7 text-center sm:px-10 sm:py-10">
+              <div className={`pointer-events-none absolute -top-12 left-1/2 h-[180px] w-[280px] -translate-x-1/2 rounded-full opacity-15 blur-[60px] ${t.accentDot}`} />
               <p className="relative mb-1 text-[11px] text-[var(--muted)]">你的 MBTI-覆 结果卡</p>
-              <span className={`relative mb-3 inline-block rounded-full ${t.badge} px-3 py-0.5 text-xs font-medium`}>{camp.label}</span>
+              <span className="relative mb-3 inline-block rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-3 py-0.5 text-xs font-medium text-[var(--accent)]">{camp.label}</span>
               <p className={`relative mb-0.5 text-5xl font-black tracking-widest sm:text-7xl bg-gradient-to-r ${t.typeGradient} bg-clip-text text-transparent`}>{result.type}</p>
               <p className="relative mb-3 text-lg font-semibold text-[var(--text)] sm:text-xl">{result.name}</p>
               <div className="relative flex flex-wrap justify-center gap-1.5">
                 {result.keywords.map((kw) => (
-                  <span key={kw} className={`rounded-full border ${t.cardBorder} bg-[var(--surface)] px-2.5 py-0.5 text-xs text-[var(--muted)] backdrop-blur-sm`}>{kw}</span>
+                  <span key={kw} className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-0.5 text-xs text-[var(--muted)] backdrop-blur-sm">{kw}</span>
                 ))}
               </div>
               <div className="relative mt-4 flex justify-center gap-2 overflow-x-auto pb-1">
                 {winnerChips.map(({ dim, letter, pct, full }) => (
                   <button key={dim} onClick={(e) => { e.stopPropagation(); setDimModal(full); }}
-                    className={`shrink-0 rounded-full border ${t.cardBorder} bg-[var(--surface)] px-3 py-1 text-xs backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-sm`}>
+                    className="shrink-0 rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-xs backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-sm">
                     <span className="font-bold text-[var(--text)]">{letter}</span>
                     <span className="ml-1 text-[var(--muted)]">{pct}%</span>
                   </button>
@@ -132,8 +132,8 @@ function ResultContent() {
               <p className="relative mt-4 text-[11px] text-[var(--muted)] transition group-hover:opacity-80">点击查看完整解读 ↓</p>
             </div>
 
-            {/* Description preview — clickable to open full modal */}
-            <div className="border-t border-[var(--border)] px-6 py-4 sm:px-10 cursor-pointer transition hover:bg-[var(--accent-soft)]/30"
+            {/* Description preview */}
+            <div className="border-t border-[var(--border)] px-6 py-4 sm:px-10 cursor-pointer transition hover:bg-[var(--accent-soft)]/20"
               onClick={(e) => { e.stopPropagation(); setDescModal(true); }}>
               <h4 className="mb-1 text-xs font-semibold text-[var(--accent)]">完整描述</h4>
               <p className="line-clamp-2 text-sm leading-relaxed text-[var(--muted)]">{result.summary}</p>
@@ -150,12 +150,12 @@ function ResultContent() {
         <div className="mx-auto max-w-2xl">
           <SectionHeader eyebrow="Core Snapshot" title="先看最像你的地方" description="最常被感受到的样子。" />
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
-            <div className={`rounded-2xl border ${t.cardBorder} bg-[var(--surface)] p-5 shadow-sm backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-md`}>
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-md">
               <h3 className="mb-1 text-sm font-semibold text-emerald-600">你的优势</h3>
               <p className="mb-3 text-xs text-[var(--muted)]">你身上自然发光的部分。</p>
               <ul className="space-y-2">{result.strengths.map((s) => <li key={s} className="flex items-start gap-2 text-sm leading-relaxed text-[var(--text)]"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />{s}</li>)}</ul>
             </div>
-            <div className={`rounded-2xl border ${t.cardBorder} bg-[var(--surface)] p-5 shadow-sm backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-md`}>
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-md">
               <h3 className="mb-1 text-sm font-semibold text-amber-600">你需要注意</h3>
               <p className="mb-3 text-xs text-[var(--muted)]">压力下容易被忽略的地方。</p>
               <ul className="space-y-2">{result.cautions.map((c) => <li key={c} className="flex items-start gap-2 text-sm leading-relaxed text-[var(--text)]"><span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />{c}</li>)}</ul>
@@ -208,8 +208,8 @@ function ResultContent() {
             <button onClick={() => setDimModal(null)} className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--border)]">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
             </button>
-            <div className={`shrink-0 bg-gradient-to-br ${t.heroGradient} px-6 pb-5 pt-8 text-center`}>
-              <span className={`mb-3 inline-block rounded-full ${t.badge} px-3 py-0.5 text-xs font-medium`}>{dimModal.label}</span>
+            <div className="shrink-0 bg-gradient-to-br from-[var(--accent-soft)]/30 via-[var(--surface)] to-[var(--bg)] px-6 pb-5 pt-8 text-center">
+              <span className="mb-3 inline-block rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-3 py-0.5 text-xs font-medium text-[var(--accent)]">{dimModal.label}</span>
               <h2 className="text-2xl font-bold text-[var(--text)]">{dimModal.left.label}({dimModal.left.letter}) / {dimModal.right.label}({dimModal.right.letter})</h2>
             </div>
             <div className="flex-1 overflow-y-auto px-6 py-5">
@@ -237,9 +237,9 @@ function ResultContent() {
             <button onClick={() => setDescModal(false)} className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--border)]">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
             </button>
-            <div className={`shrink-0 bg-gradient-to-br ${t.heroGradient} px-6 pt-6 pb-4 md:px-8 md:pt-7`}>
+            <div className="shrink-0 bg-gradient-to-br from-[var(--accent-soft)]/30 via-[var(--surface)] to-[var(--bg)] px-6 pt-6 pb-4 md:px-8 md:pt-7">
               <div className="mb-2 flex items-center gap-2">
-                <span className={`rounded-full ${t.badge} px-2.5 py-0.5 text-[11px] font-medium`}>{camp.label}</span>
+                <span className="rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-2.5 py-0.5 text-[11px] font-medium text-[var(--accent)]">{camp.label}</span>
                 <span className="text-[11px] font-medium text-[var(--muted)]">{result.type}</span>
               </div>
               <h2 className="text-xl font-bold text-[var(--text)] md:text-2xl">完整描述</h2>
