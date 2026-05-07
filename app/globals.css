@@ -1,28 +1,41 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FAFAFB;
-  --foreground: #26222E;
+  --bg: #f8f5ef;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-strong: #ffffff;
+  --text: #201c1a;
+  --muted: #756f68;
+  --border: rgba(70, 55, 40, 0.12);
+  --accent: #8f6ed5;
+  --accent-soft: #eee7ff;
+  --shadow: rgba(0,0,0,0.06);
+}
+
+html.dark {
+  --bg: #0f1117;
+  --surface: rgba(24, 27, 37, 0.72);
+  --surface-strong: #181b25;
+  --text: #f2eee8;
+  --muted: #aaa3b4;
+  --border: rgba(255, 255, 255, 0.10);
+  --accent: #b9a7ff;
+  --accent-soft: rgba(185, 167, 255, 0.16);
+  --shadow: rgba(0,0,0,0.3);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #FAFAFB;
-    --foreground: #26222E;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 @keyframes fadeIn {
@@ -42,19 +55,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-\[floatSlow_30s_ease-in-out_infinite\] {
-    animation: none;
-  }
-  .animate-\[floatSlow_25s_ease-in-out_infinite\] {
-    animation: none;
-  }
-  .animate-\[floatSlow_25s_ease-in-out_infinite_reverse\] {
-    animation: none;
-  }
-  .animate-\[floatSlow_28s_ease-in-out_infinite_reverse\] {
-    animation: none;
-  }
-  .animate-\[floatSlow_35s_ease-in-out_infinite\] {
-    animation: none;
-  }
+  .animate-\[floatSlow_30s_ease-in-out_infinite\] { animation: none; }
+  .animate-\[floatSlow_25s_ease-in-out_infinite\] { animation: none; }
+  .animate-\[floatSlow_25s_ease-in-out_infinite_reverse\] { animation: none; }
+  .animate-\[floatSlow_28s_ease-in-out_infinite_reverse\] { animation: none; }
+  .animate-\[floatSlow_35s_ease-in-out_infinite\] { animation: none; }
 }

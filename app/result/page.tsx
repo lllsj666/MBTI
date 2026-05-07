@@ -92,7 +92,7 @@ function ResultContent() {
   ];
 
   return (
-    <main className={`relative min-h-screen ${t.pageBg}`}>
+    <main className={`relative min-h-screen bg-[var(--bg)]`}>
       {/* Background glows */}
       <div className={`pointer-events-none fixed -top-32 left-1/2 h-[500px] w-[700px] -translate-x-1/2 rounded-full opacity-[0.07] blur-[120px] animate-[floatSlow_30s_ease-in-out_infinite] ${t.accentDot}`} />
       <div className="pointer-events-none fixed top-1/3 -right-20 h-[400px] w-[400px] rounded-full bg-slate-200/20 blur-[100px] animate-[floatSlow_25s_ease-in-out_infinite_reverse]" />
@@ -210,7 +210,7 @@ function ResultContent() {
             <button
               type="button"
               onClick={() => setIsDeepReadingOpen(true)}
-              className="w-full rounded-[28px] border border-amber-200/60 bg-white/60 px-5 py-5 text-left shadow-sm backdrop-blur-md transition hover:shadow-md md:px-7 md:py-6"
+              className="w-full rounded-[28px] border border-amber-200/60 bg-white/60 px-5 py-5 text-left shadow-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:shadow-lg md:px-7 md:py-6"
             >
               <div className="flex items-center justify-between gap-4">
                 <div>

@@ -66,7 +66,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative flex-1 overflow-hidden bg-slate-50 text-[#26222E]" onMouseMove={handleMouseMove}>
+    <main className="relative flex-1 overflow-hidden bg-[var(--bg)] text-[var(--text)]" onMouseMove={handleMouseMove}>
       {/* Parallax glows */}
       <div
         className="pointer-events-none fixed -top-40 -left-20 h-[600px] w-[600px] rounded-full bg-violet-200/25 blur-[140px] transition-transform duration-[2s] ease-out"
