@@ -20,21 +20,6 @@ function splitChineseParagraph(text: string): string[] {
   return text.split(/(?<=。|！|？|；|，)/).map((s) => s.trim()).filter(Boolean);
 }
 
-function CardsSection({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm md:rounded-[22px] md:p-6">
-      <h4 className="mb-3 text-base font-bold text-[var(--text)] md:text-lg">{label}</h4>
-      <div className="text-[15px] leading-7 text-[var(--text)] md:text-base">{children}</div>
-    </div>
-  );
-}
-
-function textCards(content: string) {
-  const parts = splitChineseParagraph(content);
-  if (parts.length === 0) return <p>暂无内容。</p>;
-  return parts.map((p, i) => <p key={i}>{p}</p>);
-}
-
 export function RelationshipDetailModal({ open, onClose, item, variant }: Props) {
   if (!item) return null;
 
@@ -44,11 +29,7 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
   return (
     <ResultModalShell open={open} onClose={onClose}>
       {/* Close */}
-      <button
-        onClick={onClose}
-        className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--border)]"
-        aria-label="关闭详情"
-      >
+      <button onClick={onClose} className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:bg-[var(--border)]" aria-label="关闭详情">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
       </button>
 
@@ -62,14 +43,28 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
         <p className="mt-1 text-xl font-bold text-[var(--text)] md:text-2xl">{item.title}</p>
       </div>
 
-      {/* Body */}
+      {/* Body — 2 refined cards */}
       <div className="flex-1 overflow-y-auto px-5 py-5 pb-[calc(24px+env(safe-area-inset-bottom,0px))] md:px-8 md:py-6">
-        <div className="space-y-4">
-          <CardsSection label="完整描述">{textCards(item.description)}</CardsSection>
-          <CardsSection label="对方特点">{textCards(item.traits)}</CardsSection>
-          <CardsSection label={variant === "match" ? "你们的默契点" : "你们的磨合点"}>{textCards(variant === "match" ? item.chemistry : item.frictionPoint)}</CardsSection>
-          <CardsSection label="相处建议">{textCards(item.howToGetAlong)}</CardsSection>
-          <CardsSection label="潜在摩擦">{textCards(item.possibleFriction)}</CardsSection>
+        <div className="space-y-5">
+          {/* Card 1: 完整描述 */}
+          <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm md:rounded-3xl md:p-7">
+            <div className="pointer-events-none absolute -top-12 right-0 h-[120px] w-[200px] rounded-full bg-[var(--accent-soft)]/20 blur-[50px]" />
+            <h4 className="relative mb-4 text-lg font-bold text-[var(--text)] md:text-xl">完整描述</h4>
+            <div className="relative space-y-3 text-[15px] leading-7 text-[var(--text)] md:text-base">
+              {splitChineseParagraph(item.description).map((p, i) => <p key={i}>{p}</p>)}
+            </div>
+          </div>
+
+          {/* Card 2: 默契点 / 磨合点 */}
+          <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm md:rounded-3xl md:p-7">
+            <div className={`pointer-events-none absolute -top-12 right-0 h-[120px] w-[200px] rounded-full opacity-20 blur-[50px] ${t.accentDot}`} />
+            <h4 className={`relative mb-4 text-lg font-bold md:text-xl ${t.primaryText}`}>
+              {variant === "match" ? "你们的默契点" : "你们的磨合点"}
+            </h4>
+            <div className="relative space-y-3 text-[15px] leading-7 text-[var(--text)] md:text-base">
+              {splitChineseParagraph(variant === "match" ? item.chemistry : item.frictionPoint).map((p, i) => <p key={i}>{p}</p>)}
+            </div>
+          </div>
         </div>
       </div>
     </ResultModalShell>
