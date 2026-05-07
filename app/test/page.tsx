@@ -58,9 +58,6 @@ export default function TestPage() {
 
   const q=questions[ci];
   const progress=((ci+(answers[q.id]!==undefined?1:0))/total)*100;
-  const selected=answers[q.id]??null;
-  const isSelectedA=selected!==null&&selected>0;
-  const isSelectedB=selected!==null&&selected<0;
 
   if(ceremony)return(
     <main className="flex min-h-screen items-center justify-center bg-[var(--bg)]">
@@ -97,39 +94,30 @@ export default function TestPage() {
               <h2 className="text-center text-base font-semibold leading-relaxed text-[var(--text)] sm:text-xl">{q.question}</h2>
             </div>
 
-            {/* A/B description cards — glass */}
+            {/* A/B description cards — A=violet tone, B=amber tone, no click change */}
             <div className="mb-4 grid gap-2 sm:mb-6 sm:grid-cols-2 sm:gap-4">
-              <div className={`rounded-2xl border px-4 py-3 backdrop-blur-xl transition-all sm:px-5 sm:py-4 ${
-                isSelectedA?"border-[var(--accent)]/40 bg-[var(--accent-soft)]/30 ring-1 ring-[var(--accent)]/20":"border-[var(--border)] bg-[var(--surface)]/60 hover:border-[var(--accent)]/20"
-              }`}>
-                <span className="mb-1 block text-[10px] font-semibold tracking-wider text-[var(--accent)] sm:mb-1.5 sm:text-xs">A</span>
+              <div className="rounded-2xl border border-violet-200/60 bg-violet-50/20 px-4 py-3 backdrop-blur-xl sm:px-5 sm:py-4">
+                <span className="mb-1 block text-[10px] font-semibold tracking-wider text-violet-500/80 sm:mb-1.5 sm:text-xs">A</span>
                 <p className="text-[13px] leading-relaxed text-[var(--text)] sm:text-[15px]">{q.optionA}</p>
               </div>
-              <div className={`rounded-2xl border px-4 py-3 backdrop-blur-xl transition-all sm:px-5 sm:py-4 ${
-                isSelectedB?"border-[var(--accent)]/40 bg-[var(--accent-soft)]/30 ring-1 ring-[var(--accent)]/20":"border-[var(--border)] bg-[var(--surface)]/60 hover:border-[var(--accent)]/20"
-              }`}>
-                <span className="mb-1 block text-[10px] font-semibold tracking-wider text-[var(--accent)] sm:mb-1.5 sm:text-xs">B</span>
+              <div className="rounded-2xl border border-amber-200/60 bg-amber-50/20 px-4 py-3 backdrop-blur-xl sm:px-5 sm:py-4">
+                <span className="mb-1 block text-[10px] font-semibold tracking-wider text-amber-500/80 sm:mb-1.5 sm:text-xs">B</span>
                 <p className="text-[13px] leading-relaxed text-[var(--text)] sm:text-[15px]">{q.optionB}</p>
               </div>
             </div>
 
-            {/* Option buttons — 2x2 grid, glass, subtle selection */}
+            {/* Option buttons — consistent glass, "更像" deeper, "有点像" lighter */}
             <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2 sm:gap-3">
               {CHOICES.map((ch) => {
-                const isActive = selected === ch.value;
                 const isStrong = Math.abs(ch.value) === 2;
                 return (
                   <button key={ch.value} onClick={()=>handleChoose(ch.value,ci===total-1)}
-                    className={`rounded-xl border px-4 py-2.5 text-center backdrop-blur-xl transition-all active:scale-[0.98] sm:py-3.5 ${
-                      isActive
-                        ?"border-[var(--accent)]/40 bg-[var(--accent-soft)]/20 ring-1 ring-[var(--accent)]/20 shadow-sm"
-                        :"border-[var(--border)] bg-[var(--surface)]/50 hover:border-[var(--accent)]/20 hover:bg-[var(--surface)]/80"
-                    }`}>
+                    className="rounded-xl border border-[var(--border)] bg-[var(--surface)]/50 px-4 py-2.5 text-center backdrop-blur-xl transition-all active:scale-[0.98] hover:bg-[var(--surface)]/80 sm:py-3.5">
                     <span className={`block font-medium tracking-wide ${
-                      isActive?"text-[var(--accent)]":isStrong?"text-[var(--text)]":"text-[var(--muted)]"
-                    } ${isStrong?"text-[14px] sm:text-base":"text-[13px] sm:text-sm"}`}>{ch.label}</span>
+                      isStrong?"text-[var(--text)] text-[14px] sm:text-base":"text-[var(--muted)] text-[13px] sm:text-sm"
+                    }`}>{ch.label}</span>
                     <span className={`mt-0.5 block text-[10px] sm:text-[11px] ${
-                      isActive?"text-[var(--accent)]/70":isStrong?"text-[var(--muted)]":"text-[var(--muted)]/60"
+                      isStrong?"text-[var(--muted)]":"text-[var(--muted)]/50"
                     }`}>{ch.sublabel}</span>
                   </button>
                 );
