@@ -113,12 +113,10 @@ export default function TestPage() {
                 return (
                   <button key={ch.value} onClick={()=>handleChoose(ch.value,ci===total-1)}
                     className="rounded-xl border border-[var(--border)] bg-[var(--surface)]/50 px-4 py-2.5 text-center backdrop-blur-xl transition-all active:scale-[0.98] hover:bg-[var(--surface)]/80 sm:py-3.5">
-                    <span className={`block font-medium tracking-wide ${
-                      isStrong?"text-[var(--text)] text-[14px] sm:text-base":"text-[var(--muted)] text-[13px] sm:text-sm"
+                    <span className={`block font-medium tracking-wide text-[var(--text)] ${
+                      isStrong?"text-[14px] sm:text-base":"text-[13px] sm:text-sm"
                     }`}>{ch.label}</span>
-                    <span className={`mt-0.5 block text-[10px] sm:text-[11px] ${
-                      isStrong?"text-[var(--muted)]":"text-[var(--muted)]/50"
-                    }`}>{ch.sublabel}</span>
+                    <span className="mt-0.5 block text-[10px] text-[var(--muted)] sm:text-[11px]">{ch.sublabel}</span>
                   </button>
                 );
               })}
