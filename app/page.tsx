@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { motion, useAnimation, type Variants } from "framer-motion";
 import { getMbtiTheme, getDefaultDimensionScores } from "@/app/data/mbti-themes";
 import { mbtiResults } from "@/app/data/mbti-results";
+import { STORAGE_KEYS } from "@/app/data/questions";
 
 const fadeUp: Variants = {
   offscreen: { opacity: 0, y: 24 },
@@ -32,6 +33,11 @@ const allTypes = Object.keys(mbtiResults);
 
 export default function Home() {
   const ctrls = useAnimation();
+  const [savedType, setSavedType] = useState<string | null>(null);
+
+  useEffect(() => {
+    try { const s = localStorage.getItem(STORAGE_KEYS.savedResult); if (s) setSavedType(s); } catch {}
+  }, []);
 
   const randomExample = useMemo(() => {
     const t = allTypes[Math.floor(Math.random() * allTypes.length)];
@@ -121,9 +127,26 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-              <p className="mt-5 text-sm leading-relaxed text-[var(--muted)]">
-                完成测试即可查看你的专属结果，包含优势、默契类型、关系模式和生活建议。
-              </p>
+              {savedType ? (
+                <div className="mt-5 flex items-center gap-3">
+                  <Link href={`/result?type=${savedType}`} className="rounded-full bg-[var(--accent)]/15 px-4 py-2 text-xs font-medium text-[var(--accent)] transition hover:bg-[var(--accent)]/25">
+                    查看结果
+                  </Link>
+                  <button
+                    onClick={() => {
+                      try { localStorage.removeItem(STORAGE_KEYS.savedResult); } catch {}
+                      setSavedType(null);
+                    }}
+                    className="rounded-full border border-[var(--border)] px-3 py-2 text-[10px] text-[var(--muted)] transition hover:text-rose-400"
+                  >
+                    删除记录
+                  </button>
+                </div>
+              ) : (
+                <p className="mt-5 text-sm leading-relaxed text-[var(--muted)]">
+                  完成测试即可查看你的专属结果，包含优势、默契类型、关系模式和生活建议。
+                </p>
+              )}
             </div>
           </div>
         </motion.div>
