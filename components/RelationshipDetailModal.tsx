@@ -42,27 +42,15 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
         <p className="mt-1 text-xl font-bold text-[var(--text)] md:text-2xl">{item.title}</p>
       </div>
 
-      {/* Body — 2 refined cards */}
+      {/* Body — 单一关系卡片 */}
       <div className="flex-1 overflow-y-auto px-5 py-5 pb-[calc(24px+env(safe-area-inset-bottom,0px))] md:px-8 md:py-6">
-        <div className="space-y-5">
-          {/* Card 1: 完整描述 */}
-          <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-sm md:rounded-3xl md:p-7">
-            <div className="pointer-events-none absolute -top-12 right-0 h-[120px] w-[200px] rounded-full bg-[var(--accent)]/6 blur-[50px]" />
-            <h4 className="relative mb-4 text-lg font-bold text-[var(--accent)] md:text-xl">完整描述</h4>
-            <div className="relative space-y-3 text-[15px] leading-7 text-[var(--text)] md:text-base">
-              {splitChineseParagraph(item.description).map((p, i) => <p key={i}>{p}</p>)}
-            </div>
-          </div>
-
-          {/* Card 2: 默契点 / 磨合点 */}
-          <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-sm md:rounded-3xl md:p-7">
-            <div className="pointer-events-none absolute -top-12 right-0 h-[120px] w-[200px] rounded-full bg-[var(--accent)]/8 blur-[50px]" />
-            <h4 className="relative mb-4 text-lg font-bold text-[var(--accent)] md:text-xl">
-              {variant === "match" ? "你们的默契点" : "你们的磨合点"}
-            </h4>
-            <div className="relative space-y-3 text-[15px] leading-7 text-[var(--text)] md:text-base">
-              {splitChineseParagraph(variant === "match" ? item.chemistry : item.frictionPoint).map((p, i) => <p key={i}>{p}</p>)}
-            </div>
+        <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-sm md:rounded-3xl md:p-7">
+          <div className="pointer-events-none absolute -top-12 right-0 h-[120px] w-[200px] rounded-full bg-[var(--accent)]/8 blur-[50px]" />
+          <h4 className="relative mb-4 text-lg font-bold text-[var(--accent)] md:text-xl">
+            {variant === "match" ? "你们的默契点" : "你们的磨合点"}
+          </h4>
+          <div className="relative space-y-3 text-[15px] leading-7 text-[var(--text)] md:text-base">
+            {splitChineseParagraph(variant === "match" ? item.chemistry : item.frictionPoint).map((p, i) => <p key={i}>{p}</p>)}
           </div>
         </div>
       </div>
