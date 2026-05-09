@@ -19,18 +19,36 @@ export default function TestPage() {
   const [ceremony, setCeremony] = useState(false);
 
   useEffect(() => {
-    try { const a=localStorage.getItem(STORAGE_KEYS.answers);const s=localStorage.getItem(STORAGE_KEYS.scores);if(a)setAnswers(JSON.parse(a));if(s)setScores(JSON.parse(s)); } catch {}
+    try {
+      const a=localStorage.getItem(STORAGE_KEYS.answers);
+      const s=localStorage.getItem(STORAGE_KEYS.scores);
+      const i=localStorage.getItem(STORAGE_KEYS.currentIndex);
+      if(a)setAnswers(JSON.parse(a));
+      if(s)setScores(JSON.parse(s));
+      if(i)setCi(parseInt(i,10));
+    } catch {}
     setLoaded(true);
   }, []);
 
   useEffect(() => {
     if(!loaded)return;
-    try { localStorage.setItem(STORAGE_KEYS.answers,JSON.stringify(answers));localStorage.setItem(STORAGE_KEYS.scores,JSON.stringify(scores)); } catch {}
-  }, [answers,scores,loaded]);
+    try {
+      localStorage.setItem(STORAGE_KEYS.answers,JSON.stringify(answers));
+      localStorage.setItem(STORAGE_KEYS.scores,JSON.stringify(scores));
+      localStorage.setItem(STORAGE_KEYS.currentIndex,String(ci));
+    } catch {}
+  }, [answers,scores,ci,loaded]);
 
   const goToResult = useCallback((s: Record<string,number>)=>{
     const r=calculateMBTI(s);
-    try{localStorage.setItem(STORAGE_KEYS.result,r.type);localStorage.setItem(STORAGE_KEYS.tendency,JSON.stringify(r));}catch{}
+    try{
+      localStorage.setItem(STORAGE_KEYS.result,r.type);
+      localStorage.setItem(STORAGE_KEYS.tendency,JSON.stringify(r));
+      // Clear test progress so next test starts fresh
+      localStorage.removeItem(STORAGE_KEYS.answers);
+      localStorage.removeItem(STORAGE_KEYS.scores);
+      localStorage.removeItem(STORAGE_KEYS.currentIndex);
+    }catch{}
     router.push(`/result?type=${r.type}`);
   },[router]);
 

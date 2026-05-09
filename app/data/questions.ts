@@ -357,6 +357,8 @@ export const STORAGE_KEYS = {
   scores: "typemind_scores",
   result: "typemind_result",
   tendency: "typemind_tendency",
+  currentIndex: "typemind_ci",
+  savedResult: "typemind_saved_result",
 } as const;
 
 export interface TendencyDetail {

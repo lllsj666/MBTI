@@ -25,6 +25,7 @@ function ResultContent() {
   const [dimModal, setDimModal] = useState<DimensionScore | null>(null);
   const [descModal, setDescModal] = useState(false);
   const [isDeepReadingOpen, setIsDeepReadingOpen] = useState(false);
+  const [saved, setSaved] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -197,8 +198,19 @@ function ResultContent() {
       </section>
 
       <footer className="relative z-10 border-t border-[var(--border)] px-5 py-8">
-        <p className="text-center text-xs leading-relaxed text-[var(--muted)]">MBTI 性格测试-覆</p>
-        <p className="mt-3 text-center text-[11px] leading-relaxed text-[var(--muted)]">这只是参考，不是定义。</p>
+        <div className="flex flex-col items-center gap-3">
+          <button
+            onClick={() => {
+              try { localStorage.setItem(STORAGE_KEYS.savedResult, result.type); } catch {}
+              setSaved(true);
+              setTimeout(() => setSaved(false), 2000);
+            }}
+            className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-5 py-2 text-xs text-[var(--muted)] backdrop-blur-sm transition hover:border-[var(--accent)]/30 hover:text-[var(--accent)]"
+          >
+            {saved ? "已保存 ✓" : "保存本次结果"}
+          </button>
+          <p className="text-center text-xs leading-relaxed text-[var(--muted)]">MBTI 性格测试-覆 · 这只是参考，不是定义。</p>
+        </div>
       </footer>
 
       {/* ===== Dimension modal ===== */}
