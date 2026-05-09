@@ -113,7 +113,7 @@ function ResultContent() {
             <div className="relative overflow-hidden bg-gradient-to-br from-[var(--accent-soft)]/30 via-[var(--surface)] to-[var(--bg)] px-6 py-7 text-center sm:px-10 sm:py-10">
               <div className={`pointer-events-none absolute -top-12 left-1/2 h-[180px] w-[280px] -translate-x-1/2 rounded-full opacity-15 blur-[60px] ${t.accentDot}`} />
               <p className="relative mb-1 text-[11px] text-[var(--muted)]">你的 MBTI-覆 结果卡</p>
-              <span className="relative mb-3 inline-block rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-3 py-0.5 text-xs font-medium text-[var(--accent)]">{camp.label}</span>
+              <span className={`relative mb-3 inline-block rounded-full ${t.badge} px-3 py-0.5 text-xs font-medium`}>{camp.label}</span>
               <p className={`relative mb-0.5 text-5xl font-black tracking-widest sm:text-7xl bg-gradient-to-r ${t.typeGradient} bg-clip-text text-transparent`}>{result.type}</p>
               <p className="relative mb-3 text-lg font-semibold text-[var(--text)] sm:text-xl">{result.name}</p>
               <div className="relative flex flex-wrap justify-center gap-1.5">
@@ -136,7 +136,7 @@ function ResultContent() {
             {/* Description preview */}
             <div className="border-t border-[var(--border)] px-6 py-4 sm:px-10 cursor-pointer transition hover:bg-[var(--accent-soft)]/20"
               onClick={(e) => { e.stopPropagation(); setDescModal(true); }}>
-              <h4 className="mb-1 text-xs font-semibold text-[var(--accent)]">完整描述</h4>
+              <h4 className={`mb-1 text-xs font-semibold ${t.primaryText}`}>完整描述</h4>
               <p className="line-clamp-2 text-sm leading-relaxed text-[var(--muted)]">{result.summary}</p>
               <p className="mt-2 text-[11px] text-[var(--muted)] transition group-hover:opacity-80">点击查看完整描述 →</p>
             </div>
@@ -222,7 +222,7 @@ function ResultContent() {
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
             </button>
             <div className="shrink-0 bg-gradient-to-br from-[var(--accent-soft)]/30 via-[var(--surface)] to-[var(--bg)] px-6 pb-5 pt-8 text-center">
-              <span className="mb-3 inline-block rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-3 py-0.5 text-xs font-medium text-[var(--accent)]">{dimModal.label}</span>
+              <span className={`mb-3 inline-block rounded-full ${t.badge} px-3 py-0.5 text-xs font-medium`}>{dimModal.label}</span>
               <h2 className="text-2xl font-bold text-[var(--text)]">{dimModal.left.label}({dimModal.left.letter}) / {dimModal.right.label}({dimModal.right.letter})</h2>
             </div>
             <div className="flex-1 overflow-y-auto px-6 py-5">
@@ -283,7 +283,7 @@ function ResultContent() {
             {insights.map(({ label, content }) => (
               <div key={label} className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-5">
                 <div className="pointer-events-none absolute -top-8 right-0 h-[80px] w-[120px] rounded-full bg-[var(--accent)]/8 blur-[40px]" />
-                <h4 className="relative mb-2 text-[13px] font-semibold tracking-[0.02em] text-[var(--accent)] md:text-sm">{label}</h4>
+                <h4 className={`relative mb-2 text-[13px] font-semibold tracking-[0.02em] md:text-sm ${t.primaryText}`}>{label}</h4>
                 <div className="relative space-y-2 text-[13px] leading-6 text-[var(--text)] md:text-[14px] md:leading-7">
                   {splitChineseParagraph(content).map((p, j) => <p key={j}>{p}</p>)}
                 </div>
