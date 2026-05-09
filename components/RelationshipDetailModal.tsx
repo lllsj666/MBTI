@@ -30,12 +30,12 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
       </button>
 
       {/* Header — camp-specific gradient and colors */}
-      <div className={`shrink-0 bg-gradient-to-br ${t.heroGradient} px-5 pt-6 pb-5 md:px-8 md:pt-7 md:pb-6`}>
+      <div className="shrink-0 bg-gradient-to-br from-[var(--accent-soft)]/60 via-[var(--surface)] to-[var(--surface)] px-5 pt-6 pb-5 md:px-8 md:pt-7 md:pb-6">
         <div className="mb-2 flex items-center gap-2">
           <span className={`rounded-full ${t.badge} px-2.5 py-0.5 text-[11px] font-medium`}>{camp.label}</span>
-          <span className={`text-[11px] font-medium ${t.primaryText}`}>{variant === "match" ? "更容易产生默契" : "更需要磨合"}</span>
+          <span className="text-[11px] font-medium text-[var(--muted)]">{variant === "match" ? "更容易产生默契" : "更需要磨合"}</span>
         </div>
-        <h2 className={`text-3xl font-bold tracking-tight md:text-4xl ${t.primaryText}`}>{item.type}</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-[var(--accent)] md:text-4xl">{item.type}</h2>
         <p className="mt-1 text-xl font-bold text-[var(--text)] md:text-2xl">{item.title}</p>
       </div>
 
@@ -43,7 +43,7 @@ export function RelationshipDetailModal({ open, onClose, item, variant }: Props)
       <div className="flex-1 overflow-y-auto px-5 py-5 pb-[calc(24px+env(safe-area-inset-bottom,0px))] md:px-8 md:py-6">
         <div className={`relative overflow-hidden rounded-2xl border ${t.cardBorder} bg-[var(--bg)] p-6 shadow-sm md:rounded-3xl md:p-7`}>
           <div className={`pointer-events-none absolute -top-12 right-0 h-[120px] w-[200px] rounded-full opacity-20 blur-[50px] ${t.accentDot}`} />
-          <h4 className={`relative mb-4 text-lg font-bold md:text-xl ${t.primaryText}`}>
+          <h4 className="relative mb-4 text-lg font-bold text-[var(--accent)] md:text-xl">
             {variant === "match" ? "你们的默契点" : "你们的磨合点"}
           </h4>
           <div className="relative space-y-2 font-sans text-[15px] leading-[1.85] text-[var(--text)] md:text-[17px]">

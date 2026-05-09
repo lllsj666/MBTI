@@ -250,7 +250,7 @@ function ResultContent() {
             <button onClick={() => setDescModal(false)} className="absolute right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--bg)] text-[var(--muted)] transition hover:bg-[var(--border)]">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
             </button>
-            <div className={`shrink-0 bg-gradient-to-br ${t.heroGradient} px-6 pt-6 pb-4 md:px-8 md:pt-7`}>
+            <div className="shrink-0 bg-gradient-to-br from-[var(--accent-soft)]/60 via-[var(--surface)] to-[var(--surface)] px-6 pt-6 pb-4 md:px-8 md:pt-7">
               <div className="mb-2 flex items-center gap-2">
                 <span className={`rounded-full ${t.badge} px-2.5 py-0.5 text-[11px] font-medium`}>{camp.label}</span>
                 <span className="text-[11px] font-medium text-[var(--muted)]">{result.type}</span>
