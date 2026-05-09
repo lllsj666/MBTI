@@ -130,7 +130,7 @@ export default function Home() {
               {savedType ? (
                 <div className="mt-5 flex items-center gap-3">
                   <Link href={`/result?type=${savedType}`} className="rounded-full bg-[var(--accent)]/15 px-4 py-2 text-xs font-medium text-[var(--accent)] transition hover:bg-[var(--accent)]/25">
-                    查看结果
+                    查看保存记录
                   </Link>
                   <button
                     onClick={() => {
