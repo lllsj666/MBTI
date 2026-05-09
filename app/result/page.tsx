@@ -210,7 +210,7 @@ function ResultContent() {
             {saved ? "已保存 ✓" : "保存本次结果"}
           </button>
           <p className="text-center text-[10px] text-[var(--muted)]/60">保存后回到首页可重新查看。</p>
-          <p className="text-center text-xs leading-relaxed text-[var(--muted)]">MBTI 性格测试-覆 · 这只是参考，不是定义。</p>
+          <p className="text-center text-xs leading-relaxed text-[var(--muted)]">MBTI 性格测试-覆 · El Psy Congroo.</p>
         </div>
       </footer>
 

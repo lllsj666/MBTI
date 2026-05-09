@@ -186,7 +186,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="relative z-10 border-t border-[var(--border)] bg-[var(--surface)]/40 px-5 py-8 backdrop-blur-sm">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-[var(--muted)] sm:flex-row">
-          <span className="flex items-center gap-1.5 font-semibold"><span className={`h-2 w-2 rounded-full bg-gradient-to-r ${randomExample.accent.textGrad}`} />MBTI 性格测试-覆</span>
+          <span className="flex items-center gap-1.5 font-semibold"><span className={`h-2 w-2 rounded-full bg-gradient-to-r ${randomExample.accent.textGrad}`} />Future Gadget Lab · FG-002。</span>
           <div className="flex gap-6"><a href="#" className="transition hover:text-[var(--text)]">关于</a><a href="#" className="transition hover:text-[var(--text)]">隐私政策</a><a href="#" className="transition hover:text-[var(--text)]">联系我们</a></div>
         </div>
       </footer>
